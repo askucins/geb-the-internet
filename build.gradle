@@ -1,3 +1,4 @@
+// See more at: https://docs.gradle.org/current/userguide/groovy_plugin.html
 apply plugin: "groovy"
 
 repositories {
@@ -20,10 +21,15 @@ dependencies {
     def gebVersion = "2.0"
     testCompile "org.gebish:geb-core:${gebVersion}"
     testCompile "org.gebish:geb-spock:${gebVersion}"
-    testCompile "org.seleniumhq.selenium:selenium-chrome-driver:3.6.0"
+
+    def seleniumVersion = "3.6.0"
+    testCompile "org.seleniumhq.selenium:selenium-chrome-driver:${seleniumVersion}"
+    //testCompile "org.seleniumhq.selenium:selenium-firefox-driver:${seleniumVersion}"
+    testCompile "org.seleniumhq.selenium:selenium-support:${seleniumVersion}"
 }
 
 tasks.withType(Test) {
     systemProperties "geb.build.reportsDir": "reports"
     systemProperties "webdriver.chrome.driver": "/opt/webdriver/chromedriver"
+    systemProperties "webdriver.gecko.driver": "/opt/webdriver/geckodriver"
 }

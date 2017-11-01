@@ -1,8 +1,8 @@
-package book
+package book.minimal
 
 import geb.Browser
 
-class SmokeSpec extends GebSpec {
+class SmokeSpec extends MinimalBaseSpec {
     def "should open the Gebish page"() {
         expect:
         Browser.drive {

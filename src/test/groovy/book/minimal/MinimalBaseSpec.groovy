@@ -1,12 +1,12 @@
-package book
+package book.minimal
 
 import groovy.util.logging.Slf4j
 import spock.lang.Specification
 import spock.util.environment.RestoreSystemProperties
 
-@Slf4j
 @RestoreSystemProperties
-class GebSpec extends Specification {
+@Slf4j
+class MinimalBaseSpec extends Specification {
 
     def setupSpec() {
         def sp = System.properties
