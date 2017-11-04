@@ -1,4 +1,4 @@
-package book
+package book.minimalspock
 
 import geb.spock.GebSpec
 import groovy.util.logging.Slf4j

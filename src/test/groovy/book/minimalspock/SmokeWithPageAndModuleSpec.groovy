@@ -1,4 +1,4 @@
-package book
+package book.minimalspock
 
 import geb.Module
 import geb.Page
