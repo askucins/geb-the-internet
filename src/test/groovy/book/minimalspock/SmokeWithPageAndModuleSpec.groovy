@@ -39,11 +39,14 @@ class SmokeWithPageAndModuleSpec extends BaseSpec {
         given:
         log.info "About to open GebHomePage..."
         to GebHomePage
+        report "Geb-Home-Page"
         when:
         manualsMenu.open()
         manualsMenu.links.first().click()
         then:
         log.info "And now on the Book of Geb..."
         at TheBookOfGebPage
+        cleanup:
+        report "The-Book-Of-Geb"
     }
 }
