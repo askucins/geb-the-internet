@@ -9,12 +9,12 @@ import spock.util.environment.RestoreSystemProperties
 class MinimalBaseSpec extends Specification {
 
     def setupSpec() {
-        def sp = System.properties
+        expect:
+        assert System.getProperty('webdriver.chrome.driver')
+        assert System.getProperty('geb.build.reportsDir')
 
-        sp.'webdriver.chrome.driver' = sp.'webdriver.chrome.driver' ?: '/opt/webdriver/chromedriver'
-        log.info "Path to chromedriver: ${sp.'webdriver.chrome.driver'}"
-
-        sp.'geb.build.reportsDir' = sp.'geb.build.reportsDir' ?: "reports"
-        log.info "Additional Geb reports in: ${sp.'geb.build.reportsDir'}"
+        clean:
+        log.info "Path to chromedriver: " + System.getProperty('webdriver.chrome.driver')
+        log.info "Additional Geb reports in: " + System.getProperty('geb.build.reportsDir')
     }
 }

@@ -1,5 +1,5 @@
 // See more at: https://docs.gradle.org/current/userguide/groovy_plugin.html
-apply plugin: "groovy"
+apply plugin: 'groovy'
 
 repositories {
     jcenter()
@@ -28,7 +28,12 @@ dependencies {
 }
 
 tasks.withType(Test) {
-    systemProperties "geb.build.reportsDir": "reports"
-    systemProperties "webdriver.chrome.driver": "/opt/webdriver/chromedriver"
-    systemProperties "webdriver.gecko.driver": "/opt/webdriver/geckodriver"
+    systemProperty 'geb.build.reportsDir', 'reports'
+    systemProperty 'webdriver.chrome.driver', '/opt/webdriver/chromedriver'
+    systemProperty 'webdriver.gecko.driver', '/opt/webdriver/geckodriver'
+
+    testLogging {
+        // Show that tests are run in the command-line output
+        events 'started', 'passed'
+    }
 }

@@ -9,15 +9,14 @@ import spock.util.environment.RestoreSystemProperties
 class BaseSpec extends GebSpec {
 
     def setupSpec() {
-        def sp = System.properties
+        expect:
+        assert System.getProperty('webdriver.chrome.driver')
+        assert System.getProperty('webdriver.gecko.driver')
+        assert System.getProperty('geb.build.reportsDir')
 
-        sp.'geb.build.reportsDir' = sp.'geb.build.reportsDir' ?: "reports"
-        log.info "Additional Geb reports in: ${sp.'geb.build.reportsDir'}"
-
-        sp.'webdriver.chrome.driver' = sp.'webdriver.chrome.driver' ?: '/opt/webdriver/chromedriver'
-        log.info "Path to chromedriver: ${sp.'webdriver.chrome.driver'}"
-
-        sp.'webdriver.gecko.driver' = sp.'webdriver.gecko.driver' ?: '/opt/webdriver/geckodriver'
-        log.info "Path to geckodriver: ${sp.'webdriver.gecko.driver'}"
+        clean:
+        log.info "Path to chromedriver: " + System.getProperty('webdriver.chrome.driver')
+        log.info "Path to geckodriver: " + System.getProperty('webdriver.gecko.driver')
+        log.info "Additional Geb reports in: " + System.getProperty('geb.build.reportsDir')
     }
 }
