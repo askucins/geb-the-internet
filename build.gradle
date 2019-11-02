@@ -32,10 +32,11 @@ dependencies {
 }
 
 tasks.withType(Test) {
-    systemProperty 'geb.build.reportsDir', 'reports'
     systemProperty 'webdriver.chrome.driver', '/opt/webdriver/chromedriver'
     systemProperty 'webdriver.gecko.driver', '/opt/webdriver/geckodriver'
-    systemProperty 'org.askucins.webdriver', project.webdriver // e.g. gw test -Pwebdriver=firefox
+    systemProperty 'geb.build.reportsDir', 'reports'
+    systemProperty 'geb.build.baseUrl', 'http://the-internet.herokuapp.com/'
+    systemProperty 'org.askucins.webdriver', project.findProperty('webdriver')
 
     testLogging {
         events 'passed', 'failed'

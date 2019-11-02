@@ -88,7 +88,7 @@ Inspired by [https://stackoverflow.com/questions/28985395/gradle-gebconfig-groov
 In ```build.gradle``` pass the gradle project property to system property:
 ```groovy
 tasks.withType(Test) {
-    systemProperty 'org.askucins.webdriver', project.webdriver
+        systemProperty 'org.askucins.webdriver', project.findProperty('webdriver')
     // [...]
 ```
 

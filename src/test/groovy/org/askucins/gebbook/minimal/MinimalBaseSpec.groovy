@@ -1,4 +1,4 @@
-package org.askucins.gebbook.minimal.spec
+package org.askucins.gebbook.minimal
 
 import geb.spock.GebSpec
 import groovy.util.logging.Slf4j
