@@ -27,14 +27,15 @@ dependencies {
         transitive = false // this avoids affecting your version of Groovy/Spock
     }
     //Proxies
-    implementation 'com.browserup:browserup-proxy-core:2.0.1'
-    implementation 'xyz.rogfam:littleproxy:2.0.0-beta-5'
+    implementation 'com.browserup:browserup-proxy-core:2.0.1' //https://github.com/browserup/browserup-proxy
+    implementation 'xyz.rogfam:littleproxy:2.0.0-beta-5'      //https://github.com/mrog/LittleProxy
 }
 
 tasks.withType(Test) {
     systemProperty 'geb.build.reportsDir', 'reports'
     systemProperty 'webdriver.chrome.driver', '/opt/webdriver/chromedriver'
     systemProperty 'webdriver.gecko.driver', '/opt/webdriver/geckodriver'
+    systemProperty 'org.askucins.webdriver', project.webdriver
 
     testLogging {
         events 'passed', 'failed'
