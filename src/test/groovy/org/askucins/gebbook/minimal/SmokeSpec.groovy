@@ -1,4 +1,4 @@
-package book.minimal
+package org.askucins.gebbook.minimal
 
 import geb.Browser
 

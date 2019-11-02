@@ -1,9 +1,10 @@
-package book.minimal
+package org.askucins.gebbook.minimalspock
 
-import geb.Browser
 import geb.Module
 import geb.Page
+import groovy.util.logging.Slf4j
 
+@Slf4j
 class ManualsMenuModule extends Module {
     static content = {
         toggle { $("div.menu a.manuals") }
@@ -12,11 +13,13 @@ class ManualsMenuModule extends Module {
     }
 
     void open() {
+        log.info "About to click in the menu..."
         toggle.click()
         waitFor { !linksContainer.hasClass("animating") }
     }
 }
 
+@Slf4j
 class GebHomePage extends Page {
     static url = "http://gebish.org"
     static at = { title == "Geb - Very Groovy Browser Automation" }
@@ -25,18 +28,25 @@ class GebHomePage extends Page {
     }
 }
 
+@Slf4j
 class TheBookOfGebPage extends Page {
     static at = { title.startsWith("The Book Of Geb") }
 }
 
-class SmokeWithPageAndModuleSpec extends MinimalBaseSpec {
-    def "should navigate to the Book Of Geb"() {
-        expect:
-        Browser.drive {
-            to GebHomePage
-            manualsMenu.open()
-            manualsMenu.links.first().click()
-            at TheBookOfGebPage
-        }
+@Slf4j
+class SmokeWithPageAndModuleSpec extends BaseSpec {
+    def "should access The Book Of Geb via homepage"() {
+        given:
+        log.info "About to open GebHomePage..."
+        to GebHomePage
+        report "Geb-Home-Page"
+        when:
+        manualsMenu.open()
+        manualsMenu.links.first().click()
+        then:
+        log.info "And now on the Book of Geb..."
+        at TheBookOfGebPage
+        cleanup:
+        report "The-Book-Of-Geb"
     }
 }
