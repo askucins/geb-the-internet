@@ -1,6 +1,6 @@
 import org.openqa.selenium.firefox.FirefoxDriver
 
-import static org.askucins.utils.WebDriverConfiguration.chromeDriver
+import static org.askucins.utils.ChromeDriverCustomization.chromeDriver
 
 switch (System.getProperty('org.askucins.webdriver')) {
     case 'firefox':

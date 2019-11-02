@@ -7,7 +7,7 @@ import org.openqa.selenium.chrome.ChromeDriverService
 import org.openqa.selenium.chrome.ChromeOptions
 import org.openqa.selenium.remote.CapabilityType
 
-class WebDriverConfiguration {
+class ChromeDriverCustomization {
 
 /*
  See more about Chrome options in regards to content settings:

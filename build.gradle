@@ -35,7 +35,7 @@ tasks.withType(Test) {
     systemProperty 'geb.build.reportsDir', 'reports'
     systemProperty 'webdriver.chrome.driver', '/opt/webdriver/chromedriver'
     systemProperty 'webdriver.gecko.driver', '/opt/webdriver/geckodriver'
-    systemProperty 'org.askucins.webdriver', project.webdriver
+    systemProperty 'org.askucins.webdriver', project.webdriver // e.g. gw test -Pwebdriver=firefox
 
     testLogging {
         events 'passed', 'failed'

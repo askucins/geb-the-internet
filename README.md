@@ -82,3 +82,35 @@ See more at: https://guides.gradle.org/building-groovy-libraries/
 gradle init --type groovy-library
 ```
 
+### Passing configuration from gradle to JVM
+Inspired by [https://stackoverflow.com/questions/28985395/gradle-gebconfig-groovy-parameterized](https://stackoverflow.com/questions/28985395/gradle-gebconfig-groovy-parameterized)
+
+In ```build.gradle``` pass the gradle project property to system property:
+```groovy
+tasks.withType(Test) {
+    systemProperty 'org.askucins.webdriver', project.webdriver
+    // [...]
+```
+
+Then in the ```GebConfig.groovy``` select your webdriver based on the passed system property:
+```groovy
+import org.openqa.selenium.firefox.FirefoxDriver
+
+import static org.askucins.utils.WebDriverConfiguration.chromeDriver
+
+switch (System.getProperty('org.askucins.webdriver')) {
+    case 'firefox':
+        driver = { new FirefoxDriver() }
+        break
+    case 'chrome':
+        driver = { chromeDriver([headless: false]) }
+        break
+    default:
+        driver = { chromeDriver([headless: true]) }
+}
+```
+
+and if you want to e.g. run execute tests with firefox you may run this:
+```bash
+gw test -Pwebdriver=firefox
+```
