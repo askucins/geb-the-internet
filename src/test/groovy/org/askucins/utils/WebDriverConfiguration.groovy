@@ -16,7 +16,6 @@ class WebDriverConfiguration {
 
     enum ChromeGeoLocation {
         Allow(1), Block(2)
-
         Integer value
 
         ChromeGeoLocation(value) {
@@ -35,18 +34,15 @@ class WebDriverConfiguration {
 
     static ChromeDriver chromeDriver(Map config) {
         ChromeOptions options = defaultChromeOptions()
-
         if (config.shareLocation) {
             options.setExperimentalOption("prefs", [profile: [default_content_setting_values: [geolocation: ChromeGeoLocation.Allow.value]]])
         } else {
             options.setExperimentalOption("prefs", [profile: [default_content_setting_values: [geolocation: ChromeGeoLocation.Block.value]]])
         }
-
         if (config?.headless) {
             // See more at http://blog.faraday.io/headless-chromium-with-capybara-and-selenium-webdriver/
             options.addArguments("headless")
         }
-
         if (config?.proxy) {
             // Host defined explicitly to enforce using localhost/127.0.0.1
             def seleniumProxy = ClientUtil.createSeleniumProxy(config.proxy as BrowserUpProxy, InetAddress.getByName('localhost'))
@@ -54,7 +50,6 @@ class WebDriverConfiguration {
             options.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS, true) //cert...
             options.setCapability(CapabilityType.PROXY, seleniumProxy)
         }
-
         ChromeDriverService.Builder serviceBuilder = new ChromeDriverService.Builder()
                 .usingAnyFreePort()
                 .usingDriverExecutable(new File('/opt/webdriver/chromedriver'))

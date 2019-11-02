@@ -1,8 +1,10 @@
-package org.askucins.gebbook.minimal
+package org.askucins.gebbook.minimal.spec
 
 import geb.Browser
+import groovy.util.logging.Slf4j
 
-class SmokeSpec extends MinimalBaseSpec {
+@Slf4j
+class MinimalSmokeSpec extends MinimalBaseSpec {
     def "should open the Gebish page"() {
         expect:
         Browser.drive {

@@ -1,4 +1,4 @@
-import static org.askucins.utils.WebDriverConfiguration.*
+import static org.askucins.utils.WebDriverConfiguration.chromeDriver
 
 driver = { chromeDriver([headless: true]) }
 
