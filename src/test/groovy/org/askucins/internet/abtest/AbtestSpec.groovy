@@ -7,30 +7,21 @@ import spock.lang.Unroll
 @Slf4j
 class AbtestSpec extends InternetSpec {
 
-    def "should display correct info"() {
+    def "should open page"() {
         when:
         to AbtestPage
         then:
-        info == 'Also known as split testing. This is a way in which businesses are able to simultaneously test and learn different versions of a page to see which text and/or functionality works best towards a desired outcome (e.g. a user action such as a click-through).'
-        cleanup:
-        log.debug "Info starts with: ${info[0..9]}..."
-    }
-
-    def "should display correct header"() {
-        when:
-        to AbtestPage
-        then:
-        AbtestPage.headerVariants.contains headerVariant
+        info.startsWith 'Also known as split testing.'
         cleanup:
         log.debug "Current header variant: $headerVariant"
     }
 
     @Unroll
-    def "should always display correct header (#attempt)"() {
+    def "should always open page (#attempt)"() {
         when:
         to AbtestPage
         then:
-        AbtestPage.headerVariants.contains headerVariant
+        at AbtestPage
         cleanup:
         log.debug "Current header variant: $headerVariant"
         where:
