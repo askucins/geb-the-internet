@@ -5,11 +5,11 @@ import org.askucins.internet.InternetSpec
 import spock.lang.Unroll
 
 @Slf4j
-class AbtestSpec extends InternetSpec {
+class AbTestSpec extends InternetSpec {
 
     def "should open page"() {
         when:
-        to AbtestPage
+        to AbTestPage
         then:
         info.startsWith 'Also known as split testing.'
         cleanup:
@@ -19,9 +19,9 @@ class AbtestSpec extends InternetSpec {
     @Unroll
     def "should always open page (#attempt)"() {
         when:
-        to AbtestPage
+        to AbTestPage
         then:
-        at AbtestPage
+        at AbTestPage
         cleanup:
         log.debug "Current header variant: $headerVariant"
         where:

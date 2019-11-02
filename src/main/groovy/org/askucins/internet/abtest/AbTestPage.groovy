@@ -4,7 +4,7 @@ import geb.Page
 import groovy.util.logging.Slf4j
 
 @Slf4j
-class AbtestPage extends Page {
+class AbTestPage extends Page {
     static url = 'abtest'
     static content = {
         headerVariant { $('div#content div.example h3').first().text() }
@@ -14,6 +14,4 @@ class AbtestPage extends Page {
     static at = {
         headerVariants.contains(headerVariant)
     }
-
-
 }
