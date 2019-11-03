@@ -3,7 +3,6 @@ wrapper {
     distributionType = Wrapper.DistributionType.ALL
 }
 
-// See more at: https://docs.gradle.org/current/userguide/groovy_plugin.html
 apply plugin: 'groovy'
 
 repositories {
@@ -19,16 +18,20 @@ dependencies {
     }
     implementation 'org.gebish:geb-core:3.2'
     testImplementation 'org.gebish:geb-spock:3.2'
-    def verSelenium = "4.0.0-alpha-3"
-    implementation "org.seleniumhq.selenium:selenium-chrome-driver:${verSelenium}"
-    implementation "org.seleniumhq.selenium:selenium-firefox-driver:${verSelenium}"
-    implementation "org.seleniumhq.selenium:selenium-support:${verSelenium}"
+    def versionSelenium = "4.0.0-alpha-3"
+    implementation "org.seleniumhq.selenium:selenium-chrome-driver:${versionSelenium}"
+    implementation "org.seleniumhq.selenium:selenium-firefox-driver:${versionSelenium}"
+    implementation "org.seleniumhq.selenium:selenium-support:${versionSelenium}"
     testImplementation('com.athaydes:spock-reports:1.6.2') {
         transitive = false // this avoids affecting your version of Groovy/Spock
     }
-    //Proxies
-    implementation 'com.browserup:browserup-proxy-core:2.0.1' // https://github.com/browserup/browserup-proxy
-    implementation 'xyz.rogfam:littleproxy:2.0.0-beta-5'      // https://github.com/mrog/LittleProxy
+    // Proxies
+    // https://github.com/browserup/browserup-proxy
+    def versionBrowserUp = '2.0.1'
+    implementation "com.browserup:browserup-proxy-core:${versionBrowserUp}"
+    implementation "com.browserup:browserup-proxy-mitm:${versionBrowserUp}"
+    // https://github.com/mrog/LittleProxy
+    implementation 'xyz.rogfam:littleproxy:2.0.0-beta-5'
 }
 
 tasks.withType(Test) {
@@ -38,7 +41,7 @@ tasks.withType(Test) {
     systemProperty 'geb.build.baseUrl', 'http://the-internet.herokuapp.com/'
     systemProperty 'org.askucins.webdriver', project.findProperty('webdriver')
 
-    // temporarily
+    // TODO this is only temporarily
     systemProperty 'org.askucins.webdriver', 'firefox'
 
     testLogging {
