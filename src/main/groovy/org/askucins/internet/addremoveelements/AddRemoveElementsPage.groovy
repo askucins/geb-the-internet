@@ -24,4 +24,17 @@ class AddRemoveElementsPage extends Page {
     void delete(Integer i) {
         element(i).click()
     }
+
+    void deleteFirst() {
+        delete(0)
+    }
+
+    void deleteLast() {
+        delete(elements.size() - 1)
+    }
+
+    void deleteRandom() {
+        Random random = new Random()
+        delete(random.nextInt(elements.size()))
+    }
 }

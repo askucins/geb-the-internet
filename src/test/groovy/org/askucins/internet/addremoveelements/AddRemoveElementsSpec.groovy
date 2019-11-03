@@ -32,31 +32,32 @@ class AddRemoveElementsSpec extends InternetSpec {
         when:
         add()
         add()
-        delete(0)
+        deleteFirst()
         add()
-        delete(0)
-        delete(0)
+        deleteFirst()
+        deleteFirst()
         add()
         add()
-        delete(0)
+        deleteFirst
         then:
         elements.size() == 1
     }
 
     def "should adding and removing random elements work"() {
         given:
-        Random random = new Random()
         to AddRemoveElementsPage
         when:
         add()
         add()
-        delete(random.nextInt(elements.size()))
         add()
-        delete(random.nextInt(elements.size()))
-        delete(random.nextInt(elements.size()))
+        deleteRandom()
         add()
+        deleteRandom()
+        deleteRandom()
         add()
-        delete(random.nextInt(elements.size()))
+        deleteRandom()
+        add()
+        deleteRandom()
         then:
         elements.size() == 1
     }
@@ -90,7 +91,7 @@ class AddRemoveElementsSpec extends InternetSpec {
         elements.size() == attempts + 1
         when: "removing that last added"
         report "AddRemoveElements before removing that last one ($attempts element/s)"
-        delete(attempts)
+        deleteLast()
         then:
         elements.size() == attempts
         cleanup:
@@ -114,7 +115,7 @@ class AddRemoveElementsSpec extends InternetSpec {
         elements.size() == attempts + 1
         when: "removing the first element"
         report "AddRemoveElements before removing the first one ($attempts element/s)"
-        delete(0)
+        deleteFirst()
         then:
         elements.size() == attempts
         cleanup:
@@ -130,7 +131,6 @@ class AddRemoveElementsSpec extends InternetSpec {
     @Unroll
     def "should adding and removing random element keeps the number of displayed elements intact (#attempts)"() {
         given:
-        Random random = new Random()
         to AddRemoveElementsPage
         (0..<attempts).each { add() }
         when: "added one more"
@@ -139,7 +139,7 @@ class AddRemoveElementsSpec extends InternetSpec {
         elements.size() == attempts + 1
         when: "removing a random element"
         report "AddRemoveElements before removing the random one ($attempts element/s)"
-        delete(random.nextInt(attempts + 1))
+        deleteRandom()
         then:
         elements.size() == attempts
         cleanup:
@@ -160,7 +160,7 @@ class AddRemoveElementsSpec extends InternetSpec {
         then:
         elements.size() == attempts
         when:
-        (0..<attempts).each { delete(elements.size() - 1) }
+        (0..<attempts).each { deleteLast() }
         then:
         elements.size() == 0
         where:
@@ -179,7 +179,7 @@ class AddRemoveElementsSpec extends InternetSpec {
         then:
         elements.size() == attempts
         when:
-        (0..<attempts).each { delete(0) }
+        (0..<attempts).each { deleteFirst() }
         then:
         elements.size() == 0
         where:
@@ -192,15 +192,13 @@ class AddRemoveElementsSpec extends InternetSpec {
 
     @Unroll
     def "should adding and removing all elements randomly leaving zero elements (#attempts)"() {
-        given:
-        Random random = new Random()
         when:
         to AddRemoveElementsPage
         (0..<attempts).each { add() }
         then:
         elements.size() == attempts
         when:
-        (0..<attempts).each { delete(random.nextInt(elements.size())) }
+        (0..<attempts).each { deleteRandom() }
         then:
         elements.size() == 0
         where:
