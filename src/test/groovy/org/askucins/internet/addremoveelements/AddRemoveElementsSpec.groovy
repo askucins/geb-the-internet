@@ -26,7 +26,7 @@ class AddRemoveElementsSpec extends InternetSpec {
         report "AddRemoveElements one element"
     }
 
-    def "should adding and removing elements work"() {
+    def "should adding and removing elements from beginning work"() {
         given:
         to AddRemoveElementsPage
         when:
@@ -39,6 +39,24 @@ class AddRemoveElementsSpec extends InternetSpec {
         add()
         add()
         delete(0)
+        then:
+        elements.size() == 1
+    }
+
+    def "should adding and removing random elements work"() {
+        given:
+        Random random = new Random()
+        to AddRemoveElementsPage
+        when:
+        add()
+        add()
+        delete(random.nextInt(elements.size()))
+        add()
+        delete(random.nextInt(elements.size()))
+        delete(random.nextInt(elements.size()))
+        add()
+        add()
+        delete(random.nextInt(elements.size()))
         then:
         elements.size() == 1
     }
@@ -62,7 +80,7 @@ class AddRemoveElementsSpec extends InternetSpec {
     }
 
     @Unroll
-    def "should adding and removing last element keeps the number of displayed elements (#attempts)"() {
+    def "should adding and removing last element keeps the number of displayed elements intact (#attempts)"() {
         given:
         to AddRemoveElementsPage
         (0..<attempts).each { add() }
@@ -86,7 +104,7 @@ class AddRemoveElementsSpec extends InternetSpec {
     }
 
     @Unroll
-    def "should adding and removing first element keeps the number of displayed elements (#attempts)"() {
+    def "should adding and removing first element keeps the number of displayed elements intact (#attempts)"() {
         given:
         to AddRemoveElementsPage
         (0..<attempts).each { add() }
@@ -110,7 +128,7 @@ class AddRemoveElementsSpec extends InternetSpec {
     }
 
     @Unroll
-    def "should adding and removing random element keeps the number of displayed elements (#attempts)"() {
+    def "should adding and removing random element keeps the number of displayed elements intact (#attempts)"() {
         given:
         Random random = new Random()
         to AddRemoveElementsPage
@@ -135,7 +153,7 @@ class AddRemoveElementsSpec extends InternetSpec {
     }
 
     @Unroll
-    def "should adding and removing all elements from the end left zero elements (#attempts)"() {
+    def "should adding and removing all elements from the end leaving zero elements (#attempts)"() {
         when:
         to AddRemoveElementsPage
         (0..<attempts).each { add() }
@@ -154,7 +172,7 @@ class AddRemoveElementsSpec extends InternetSpec {
     }
 
     @Unroll
-    def "should adding and removing all elements from the beginning left zero elements (#attempts)"() {
+    def "should adding and removing all elements from the beginning leaving zero elements (#attempts)"() {
         when:
         to AddRemoveElementsPage
         (0..<attempts).each { add() }
@@ -173,7 +191,7 @@ class AddRemoveElementsSpec extends InternetSpec {
     }
 
     @Unroll
-    def "should adding and removing all elements randomly left zero elements (#attempts)"() {
+    def "should adding and removing all elements randomly leaving zero elements (#attempts)"() {
         given:
         Random random = new Random()
         when:

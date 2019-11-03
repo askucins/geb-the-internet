@@ -19,6 +19,7 @@ abstract class InternetSpec extends GebSpec {
         log.info "Webdriver path to geckodriver: " + System.getProperty('webdriver.gecko.driver')
         log.info "Geb reports in: " + System.getProperty('geb.build.reportsDir')
         log.info "Geb baseUrl: " + System.getProperty('geb.build.baseUrl')
+        log.info "Webdriver used in tests: " + System.getProperty('org.askucins.webdriver') ?: 'none explicitly!'
     }
 
     def cleanupSpec() {

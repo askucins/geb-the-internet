@@ -27,8 +27,8 @@ dependencies {
         transitive = false // this avoids affecting your version of Groovy/Spock
     }
     //Proxies
-    implementation 'com.browserup:browserup-proxy-core:2.0.1' //https://github.com/browserup/browserup-proxy
-    implementation 'xyz.rogfam:littleproxy:2.0.0-beta-5'      //https://github.com/mrog/LittleProxy
+    implementation 'com.browserup:browserup-proxy-core:2.0.1' // https://github.com/browserup/browserup-proxy
+    implementation 'xyz.rogfam:littleproxy:2.0.0-beta-5'      // https://github.com/mrog/LittleProxy
 }
 
 tasks.withType(Test) {
@@ -37,6 +37,9 @@ tasks.withType(Test) {
     systemProperty 'geb.build.reportsDir', 'reports'
     systemProperty 'geb.build.baseUrl', 'http://the-internet.herokuapp.com/'
     systemProperty 'org.askucins.webdriver', project.findProperty('webdriver')
+
+    // temporarily
+    systemProperty 'org.askucins.webdriver', 'firefox'
 
     testLogging {
         events 'passed', 'failed'
