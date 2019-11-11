@@ -32,6 +32,12 @@ dependencies {
     implementation "com.browserup:browserup-proxy-mitm:${versionBrowserUp}"
     // https://github.com/mrog/LittleProxy
     implementation 'xyz.rogfam:littleproxy:2.0.0-beta-5'
+
+    // OCR
+    // Tesseract requires to install the library, e.g
+    // [root@nighthawk tmp]# rpm -q tesseract
+    // tesseract-3.04.00-3.el7.x86_64
+    implementation 'net.sourceforge.tess4j:tess4j:4.4.1'
 }
 
 tasks.withType(Test) {
@@ -40,6 +46,7 @@ tasks.withType(Test) {
     systemProperty 'geb.build.reportsDir', 'reports'
     systemProperty 'geb.build.baseUrl', 'http://the-internet.herokuapp.com/'
     systemProperty 'org.askucins.webdriver', project.findProperty('webdriver')
+    systemProperty 'org.askucins.tesseract', '/usr/share/tesseract'
 
     // TODO this is only temporarily
     systemProperty 'org.askucins.webdriver', 'firefox'
