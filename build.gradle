@@ -25,6 +25,7 @@ dependencies {
     testImplementation('com.athaydes:spock-reports:1.6.2') {
         transitive = false // this avoids affecting your version of Groovy/Spock
     }
+
     // Proxies
     // https://github.com/browserup/browserup-proxy
     def versionBrowserUp = '2.0.1'

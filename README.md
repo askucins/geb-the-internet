@@ -14,7 +14,7 @@ Deployed and available at [http://the-internet.herokuapp.com](http://the-interne
 + Done! [Add/Remove Elements](http://the-internet.herokuapp.com/add_remove_elements/)
 + Done! [Basic Auth](http://the-internet.herokuapp.com/basic_auth) (user and pass: admin)
 + Done! [Broken Images](http://the-internet.herokuapp.com/broken_images)
-+ [Challenging DOM](http://the-internet.herokuapp.com/challenging_dom)
++ W-I-P [Challenging DOM](http://the-internet.herokuapp.com/challenging_dom)
 + [Checkboxes](http://the-internet.herokuapp.com/checkboxes)
 + [Context Menu](http://the-internet.herokuapp.com/context_menu)
 + [Digest Authentication](http://the-internet.herokuapp.com/digest_auth) (user and pass: admin)

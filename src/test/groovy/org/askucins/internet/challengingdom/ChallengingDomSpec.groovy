@@ -14,7 +14,7 @@ class ChallengingDomSpec extends InternetSpec {
     }
 
     @Unroll
-    def "should extract answer #info"() {
+    def "should extract answer when canvas accessed by #selector"() {
         when:
         to ChallengingDomPage
         then:
@@ -31,11 +31,10 @@ class ChallengingDomSpec extends InternetSpec {
         log.info "OCRed: " + imageContent
 
         where:
-        selector | info
-        'ID'     | "accessed by ID"
-        'JS'     | "accessed by JS"
+        selector | _
+        'ID'     | _
+        'JS'     | _
     }
-
 
     @Unroll
     def "should react when #color button is clicked"() {
