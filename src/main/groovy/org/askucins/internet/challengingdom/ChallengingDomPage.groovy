@@ -2,6 +2,7 @@ package org.askucins.internet.challengingdom
 
 import geb.Page
 import groovy.util.logging.Slf4j
+import org.openqa.selenium.InvalidArgumentException
 
 @Slf4j
 class ChallengingDomPage extends Page {
@@ -22,6 +23,24 @@ class ChallengingDomPage extends Page {
                 default: answerCanvasById
             }
         }
+        buttonNormal { $('a.button').not('.alert').not('.success').first() }
+        buttonAlert { $('a.button.alert').first() }
+        buttonSuccess { $('a.button.success').first() }
+        buttonOf(to: ChallengingDomPage) {
+            switch (it) {
+                case 'blue': buttonNormal; break
+                case 'red': buttonAlert; break
+                case 'green': buttonSuccess; break
+                default: throw new InvalidArgumentException()
+            }
+        }
+        tableHeader { $('div table thead tr th') }
+        tableHeaderOf { label -> tableHeader.filter(text: label) }
+        tableRows { $('div table tbody tr') }
+        tableCellOf { Integer row, Integer col -> tableRows[(row)].$('td')[(col)] }
+        actionOf { Integer row -> tableCellOf(row, 6) }
+        actionEditOn { Integer row -> actionOf(row).$('a', href: '#edit') }
+        actionDeleteOn { Integer row -> actionOf(row).$('a', href: '#delete') }
     }
     static at = {
         header == 'Challenging DOM'

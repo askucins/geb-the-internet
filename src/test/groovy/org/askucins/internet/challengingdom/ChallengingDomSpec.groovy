@@ -1,5 +1,6 @@
 package org.askucins.internet.challengingdom
 
+import geb.error.RequiredPageContentNotPresent
 import groovy.util.logging.Slf4j
 import org.askucins.internet.InternetSpec
 import org.askucins.util.ImageOcr
@@ -37,20 +38,27 @@ class ChallengingDomSpec extends InternetSpec {
     }
 
     @Unroll
-    def "should react when #color button is clicked"() {
-        expect:
-        false
+    def "should react when #buttonType button is clicked"() {
+        given:
+        to ChallengingDomPage
+        when:
+        buttonOf(buttonType).click()
+        then:
+        at ChallengingDomPage
+
         where:
-        color   | button
-        'blue'  | null
-        'read'  | null
-        'green' | null
+        buttonType | _
+        'red'      | _
+        'blue'     | _
+        'green'    | _
     }
 
     @Unroll
     def "should find a header matching to (#label)"() {
+        given:
+        to ChallengingDomPage
         expect:
-        false
+        tableHeaderOf(label).text() == label
         where:
         label     | _
         'Lorem'   | _
@@ -64,8 +72,14 @@ class ChallengingDomSpec extends InternetSpec {
 
     @Unroll
     def "should not find a header matching to (#label)"() {
-        expect:
-        false
+        given:
+        to ChallengingDomPage
+        when:
+        tableHeaderOf(label)
+        then:
+        RequiredPageContentNotPresent e = thrown()
+        and:
+        e.toString().startsWith('geb.error.RequiredPageContentNotPresent: The required page content')
         where:
         label          | _
         'NoSuchHeader' | _
@@ -73,28 +87,40 @@ class ChallengingDomSpec extends InternetSpec {
 
     @Unroll
     def "should match a text of (#row, #column) cell"() {
+        given:
+        to ChallengingDomPage
         expect:
-        false
+        tableCellOf(row, column).text() == "$prefix$row"
         where:
         row | column | prefix
-        0   | 0      | 'luvaret'
+        0   | 0      | 'Iuvaret'
+        0   | 4      | 'Consequuntur'
+        1   | 1      | 'Apeirian'
+        6   | 2      | 'Adipisci'
+        9   | 5      | 'Phaedrum'
     }
 
     @Unroll
     def "should run 'edit' on (#row) row"() {
+        given:
+        to ChallengingDomPage
         expect:
-        false
+        actionEditOn(row).text() == 'edit'
         where:
         row | _
         0   | _
+        2   | _
     }
 
     @Unroll
     def "should run 'delete' on (#row) row"() {
+        given:
+        to ChallengingDomPage
         expect:
-        false
+        actionDeleteOn(row).text() == 'delete'
         where:
         row | _
-        0   | _
+        1   | _
+        3   | _
     }
 }
