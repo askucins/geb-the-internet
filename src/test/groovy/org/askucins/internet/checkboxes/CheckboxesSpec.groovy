@@ -30,6 +30,8 @@ class CheckboxesSpec extends InternetSpec {
         //See more at: https://stackoverflow.com/questions/27307131/selenium-webdriver-how-do-i-find-all-of-an-elements-attributes
         def attributes = browser.driver.executeScript('var items = {}; for (index = 0; index < arguments[0].attributes.length; ++index) { items[arguments[0].attributes[index].name] = arguments[0].attributes[index].value }; return items;', checkbox.firstElement())
         log.warn "Attributes: " + attributes
+        //TODO check solution from Konrad:
+        // document.querySelectorAll('input')[0].nextSibling
         where:
         position | _
         1        | _
