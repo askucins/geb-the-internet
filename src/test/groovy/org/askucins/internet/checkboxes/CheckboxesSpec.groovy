@@ -1,5 +1,6 @@
 package org.askucins.internet.checkboxes
 
+import geb.navigator.Navigator
 import groovy.util.logging.Slf4j
 import org.askucins.internet.InternetSpec
 import spock.lang.Unroll
@@ -18,16 +19,20 @@ class CheckboxesSpec extends InternetSpec {
         given:
         to CheckboxesPage
         when:
-        def checkbox = checkboxAt(position)
+        Navigator checkbox = checkboxAt(position)
         Boolean enabledBefore = isEnabled(checkbox)
         checkbox.click()
         then:
         isEnabled(checkbox) == !enabledBefore
         and:
-        checkbox.value().contains "checkbox $position" //TODO it doesn't work! on<->null
+        checkbox.siblings()[1].firstElement().text().contains("checkbox $position") //TODO it doesn't work! on<->null
+        cleanup:
+        //See more at: https://stackoverflow.com/questions/27307131/selenium-webdriver-how-do-i-find-all-of-an-elements-attributes
+        def attributes = browser.driver.executeScript('var items = {}; for (index = 0; index < arguments[0].attributes.length; ++index) { items[arguments[0].attributes[index].name] = arguments[0].attributes[index].value }; return items;', checkbox.firstElement())
+        log.warn "Attributes: " + attributes
         where:
         position | _
         1        | _
-        2        | _
+        //2        | _
     }
 }
