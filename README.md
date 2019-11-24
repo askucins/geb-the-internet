@@ -51,7 +51,7 @@ Deployed and available at [http://the-internet.herokuapp.com](http://the-interne
 + [Slow Resources](http://the-internet.herokuapp.com/slow)
 + [Sortable Data Tables](http://the-internet.herokuapp.com/tables)
 + [Status Codes](http://the-internet.herokuapp.com/status_codes)
-+ W-I-P [Typos](http://the-internet.herokuapp.com/typos)
++ Done! [Typos](http://the-internet.herokuapp.com/typos)
 + [WYSIWYG Editor](http://the-internet.herokuapp.com/tinymce)
 
 ## Getting Started with The Internet
