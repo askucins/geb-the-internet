@@ -5,10 +5,10 @@ import groovy.util.logging.Slf4j
 
 @Slf4j
 class WindowsPage extends Page {
-    static url ='windows'
+    static url = 'windows'
     static content = {
         header { $('div#content div.example h3').first().text() }
-        newWindowLink {$('div.example a')}
+        newWindowLink { $('div.example a') }
     }
     static at = {
         header == 'Opening a new window'

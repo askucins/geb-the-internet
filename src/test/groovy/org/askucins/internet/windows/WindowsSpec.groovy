@@ -14,4 +14,15 @@ class WindowsSpec extends InternetSpec {
         expect:
         to NewWindowPage
     }
+
+    def "should open NewWindowPage on a click"() {
+        given:
+        to WindowsPage
+        when:
+        newWindowLink.click()
+        then:
+        pause()
+        at NewWindowPage
+        cleanu
+    }
 }
