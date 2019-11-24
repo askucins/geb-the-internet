@@ -24,17 +24,37 @@ class CheckboxesSpec extends InternetSpec {
         checkbox.click()
         then:
         isEnabled(checkbox) == !enabledBefore
-        and:
-        checkbox.siblings()[1].firstElement().text().contains("checkbox $position") //TODO it doesn't work! on<->null
         cleanup:
-        //See more at: https://stackoverflow.com/questions/27307131/selenium-webdriver-how-do-i-find-all-of-an-elements-attributes
-        def attributes = browser.driver.executeScript('var items = {}; for (index = 0; index < arguments[0].attributes.length; ++index) { items[arguments[0].attributes[index].name] = arguments[0].attributes[index].value }; return items;', checkbox.firstElement())
-        log.warn "Attributes: " + attributes
-        //TODO check solution from Konrad:
-        // document.querySelectorAll('input')[0].nextSibling
+        log.debug "Checkbox $position: {}", isEnabled(checkbox)
         where:
         position | _
         1        | _
-        //2        | _
+        2        | _
+    }
+
+    @Unroll
+    def "should read text companion of checkbox (#position)"() {
+        given:
+        to CheckboxesPage
+        expect:
+        textNext(checkboxAt(position).firstElement()) == content
+
+        where:
+        position | content
+        1        | ' checkbox 1'
+        2        | ' checkbox 2\n  '
+    }
+
+    @Unroll
+    def "should read the value of checkbox (#position)"() {
+        given:
+        to CheckboxesPage
+        expect:
+        checkboxAt(position).value() == value
+
+        where:
+        position | value
+        1        | null
+        2        | 'on'
     }
 }

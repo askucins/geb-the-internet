@@ -15,7 +15,7 @@ Deployed and available at [http://the-internet.herokuapp.com](http://the-interne
 + Done! [Basic Auth](http://the-internet.herokuapp.com/basic_auth) (user and pass: admin)
 + Done! [Broken Images](http://the-internet.herokuapp.com/broken_images)
 + Done! [Challenging DOM](http://the-internet.herokuapp.com/challenging_dom)
-+ W-I-P [Checkboxes](http://the-internet.herokuapp.com/checkboxes)
++ Done! [Checkboxes](http://the-internet.herokuapp.com/checkboxes)
 + [Context Menu](http://the-internet.herokuapp.com/context_menu)
 + [Digest Authentication](http://the-internet.herokuapp.com/digest_auth) (user and pass: admin)
 + [Disappearing Elements](http://the-internet.herokuapp.com/disappearing_elements)
@@ -51,7 +51,7 @@ Deployed and available at [http://the-internet.herokuapp.com](http://the-interne
 + [Slow Resources](http://the-internet.herokuapp.com/slow)
 + [Sortable Data Tables](http://the-internet.herokuapp.com/tables)
 + [Status Codes](http://the-internet.herokuapp.com/status_codes)
-+ [Typos](http://the-internet.herokuapp.com/typos)
++ W-I-P [Typos](http://the-internet.herokuapp.com/typos)
 + [WYSIWYG Editor](http://the-internet.herokuapp.com/tinymce)
 
 ## Getting Started with The Internet
