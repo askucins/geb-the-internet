@@ -21,6 +21,7 @@ class WindowsSpec extends InternetSpec {
         when:
         newWindowLink.click()
         then:
+        //TODO This doesn't work!
         //pause()
         at NewWindowPage
     }
