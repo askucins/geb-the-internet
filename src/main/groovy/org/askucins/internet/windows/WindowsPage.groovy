@@ -11,6 +11,7 @@ class WindowsPage extends Page {
         newWindowLink { $('div.example a') }
     }
     static at = {
+        title == 'The Internet'
         header == 'Opening a new window'
         newWindowLink.attr('href').endsWith('/windows/new')
         newWindowLink.attr('target') == '_blank'

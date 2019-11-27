@@ -15,14 +15,37 @@ class WindowsSpec extends InternetSpec {
         to NewWindowPage
     }
 
-    def "should open NewWindowPage on a click"() {
+    def "should open NewWindowPage on a click - first approach"() {
         given:
         to WindowsPage
         when:
         newWindowLink.click()
         then:
-        //TODO This doesn't work!
-        //pause()
-        at NewWindowPage
+        waitFor {
+            log.info 'Checking...'
+            withWindow({ title == 'New Window' }, page: NewWindowPage) {
+                log.info "New: Current window: {}", browser.currentWindow
+                log.info "New: Available windows: {}", browser.availableWindows
+                true
+            }
+        }
+        cleanup:
+        log.info "Old: Current window: {}", browser.currentWindow
+        log.info "Old: Available windows: {}", browser.availableWindows
+    }
+
+    //TODO - it works in Chrome but not in Firefox...
+    def "should open NewWindowPage on a click - second approach"() {
+        given:
+        to WindowsPage
+        expect:
+        withNewWindow({ newWindowLink.click() }, page: NewWindowPage, wait: true) {
+            log.info "New: Current window: {}", browser.currentWindow
+            log.info "New: Available windows: {}", browser.availableWindows
+            true
+        }
+        cleanup:
+        log.info "Old: Current window: {}", browser.currentWindow
+        log.info "Old: Available windows: {}", browser.availableWindows
     }
 }

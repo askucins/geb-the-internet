@@ -10,6 +10,7 @@ class NewWindowPage extends Page {
         header { $('div.example h3').first().text() }
     }
     static at = {
+        title == 'New Window'
         header == 'New Window'
     }
 }
