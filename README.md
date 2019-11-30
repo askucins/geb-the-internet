@@ -82,7 +82,7 @@ See more at: https://guides.gradle.org/building-groovy-libraries/
 gradle init --type groovy-library
 ```
 
-### Passing configuration from gradle to JVM
+### Passing a configuration from gradle to JVM
 Inspired by [https://stackoverflow.com/questions/28985395/gradle-gebconfig-groovy-parameterized](https://stackoverflow.com/questions/28985395/gradle-gebconfig-groovy-parameterized)
 
 In ```build.gradle``` pass the gradle project property to system property:
@@ -90,6 +90,7 @@ In ```build.gradle``` pass the gradle project property to system property:
 tasks.withType(Test) {
         systemProperty 'org.askucins.webdriver', project.findProperty('webdriver')
     // [...]
+}
 ```
 
 Then in the ```GebConfig.groovy``` select your webdriver based on the passed system property:

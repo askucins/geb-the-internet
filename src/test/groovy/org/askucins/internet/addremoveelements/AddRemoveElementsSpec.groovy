@@ -38,7 +38,7 @@ class AddRemoveElementsSpec extends InternetSpec {
         deleteFirst()
         add()
         add()
-        deleteFirst
+        deleteFirst()
         then:
         elements.size() == 1
     }

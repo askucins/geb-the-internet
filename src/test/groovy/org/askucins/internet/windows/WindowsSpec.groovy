@@ -2,9 +2,16 @@ package org.askucins.internet.windows
 
 import groovy.util.logging.Slf4j
 import org.askucins.internet.InternetSpec
+import spock.lang.Unroll
+import spock.util.environment.RestoreSystemProperties
 
 @Slf4j
+@RestoreSystemProperties
 class WindowsSpec extends InternetSpec {
+    def setupSpec() {
+        //System.setProperty('org.askucins.webdriver', TestDriver.FIREFOX.toString())
+    }
+
     def "should open WindowsPage page"() {
         expect:
         to WindowsPage
@@ -23,7 +30,7 @@ class WindowsSpec extends InternetSpec {
         then:
         waitFor {
             log.info 'Checking...'
-            withWindow({ title == 'New Window' }, page: NewWindowPage) {
+            withWindow({ title == 'New Window' }, page: NewWindowPage, close: true) {
                 log.info "New: Current window: {}", browser.currentWindow
                 log.info "New: Available windows: {}", browser.availableWindows
                 true
@@ -34,12 +41,12 @@ class WindowsSpec extends InternetSpec {
         log.info "Old: Available windows: {}", browser.availableWindows
     }
 
-    //TODO - it works in Chrome but not in Firefox...
-    def "should open NewWindowPage on a click - second approach"() {
+    @Unroll
+    def "should open NewWindowPage on a click - second approach (attempt: #attempt)"() {
         given:
         to WindowsPage
         expect:
-        withNewWindow({ newWindowLink.click() }, page: NewWindowPage, wait: true) {
+        withNewWindow({ newWindowLink.click() }, page: NewWindowPage, wait: 'slow', close: true) {
             log.info "New: Current window: {}", browser.currentWindow
             log.info "New: Available windows: {}", browser.availableWindows
             true
@@ -47,5 +54,8 @@ class WindowsSpec extends InternetSpec {
         cleanup:
         log.info "Old: Current window: {}", browser.currentWindow
         log.info "Old: Available windows: {}", browser.availableWindows
+
+        where:
+        attempt << (0..<10)
     }
 }

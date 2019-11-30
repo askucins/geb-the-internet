@@ -49,11 +49,6 @@ tasks.withType(Test) {
     systemProperty 'org.askucins.tesseract', '/usr/share/tesseract'
     systemProperty 'org.askucins.webdriver', project.findProperty('webdriver')
 
-    // TODO this is only temporarily
-    //systemProperty 'org.askucins.webdriver', 'firefox'
-    systemProperty 'org.askucins.webdriver', 'chrome'
-    //systemProperty 'org.askucins.webdriver', ''
-
     testLogging {
         events 'passed', 'failed'
         exceptionFormat 'full'
