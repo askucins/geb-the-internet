@@ -41,7 +41,7 @@ Deployed and available at [http://the-internet.herokuapp.com](http://the-interne
 + [JavaScript Alerts](http://the-internet.herokuapp.com/javascript_alerts)
 + [JavaScript onload event error](http://the-internet.herokuapp.com/javascript_error)
 + [Key Presses](http://the-internet.herokuapp.com/key_presses)
-+ W-I-P [Large & Deep DOM](http://the-internet.herokuapp.com/large)
++ Done! [Large & Deep DOM](http://the-internet.herokuapp.com/large)
 + Done! [Multiple Windows](http://the-internet.herokuapp.com/windows)
 + [Nested Frames](http://the-internet.herokuapp.com/nested_frames)
 + [Notification Messages](http://the-internet.herokuapp.com/notification_message)
