@@ -1,3 +1,4 @@
+import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.firefox.FirefoxDriver
 
 import static org.askucins.utils.ChromeDriverCustomization.chromeDriver
@@ -14,7 +15,7 @@ switch (System.getProperty('org.askucins.webdriver')) {
         driver = { chromeDriver([headless: true]) }
         break
     default:
-        driver = { chromeDriver([headless: true]) }
+        driver = { new ChromeDriver() }
 }
 
 waiting {

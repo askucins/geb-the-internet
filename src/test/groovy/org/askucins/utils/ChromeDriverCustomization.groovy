@@ -10,7 +10,7 @@ import org.openqa.selenium.remote.CapabilityType
 class ChromeDriverCustomization {
 
 /*
- See more about Chrome options in regards to content settings:
+ See more about Chrome options in regard to content settings:
  https://developer.chrome.com/extensions/contentSettings
  */
 
@@ -27,7 +27,7 @@ class ChromeDriverCustomization {
         ChromeOptions options = new ChromeOptions()
         options.setBinary('/opt/google/chrome/google-chrome')
         //options.addArguments("disable-gpu")
-        //options.addArguments('--auto-ssl-client-auth')
+        //options.addArguments('auto-ssl-client-auth')
         options.addArguments('start-maximized')
         return options
     }
@@ -40,7 +40,7 @@ class ChromeDriverCustomization {
             options.setExperimentalOption("prefs", [profile: [default_content_setting_values: [geolocation: ChromeGeoLocation.Block.value]]])
         }
         if (config?.headless) {
-            // See more at http://blog.faraday.io/headless-chromium-with-capybara-and-selenium-webdriver/
+            options.addArguments('window-size=1920x1080')
             options.addArguments("headless")
         }
         if (config?.proxy) {
