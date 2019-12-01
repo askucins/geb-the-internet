@@ -22,13 +22,11 @@ abstract class InternetSpec extends GebReportingSpec {
         log.info "Geb baseUrl: " + System.getProperty('geb.build.baseUrl')
         log.info "Tesseract (ocr) data path: " + System.getProperty('org.askucins.tesseract')
         log.info "Webdriver used in tests: " + System.getProperty('org.askucins.webdriver') ?: 'none explicitly!'
-
-        // Based on https://github.com/geb/issues/issues/473
-        resetBrowser()
-        CachingDriverFactory.clearCacheAndQuitDriver()
     }
 
     def cleanupSpec() {
-        browser.quit()
+        // Based on https://github.com/geb/issues/issues/473
+        resetBrowser()
+        CachingDriverFactory.clearCacheAndQuitDriver()
     }
 }
