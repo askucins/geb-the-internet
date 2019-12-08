@@ -36,7 +36,7 @@ Deployed and available at [http://the-internet.herokuapp.com](http://the-interne
 + [Horizontal Slider](http://the-internet.herokuapp.com/horizontal_slider)
 + [Hovers](http://the-internet.herokuapp.com/hovers)
 + [Infinite Scroll](http://the-internet.herokuapp.com/infinite_scroll)
-+ [Inputs](http://the-internet.herokuapp.com/inputs)
++ W-I-P [Inputs](http://the-internet.herokuapp.com/inputs)
 + [JQuery UI Menus](http://the-internet.herokuapp.com/jqueryui/menu)
 + [JavaScript Alerts](http://the-internet.herokuapp.com/javascript_alerts)
 + [JavaScript onload event error](http://the-internet.herokuapp.com/javascript_error)
