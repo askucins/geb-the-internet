@@ -1,4 +1,4 @@
-package org.askucins.util
+package org.askucins.utils
 
 import net.sourceforge.tess4j.Tesseract
 

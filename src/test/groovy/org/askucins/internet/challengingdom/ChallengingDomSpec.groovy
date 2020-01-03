@@ -3,7 +3,7 @@ package org.askucins.internet.challengingdom
 import geb.error.RequiredPageContentNotPresent
 import groovy.util.logging.Slf4j
 import org.askucins.internet.InternetSpec
-import org.askucins.util.ImageOcr
+import org.askucins.utils.ImageOcr
 import org.openqa.selenium.WebElement
 import spock.lang.Unroll
 
