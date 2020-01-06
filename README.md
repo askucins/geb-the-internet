@@ -115,3 +115,8 @@ and if you want to e.g. run execute tests with firefox you may run this:
 ```bash
 gw test -Pwebdriver=firefox
 ```
+
+# Questions
+
+* Can webdriver access a JS script from the page source?
+

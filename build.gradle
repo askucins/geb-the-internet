@@ -13,32 +13,33 @@ dependencies {
     implementation 'org.codehaus.groovy:groovy-all:2.5.8'
     implementation 'org.slf4j:slf4j-api:2.0.0-alpha1'
     implementation 'ch.qos.logback:logback-classic:1.3.0-alpha5'
+    def versionGeb = '3.2'
+    implementation "org.gebish:geb-core:${versionGeb}"
+    def versionWebdriver = "4.0.0-alpha-3"
+    implementation "org.seleniumhq.selenium:selenium-chrome-driver:${versionWebdriver}"
+    implementation "org.seleniumhq.selenium:selenium-firefox-driver:${versionWebdriver}"
+    implementation "org.seleniumhq.selenium:selenium-support:${versionWebdriver}"
+
     testImplementation 'org.spockframework:spock-core:1.3-groovy-2.5', {
         exclude module: 'groovy-all'
     }
-    implementation 'org.gebish:geb-core:3.2'
-    testImplementation 'org.gebish:geb-spock:3.2'
-    def versionSelenium = "4.0.0-alpha-3"
-    implementation "org.seleniumhq.selenium:selenium-chrome-driver:${versionSelenium}"
-    implementation "org.seleniumhq.selenium:selenium-firefox-driver:${versionSelenium}"
-    implementation "org.seleniumhq.selenium:selenium-support:${versionSelenium}"
+    testImplementation "org.gebish:geb-spock:${versionGeb}"
     testImplementation('com.athaydes:spock-reports:1.6.2') {
         transitive = false // this avoids affecting your version of Groovy/Spock
     }
 
-    // Proxies
-    // https://github.com/browserup/browserup-proxy
+    // Proxy https://github.com/browserup/browserup-proxy
     def versionBrowserUp = '2.0.1'
-    implementation "com.browserup:browserup-proxy-core:${versionBrowserUp}"
-    implementation "com.browserup:browserup-proxy-mitm:${versionBrowserUp}"
-    // https://github.com/mrog/LittleProxy
-    implementation 'xyz.rogfam:littleproxy:2.0.0-beta-5'
+    testImplementation "com.browserup:browserup-proxy-core:${versionBrowserUp}"
+    testImplementation "com.browserup:browserup-proxy-mitm:${versionBrowserUp}"
+    // Proxy https://github.com/mrog/LittleProxy
+    testImplementation 'xyz.rogfam:littleproxy:2.0.0-beta-5'
 
-    // OCR
+    // OCR - Tesseract
     // Tesseract requires to install the library, e.g
     // [root@nighthawk tmp]# rpm -q tesseract
     // tesseract-3.04.00-3.el7.x86_64
-    implementation 'net.sourceforge.tess4j:tess4j:4.4.1'
+    testImplementation 'net.sourceforge.tess4j:tess4j:4.4.1'
 }
 
 tasks.withType(Test) {
