@@ -1,8 +1,7 @@
 Learning Geb with The Internet (version 0.57.0 - 14, July 2019)
 =======
 
-# Intro
-(_Excerpt from [https://github.com/tourdedave/the-internet](https://github.com/tourdedave/the-internet_)_)
+# An excerpt from [https://github.com/tourdedave/the-internet](https://github.com/tourdedave/the-internet_)
 
 An example application that captures prominent and ugly functionality found on the web. Perfect for writing automated acceptance tests against.
 
@@ -57,22 +56,25 @@ Deployed and available at [http://the-internet.herokuapp.com](http://the-interne
 ## Getting Started with The Internet
 
 Install your dependencies:
-
-    bundle install
+```bash
+bundle install
+```
 
 Start the server:
-
-    rackup
+```bash
+rackup
+```
 
 Load the page you want to see in your browser:
-
-    http://localhost:9292/url_path
-
-## See Also
+```text
+http://localhost:9292/url_path
+```
+    
+## Docker image
 
 - A Docker Image of the-internet ([link](https://hub.docker.com/r/gprestes/the-internet/))
 
-# Misc notes
+# Notes
 
 ## Gradle
 See more at: https://guides.gradle.org/building-groovy-libraries/
