@@ -3,6 +3,7 @@ wrapper {
     distributionType = Wrapper.DistributionType.ALL
 }
 
+apply plugin: 'java-library'
 apply plugin: 'groovy'
 
 repositories {
