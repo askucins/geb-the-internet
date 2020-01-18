@@ -8,5 +8,7 @@ class SmokeSpec extends GebLocalSpec {
     def "should open page"() {
         expect:
         to SmokePage
+        cleanup:
+        report("Smoke-page")
     }
 }

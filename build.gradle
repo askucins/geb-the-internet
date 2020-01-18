@@ -17,6 +17,13 @@ apply plugin: 'java-library'
 apply plugin: 'groovy'
 apply plugin: 'org.gretty'
 
+String localContextPath = '/gebbook'
+
+gretty {
+    contextPath = localContextPath
+    integrationTestTask = 'integrationTest'
+}
+
 repositories {
     jcenter()
 }
@@ -54,6 +61,20 @@ dependencies {
     testImplementation 'net.sourceforge.tess4j:tess4j:4.4.1'
 }
 
+sourceSets {
+    integration {
+        groovy.srcDir "$projectDir/src/integration/groovy"
+        resources.srcDir "$projectDir/src/integration/resources"
+        compileClasspath += main.output + test.output
+        runtimeClasspath += main.output + test.output
+    }
+}
+
+configurations {
+    integrationImplementation.extendsFrom testImplementation
+    integrationRuntime.extendsFrom testRuntime
+}
+
 tasks.withType(Test) {
     systemProperty 'webdriver.chrome.driver', '/opt/webdriver/chromedriver'
     systemProperty 'webdriver.gecko.driver', '/opt/webdriver/geckodriver'
@@ -74,29 +95,14 @@ tasks.withType(Test) {
     }
 }
 
-sourceSets {
-    integration {
-        groovy.srcDir "$projectDir/src/integration/groovy"
-        resources.srcDir "$projectDir/src/integration/resources"
-        compileClasspath += main.output + test.output
-        runtimeClasspath += main.output + test.output
-    }
-}
-
-configurations {
-    integrationImplementation.extendsFrom testImplementation
-    integrationRuntime.extendsFrom testRuntime
-}
-
 task integrationTest(type: Test) {
-    systemProperty 'geb.build.baseUrl', 'http://localhost:8080/'
+    group = 'verification'
+    description = 'runs integration tests via gretty'
     testClassesDirs = sourceSets.integration.output.classesDirs
     classpath = sourceSets.integration.runtimeClasspath
+
+    systemProperty 'geb.build.baseUrl', "http://localhost:8080${localContextPath}/"
 }
 
 check.dependsOn integrationTest
 
-
-gretty {
-    integrationTestTask = 'integrationTest'
-}
