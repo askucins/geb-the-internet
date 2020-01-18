@@ -3,8 +3,19 @@ wrapper {
     distributionType = Wrapper.DistributionType.ALL
 }
 
+// Gretty https://github.com/gretty-gradle-plugin/gretty
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'org.gretty:gretty:+'
+    }
+}
+
 apply plugin: 'java-library'
 apply plugin: 'groovy'
+apply plugin: 'org.gretty'
 
 repositories {
     jcenter()
