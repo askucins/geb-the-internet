@@ -73,3 +73,30 @@ tasks.withType(Test) {
         }
     }
 }
+
+sourceSets {
+    integration {
+        groovy.srcDir "$projectDir/src/integration/groovy"
+        resources.srcDir "$projectDir/src/integration/resources"
+        compileClasspath += main.output + test.output
+        runtimeClasspath += main.output + test.output
+    }
+}
+
+configurations {
+    integrationImplementation.extendsFrom testImplementation
+    integrationRuntime.extendsFrom testRuntime
+}
+
+task integrationTest(type: Test) {
+    systemProperty 'geb.build.baseUrl', 'http://localhost:8080/'
+    testClassesDirs = sourceSets.integration.output.classesDirs
+    classpath = sourceSets.integration.runtimeClasspath
+}
+
+check.dependsOn integrationTest
+
+
+gretty {
+    integrationTestTask = 'integrationTest'
+}
