@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dynamic Navigator</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<h1>Dynamic navigator example</h1>
+<div id="app">
+    <ul>
+        <li v-for="(berry,index) in berries" :key="`${berry}-${index}`">
+            <button v-if="index != 0" v-on:click="swapWithNext(index - 1)">⇑</button>
+            <button v-if="index != berries.length - 1" v-on:click="swapWithNext(index)">⇓</button>
+            <span>{{ berry }}</span>
+        </li>
+    </ul>
+</div>
+<script src="dynamic-navigator.js"></script>
+</body>
+</html>
