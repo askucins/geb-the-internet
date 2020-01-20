@@ -7,6 +7,7 @@ class SmokePage extends GebLocalPage {
     static url = 'smoke.html'
     static at = { title == "Geb Local" }
     static content = {
-        heading {$("h2", class:"heading")}
+        heading { $("h2", class: "heading") }    // Contains...
+        headingOnly { $("h2[class='heading']") } // Equals...
     }
 }

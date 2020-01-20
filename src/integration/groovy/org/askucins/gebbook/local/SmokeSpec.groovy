@@ -12,6 +12,10 @@ class SmokeSpec extends GebLocalSpec {
         heading.size() == 2
         and:
         heading*.text() == ['This is heading.','This is another heading.']
+        and:
+        headingOnly.size() == 1
+        and:
+        headingOnly.text() == 'This is heading.'
         cleanup:
         report("Smoke-page")
     }

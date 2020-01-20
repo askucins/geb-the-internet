@@ -11,4 +11,11 @@ class DynamicNavigatorSpec extends GebLocalSpec {
         cleanup:
         report("Dynamic-Navigator")
     }
+
+    def "should move berries around"() {
+        when:
+        to DynamicNavigatorPage
+        then:
+        item("blueberry").moveUpBy(2)
+    }
 }
