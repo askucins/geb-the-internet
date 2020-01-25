@@ -11,8 +11,10 @@
 <div id="app">
     <ul>
         <li v-for="(berry,index) in berries" :key="`${berry}-${index}`">
+            <button v-if="index == 0" v-on:click="hello(index)">T</button>
             <button v-if="index != 0" v-on:click="swapWithNext(index - 1)">⇑</button>
             <button v-if="index != berries.length - 1" v-on:click="swapWithNext(index)">⇓</button>
+            <button v-if="index == berries.length-1" v-on:click="hello(index)">B</button>
             <span>{{ berry }}</span>
         </li>
     </ul>
