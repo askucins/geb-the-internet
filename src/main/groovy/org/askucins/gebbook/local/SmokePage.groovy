@@ -9,7 +9,7 @@ class SmokePage extends GebLocalPage {
     static content = {
         heading { $("h2", class: "heading") }    // Contains a given class
         headingOnly { $("h2[class='heading']") } // Has only this one class
-        headingNotAnother { $("h2:not(.another)") } // css pseudo-element
+        headingNotAnother { $("h2:not(.another)") } // CSS pseudo-class
         headingNotAnotherAgain { $("h2").not(".another") }
     }
 }
