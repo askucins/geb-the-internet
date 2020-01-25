@@ -17,13 +17,6 @@ apply plugin: 'java-library'
 apply plugin: 'groovy'
 apply plugin: 'org.gretty'
 
-String localContextPath = '/gebbook'
-
-gretty {
-    contextPath = localContextPath
-    integrationTestTask = 'integrationTest'
-}
-
 repositories {
     jcenter()
 }
@@ -95,6 +88,8 @@ tasks.withType(Test) {
     }
 }
 
+String localContextPath = '/gebbook'
+
 task integrationTest(type: Test) {
     group = 'verification'
     description = 'runs integration tests via gretty'
@@ -106,3 +101,7 @@ task integrationTest(type: Test) {
 
 check.dependsOn integrationTest
 
+gretty {
+    contextPath = localContextPath
+    integrationTestTask = 'integrationTest'
+}
