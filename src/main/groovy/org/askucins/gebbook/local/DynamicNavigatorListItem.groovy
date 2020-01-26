@@ -11,7 +11,11 @@ class DynamicNavigatorListItem extends Module {
     }
 
     void moveUpBy(int count) {
-        count.times { upButton.click() }
+        count.times {
+            log.info "Above to move berry {}. time", it + 1
+            upButton.click()
+            log.info "Moved {}. time", it + 1
+        }
     }
 
     @Override

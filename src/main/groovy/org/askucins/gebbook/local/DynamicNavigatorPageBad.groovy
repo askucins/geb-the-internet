@@ -5,6 +5,7 @@ import groovy.util.logging.Slf4j
 @Slf4j
 class DynamicNavigatorPageBad extends DynamicNavigatorPage {
     static content = {
+        items { $("li").moduleList(DynamicNavigatorListItem) }
         item { text -> $("li", text: endsWith(text)).module(DynamicNavigatorListItem) }
     }
 }
