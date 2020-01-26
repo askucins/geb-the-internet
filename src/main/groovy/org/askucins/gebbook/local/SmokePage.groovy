@@ -11,5 +11,11 @@ class SmokePage extends GebLocalPage {
         headingOnly { $("h2[class='heading']") } // Has only this one class
         headingNotAnother { $("h2:not(.another)") } // CSS pseudo-class
         headingNotAnotherAgain { $("h2").not(".another") }
+
+        rangesAndIndexes { $('#ranges-and-indexes') }
+        attributeAndTextMatching { $('#attribute-and-text-matching') }
+        navigatorsAreIterable { $('#navigators-are-iterable') }
+        navigatorsAreIterableAnother { $('#navigators-are-iterable-another') }
+        navigatorsAreIterableAnotherAgain { $('#navigators-are-iterable-another-again') }
     }
 }
