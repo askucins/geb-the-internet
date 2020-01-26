@@ -1,6 +1,7 @@
 package org.askucins.gebbook.local
 
 import groovy.util.logging.Slf4j
+import org.openqa.selenium.By
 
 @Slf4j
 class SmokeSpec extends GebLocalSpec {
@@ -121,5 +122,56 @@ class SmokeSpec extends GebLocalSpec {
                 it.replaceAll(~/(?xms)\s/, '').toInteger()
             }.max() == 5
         }
+    }
+
+    def "should equals and hashcode work"() {
+        when:
+        to SmokePage
+        then:
+        verifyAll(equalsAndHashcode) {
+            $('div') == $('.foo')
+            $(".a") == $(".a")
+            $(".a") == $("p").not(".b")
+            $("p") == $("p")
+            $("p") == $(".a").add(".b")
+            $("div") != $("p")
+            $(".a") != $(".b")
+            $(".a").add(".b") != $(".b").add(".a")
+        }
+    }
+
+    def "should finding and filtering work"() {
+        when:
+        to SmokePage
+        then:
+        verifyAll(findingAndFiltering) {
+            // Finding
+            $('div').find('.b') == $('#el2')
+            $('div').$('.b') == $('#el2')
+            // Filtering
+            $('div').filter('.b') == $('#el3')
+            $('div').not('.a') == $('#el3')
+            $('.b').not('p') == $('#el3')
+            //
+            $('div').has('p') == $('#el1')
+            $('div').has('input', type: 'text') == $('#el3')
+            $('div').hasNot('p') == $('#el3')
+            $('div').hasNot('input', type: 'text') == $('#el1')
+            $('div').hasNot('input', type: 'submit') == $('#el1').add('#el3')
+        }
+    }
+
+    def "should composition work"() {
+        when:
+        to SmokePage
+        then:
+        verifyAll(composition) {
+            $($('p.aa'), $('p.bb')) == $('p').not('.cc')
+            // Gotcha! In those 'add' location is GLOBAL for the whole DOM,
+            // hence those classes are indeed unique.
+            $('p.aa').add('p.bb').add(By.className('cc')) == $('p')
+        }
+        and:
+        $(pElement('aa'), pElement('bb'))*.text() == ['1', '2']
     }
 }

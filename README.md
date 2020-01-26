@@ -118,6 +118,19 @@ and if you want to e.g. run execute tests with firefox you may run this:
 gw test -Pwebdriver=firefox
 ```
 
+## Geb
+
+### Finding vs filtering
+
+* A method `$(...)` (or its alias `find(...)`) searches in depth, looking for descendants
+* Methods `filter(...)` and `not(...)` search in breadth, limiting the found content.
+
+And a quote from [The Book of Geb](https://gebish.org/manual/current/):
+> The `find()` and `$()` *methods* support the exact same argument types as the $() *function*.
+> The `filter()` , `not()` , `has()` and `hasNot()` *methods* have the same signatures - 
+> they accept: a selector string, a predicates map or both. 
+> These methods return a new navigator object that represents the new content.
+
 # Questions
 
 * Can webdriver access a JS script from the page source?
