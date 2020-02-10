@@ -49,6 +49,7 @@ class TraversingSpec extends GebLocalSpec {
             $('p').size() == 3
             $('p') == $('p.a').add('p.b').add('p.c')
             $('p').next('.c') == $($('p.c'), $('p.c')) // WTF??
+            $('p').next('.c').size() == 2 // WTF?
         }
     }
 
@@ -72,9 +73,9 @@ class TraversingSpec extends GebLocalSpec {
             $('p').closest(class: 'a') == $('div.a')
             $('p').closest('div', class: 'a') == $('div.a')
 
-            $('p').closest('.a') == $('div.a')
-            $('p').closest(class: 'a') == $('div.a')
-            $('p').closest('div', class: 'a') == $('div.a')
+            $('p').closest('.b') == $('div.b')
+            $('p').closest(class: 'b') == $('div.b')
+            $('p').closest('div', class: 'b') == $('div.b')
         }
         and:
         verifyAll {
@@ -86,10 +87,10 @@ class TraversingSpec extends GebLocalSpec {
             $('p').parents()[2] == $('p').parent().parent().parent()
             $('p').parents()[3] == $('p').parent().parent().parent().parent()
             $('p').parents() == $(
-                    $('p').parent(),
-                    $('p').parent().parent(),
-                    $('p').parent().parent().parent(),
-                    $('p').parent().parent().parent().parent(),
+                $('p').parent(),
+                $('p').parent().parent(),
+                $('p').parent().parent().parent(),
+                $('p').parent().parent().parent().parent(),
             )
             $('p').parents()[0] == $('div.b')
             $('p').parents()[1] == $('div.a')
