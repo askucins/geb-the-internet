@@ -4,4 +4,4 @@ import geb.Page
 import groovy.util.logging.Slf4j
 
 @Slf4j
-class GebLocalPage extends Page {}
+abstract class GebLocalPage extends Page {}
