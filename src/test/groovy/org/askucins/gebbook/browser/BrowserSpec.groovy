@@ -7,7 +7,8 @@ import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.firefox.FirefoxDriver
 import spock.lang.Stepwise
 
-import static org.askucins.utils.ChromeDriverCustomization.chromeDriver
+import static org.askucins.utils.CustomizedChromeDriver.chromeDriver
+import static org.askucins.utils.CustomizedFirefoxDriver.firefoxDriver
 
 @Slf4j
 @Stepwise
@@ -48,6 +49,19 @@ class BrowserSpec extends GebSpec {
         myBrowser.currentUrl.contains(slug)
         cleanup:
         myBrowser.report("At ifconfig via Firefox")
+    }
+
+    def "start with FirefoxHeadless"() {
+        when:
+        myBrowser = new Browser(driver: firefoxDriver([headless: true]))
+        then:
+        myBrowser.driver.toString().startsWith('FirefoxDriver')
+        when:
+        myBrowser.go(url)
+        then:
+        myBrowser.currentUrl.contains(slug)
+        cleanup:
+        myBrowser.report("At ifconfig via Firefox Headless")
     }
 
     def "start with bare Chrome"() {

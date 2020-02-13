@@ -1,7 +1,7 @@
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.firefox.FirefoxDriver
 
-import static org.askucins.utils.ChromeDriverCustomization.chromeDriver
+import static org.askucins.utils.CustomizedChromeDriver.chromeDriver
 import static org.askucins.utils.TestDriver.*
 
 switch (System.getProperty('org.askucins.webdriver')) {

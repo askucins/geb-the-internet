@@ -6,7 +6,8 @@ import org.openqa.selenium.firefox.FirefoxDriver
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-import static org.askucins.utils.ChromeDriverCustomization.chromeDriver
+import static org.askucins.utils.CustomizedChromeDriver.chromeDriver
+import static org.askucins.utils.CustomizedFirefoxDriver.firefoxDriver
 import static org.askucins.utils.TestDriver.*
 
 Logger log = LoggerFactory.getLogger("GebConfig")
@@ -14,6 +15,9 @@ Logger log = LoggerFactory.getLogger("GebConfig")
 switch (System.getProperty('org.askucins.webdriver')) {
     case FIREFOX.toString():
         driver = { new FirefoxDriver() }
+        break
+    case FIREFOXHEADLESS.toString():
+        driver = { firefoxDriver([headless: true]) }
         break
     case CHROME.toString():
         driver = { chromeDriver([headless: false]) }
