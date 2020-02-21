@@ -41,16 +41,16 @@ dependencies {
 
     // Proxy https://github.com/browserup/browserup-proxy
     def versionBrowserUp = '2.0.1'
-    testImplementation "com.browserup:browserup-proxy-core:${versionBrowserUp}"
-    testImplementation "com.browserup:browserup-proxy-mitm:${versionBrowserUp}"
+    implementation "com.browserup:browserup-proxy-core:${versionBrowserUp}"
+    implementation "com.browserup:browserup-proxy-mitm:${versionBrowserUp}"
     // Proxy https://github.com/mrog/LittleProxy
-    testImplementation 'xyz.rogfam:littleproxy:2.0.0-beta-5'
+    implementation 'xyz.rogfam:littleproxy:2.0.0-beta-5'
 
     // OCR - Tesseract
     // Tesseract requires to install the library, e.g
     // [root@nighthawk tmp]# rpm -q tesseract
     // tesseract-3.04.00-3.el7.x86_64
-    testImplementation 'net.sourceforge.tess4j:tess4j:4.5.1'
+    implementation 'net.sourceforge.tess4j:tess4j:4.5.1'
 }
 
 sourceSets {
