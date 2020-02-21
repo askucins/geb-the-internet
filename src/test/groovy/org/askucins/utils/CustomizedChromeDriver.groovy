@@ -46,13 +46,13 @@ class CustomizedChromeDriver {
         if (config?.proxy) {
             // Host defined explicitly to enforce using localhost/127.0.0.1
             def seleniumProxy = ClientUtil.createSeleniumProxy(config.proxy as BrowserUpProxy, InetAddress.getByName('localhost'))
-            options.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true) //cert...
-            options.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS, true) //cert...
+            options.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true)
+            options.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS, true)
             options.setCapability(CapabilityType.PROXY, seleniumProxy)
         }
         ChromeDriverService.Builder serviceBuilder = new ChromeDriverService.Builder()
-                .usingAnyFreePort()
-                .usingDriverExecutable(new File('/opt/webdriver/chromedriver'))
+            .usingAnyFreePort()
+            .usingDriverExecutable(new File('/opt/webdriver/chromedriver'))
         new ChromeDriver(serviceBuilder.build(), options)
     }
 
