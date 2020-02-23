@@ -3,17 +3,14 @@ package org.askucins.internet.basicauth
 import com.browserup.bup.BrowserUpProxy
 import com.browserup.bup.BrowserUpProxyServer
 import com.browserup.bup.proxy.auth.AuthType
-import geb.driver.CachingDriverFactory
 import groovy.util.logging.Slf4j
 import org.askucins.internet.InternetSpec
 import org.openqa.selenium.UnhandledAlertException
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Unroll
 
 import static org.askucins.utils.CustomizedFirefoxDriver.customizedFirefoxDriver
 
-@Ignore
 @Slf4j
 class BasicAuthSpec extends InternetSpec {
     static correctDomain = System.getProperty('geb.build.baseUrl').toURI().host
@@ -28,14 +25,7 @@ class BasicAuthSpec extends InternetSpec {
         driver = customizedFirefoxDriver([proxy: proxy])
     }
 
-    def setupSpec() {
-        resetBrowser()
-        CachingDriverFactory.clearCacheAndQuitDriver()
-    }
-
     def cleanup() {
-        resetBrowser()
-        CachingDriverFactory.clearCacheAndQuitDriver()
         proxy.stop()
         driver.quit()
     }

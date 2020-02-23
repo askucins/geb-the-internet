@@ -1,5 +1,6 @@
 package org.askucins.gebbook.minimal
 
+import geb.driver.CachingDriverFactory
 import geb.spock.GebSpec
 import groovy.util.logging.Slf4j
 import spock.util.environment.RestoreSystemProperties
@@ -17,5 +18,8 @@ abstract class MinimalBaseSpec extends GebSpec {
         log.info "webdriver.gecko.driver: {}", System.getProperty('webdriver.gecko.driver')
         log.info "geb.build.reportsDir: {}", System.getProperty('geb.build.reportsDir')
         log.info "geb.env: {}", System.getProperty('geb.env')
+
+        resetBrowser()
+        CachingDriverFactory.clearCacheAndQuitDriver()
     }
 }

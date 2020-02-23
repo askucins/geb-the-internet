@@ -19,10 +19,7 @@ abstract class InternetSpec extends GebReportingSpec {
         log.info "webdriver.gecko.driver: {}", System.getProperty('webdriver.gecko.driver')
         log.info "geb.build.reportsDir: {}", System.getProperty('geb.build.reportsDir')
         log.info "geb.env: {}", System.getProperty('geb.env')
-    }
 
-    def cleanupSpec() {
-        // Based on https://github.com/geb/issues/issues/473
         resetBrowser()
         CachingDriverFactory.clearCacheAndQuitDriver()
     }
