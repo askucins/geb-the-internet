@@ -90,7 +90,7 @@ Inspired by [https://stackoverflow.com/questions/28985395/gradle-gebconfig-groov
 In ```build.gradle``` pass the gradle project property to system property:
 ```groovy
 tasks.withType(Test) {
-        systemProperty 'org.askucins.webdriver', project.findProperty('webdriver')
+    systemProperty 'org.askucins.webdriver', project.findProperty('webdriver')
     // [...]
 }
 ```
@@ -117,6 +117,40 @@ and if you want to e.g. run execute tests with firefox you may run this:
 ```bash
 gw test -Pwebdriver=firefox
 ```
+
+#### Update 2020-02-23
+Although that works just fine, one can use rather the built-in concept of GebConfig.environments, so then in ```build.gradle``` there would be:
+```groovy
+tasks.withType(Test) {
+    systemProperty 'geb.env', project.findProperty('webdriver') ?: 'chrome'
+    // [...]
+}
+```
+And then in the ```GebConfig.groovy```:
+```groovy
+environments {
+    firefox {
+        atCheckWaiting = 1
+        driver = { new FirefoxDriver() }
+    }
+    firefoxHeadless {
+        atCheckWaiting = 1
+        driver = { customizedFirefoxDriver([headless: true]) }
+    }
+    chrome {
+        driver = { customizedChromeDriver([headless: false]) }
+    }
+    chromeHeadless {
+        driver = { customizedChromeDriver([headless: true]) }
+    }
+}
+```
+
+With that setup if the gradle project property 'webdriver' is not defined that 'chrome' environment will be used, 
+while when it is defined - an appropriate environment will be picked up, e.g.
+```bash
+gw test -Pwebdriver=firefox
+```  
 
 ## Geb
 
