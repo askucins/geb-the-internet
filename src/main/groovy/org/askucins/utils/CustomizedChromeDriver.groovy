@@ -52,5 +52,4 @@ class CustomizedChromeDriver {
         ChromeDriverService.Builder serviceBuilder = new ChromeDriverService.Builder().usingAnyFreePort()
         new ChromeDriver(serviceBuilder.build(), options)
     }
-
 }

@@ -18,21 +18,22 @@ class BasicAuthSpec extends InternetSpec {
     @Shared
     BrowserUpProxy proxy
 
-    void createDriverWithAuthorizationProxy(String domain, String username, String password, AuthType authType) {
+    BrowserUpProxy runProxyWithAuthorization(String domain, String username, String password, AuthType authType) {
         proxy = new BrowserUpProxyServer()
         proxy.autoAuthorization(domain, username, password, authType)
         proxy.start()
-        driver = customizedFirefoxDriver([proxy: proxy])
+        proxy
     }
 
     def cleanup() {
-        proxy.stop()
-        driver.quit()
+        driver?.quit()
+        proxy?.stop()
     }
 
     def "should pass basic auth with correct credentials"() {
         when:
-        createDriverWithAuthorizationProxy(correctDomain, 'admin', 'admin', AuthType.BASIC)
+        proxy = runProxyWithAuthorization(correctDomain, 'admin', 'admin', AuthType.BASIC)
+        driver = customizedFirefoxDriver([proxy: proxy])
         then:
         to BasicAuthPage
         cleanup:
@@ -41,8 +42,10 @@ class BasicAuthSpec extends InternetSpec {
 
     @Unroll
     def "should not pass basic auth with incorrect credentials (D:#domain|U:#username|P:#password)"() {
+        given:
+        proxy = runProxyWithAuthorization(domain, username, password, AuthType.BASIC)
+        driver = customizedFirefoxDriver([proxy: proxy])
         when:
-        createDriverWithAuthorizationProxy(domain, username, password, AuthType.BASIC)
         to BasicAuthPage
         then:
         thrown(UnhandledAlertException)

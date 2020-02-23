@@ -20,7 +20,6 @@ class CustomizedFirefoxDriver {
             options.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS, true)
             options.setCapability(CapabilityType.PROXY, seleniumProxy)
         }
-
         new FirefoxDriver(options)
     }
 }
