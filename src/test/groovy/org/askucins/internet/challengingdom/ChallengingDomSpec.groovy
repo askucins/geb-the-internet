@@ -5,10 +5,18 @@ import groovy.util.logging.Slf4j
 import org.askucins.internet.InternetSpec
 import org.askucins.utils.ImageOcr
 import org.openqa.selenium.WebElement
+import spock.lang.Requires
 import spock.lang.Unroll
 
 @Slf4j
+@Requires({ System.getProperty('user.name') == 'askuci' })
 class ChallengingDomSpec extends InternetSpec {
+
+    def setupSpec() {
+        assert System.getProperty('org.askucins.tesseract')
+        log.info "Tesseract (ocr) data path: " + System.getProperty('org.askucins.tesseract')
+    }
+
     def "should open the challenging DOM page"() {
         expect:
         to ChallengingDomPage

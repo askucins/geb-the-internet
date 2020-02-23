@@ -2,18 +2,18 @@ package org.askucins.internet.basicauth
 
 import com.browserup.bup.BrowserUpProxy
 import com.browserup.bup.BrowserUpProxyServer
-import com.browserup.bup.client.ClientUtil
 import com.browserup.bup.proxy.auth.AuthType
+import geb.driver.CachingDriverFactory
 import groovy.util.logging.Slf4j
 import org.askucins.internet.InternetSpec
-import org.openqa.selenium.Proxy
 import org.openqa.selenium.UnhandledAlertException
-import org.openqa.selenium.firefox.FirefoxDriver
-import org.openqa.selenium.remote.CapabilityType
-import org.openqa.selenium.remote.DesiredCapabilities
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Unroll
 
+import static org.askucins.utils.CustomizedFirefoxDriver.customizedFirefoxDriver
+
+@Ignore
 @Slf4j
 class BasicAuthSpec extends InternetSpec {
     static correctDomain = System.getProperty('geb.build.baseUrl').toURI().host
@@ -25,19 +25,17 @@ class BasicAuthSpec extends InternetSpec {
         proxy = new BrowserUpProxyServer()
         proxy.autoAuthorization(domain, username, password, authType)
         proxy.start()
-        Proxy seleniumProxy = ClientUtil.createSeleniumProxy(proxy, InetAddress.getByName('localhost'))
-        DesiredCapabilities capabilities = new DesiredCapabilities()
-        capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true)
-        capabilities.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS, true)
-        capabilities.setCapability(CapabilityType.PROXY, seleniumProxy)
-        driver = new FirefoxDriver(capabilities)
+        driver = customizedFirefoxDriver([proxy: proxy])
     }
 
     def setupSpec() {
-        driver.quit()
+        resetBrowser()
+        CachingDriverFactory.clearCacheAndQuitDriver()
     }
 
     def cleanup() {
+        resetBrowser()
+        CachingDriverFactory.clearCacheAndQuitDriver()
         proxy.stop()
         driver.quit()
     }

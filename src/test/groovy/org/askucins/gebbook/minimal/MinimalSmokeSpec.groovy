@@ -1,13 +1,12 @@
 package org.askucins.gebbook.minimal
 
-import geb.Browser
 import groovy.util.logging.Slf4j
 
 @Slf4j
 class MinimalSmokeSpec extends MinimalBaseSpec {
     def "should open the Gebish page"() {
         expect:
-        Browser.drive {
+        drive {
             go "http://gebish.org"
             report "Geb-home-page"
             assert title == "Geb - Very Groovy Browser Automation"

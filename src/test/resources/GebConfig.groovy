@@ -1,25 +1,30 @@
-import org.openqa.selenium.chrome.ChromeDriver
+import geb.Browser
+import geb.navigator.Navigator
+import geb.navigator.event.NavigatorEventListenerSupport
 import org.openqa.selenium.firefox.FirefoxDriver
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
-import static org.askucins.utils.CustomizedChromeDriver.chromeDriver
-import static org.askucins.utils.CustomizedFirefoxDriver.firefoxDriver
-import static org.askucins.utils.TestDriver.*
+import static org.askucins.utils.CustomizedChromeDriver.customizedChromeDriver
+import static org.askucins.utils.CustomizedFirefoxDriver.customizedFirefoxDriver
 
-switch (System.getProperty('org.askucins.webdriver')) {
-    case FIREFOX.toString():
+Logger log = LoggerFactory.getLogger("GebConfig")
+
+environments {
+    firefox {
+        atCheckWaiting = 1
         driver = { new FirefoxDriver() }
-        break
-    case FIREFOXHEADLESS.toString():
-        driver = { firefoxDriver([headless: true]) }
-        break
-    case CHROME.toString():
-        driver = { chromeDriver([headless: false]) }
-        break
-    case CHROMEHEADLESS.toString():
-        driver = { chromeDriver([headless: true]) }
-        break
-    default:
-        driver = { new ChromeDriver() }
+    }
+    firefoxHeadless {
+        atCheckWaiting = 1
+        driver = { customizedFirefoxDriver([headless: true]) }
+    }
+    chrome {
+        driver = { customizedChromeDriver([headless: false]) }
+    }
+    chromeHeadless {
+        driver = { customizedChromeDriver([headless: true]) }
+    }
 }
 
 waiting {
@@ -34,3 +39,10 @@ waiting {
     }
 }
 
+navigatorEventListener = new NavigatorEventListenerSupport() {
+    void afterClick(Browser browser, Navigator navigator) {
+        // TODO This actually breaks those dynamic-navigator tests!!!
+        //log.debug "${navigator*.tag()} was clicked"
+        log.debug "Something was clicked!"
+    }
+}

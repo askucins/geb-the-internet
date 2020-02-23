@@ -7,8 +7,8 @@ import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.firefox.FirefoxDriver
 import spock.lang.Stepwise
 
-import static org.askucins.utils.CustomizedChromeDriver.chromeDriver
-import static org.askucins.utils.CustomizedFirefoxDriver.firefoxDriver
+import static org.askucins.utils.CustomizedChromeDriver.customizedChromeDriver
+import static org.askucins.utils.CustomizedFirefoxDriver.customizedFirefoxDriver
 
 @Slf4j
 @Stepwise
@@ -67,7 +67,7 @@ class BrowserSpec extends GebSpec {
 
     def "04 should work with browser initialized with Headless Firefox driver"() {
         when:
-        browser_ = new Browser(driver: firefoxDriver([headless: true]))
+        browser_ = new Browser(driver: customizedFirefoxDriver([headless: true]))
         then:
         browser_.driver.toString().startsWith('FirefoxDriver')
         when:
@@ -80,7 +80,7 @@ class BrowserSpec extends GebSpec {
 
     def "05 should work with browser initialized with Headless Chrome drivers"() {
         when:
-        browser_ = new Browser(driver: chromeDriver([headless: true]))
+        browser_ = new Browser(driver: customizedChromeDriver([headless: true]))
         then:
         browser_.driver.toString().startsWith('Chrome')
         when:
@@ -93,7 +93,7 @@ class BrowserSpec extends GebSpec {
 
     def "06 should work with browser initialized with Firefox driver"() {
         when:
-        browser_ = new Browser(driver: firefoxDriver([headless: false]))
+        browser_ = new Browser(driver: customizedFirefoxDriver([headless: false]))
         then:
         browser_.driver.toString().startsWith('FirefoxDriver')
         when:
@@ -106,7 +106,7 @@ class BrowserSpec extends GebSpec {
 
     def "07 should work with browser initialized with Chrome driver"() {
         when:
-        browser_ = new Browser(driver: chromeDriver([headless: false]))
+        browser_ = new Browser(driver: customizedChromeDriver([headless: false]))
         then:
         browser_.driver.toString().startsWith('Chrome')
         when:

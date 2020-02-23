@@ -25,19 +25,18 @@ class CustomizedChromeDriver {
 
     static ChromeOptions defaultChromeOptions() {
         ChromeOptions options = new ChromeOptions()
-        options.setBinary('/opt/google/chrome/google-chrome')
-        //options.addArguments("disable-gpu")
-        //options.addArguments('auto-ssl-client-auth')
+        //options.setBinary('/opt/google/chrome/google-chrome')
+        options.addArguments("disable-gpu")
+        options.addArguments('auto-ssl-client-auth')
         options.addArguments('start-maximized')
+        options.setExperimentalOption("prefs", [profile: [default_content_setting_values: [geolocation: ChromeGeoLocation.Block.value]]])
         return options
     }
 
-    static ChromeDriver chromeDriver(Map config) {
+    static ChromeDriver customizedChromeDriver(Map config) {
         ChromeOptions options = defaultChromeOptions()
         if (config.shareLocation) {
             options.setExperimentalOption("prefs", [profile: [default_content_setting_values: [geolocation: ChromeGeoLocation.Allow.value]]])
-        } else {
-            options.setExperimentalOption("prefs", [profile: [default_content_setting_values: [geolocation: ChromeGeoLocation.Block.value]]])
         }
         if (config?.headless) {
             options.addArguments('window-size=1920x1080')
@@ -50,9 +49,7 @@ class CustomizedChromeDriver {
             options.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS, true)
             options.setCapability(CapabilityType.PROXY, seleniumProxy)
         }
-        ChromeDriverService.Builder serviceBuilder = new ChromeDriverService.Builder()
-            .usingAnyFreePort()
-            .usingDriverExecutable(new File('/opt/webdriver/chromedriver'))
+        ChromeDriverService.Builder serviceBuilder = new ChromeDriverService.Builder().usingAnyFreePort()
         new ChromeDriver(serviceBuilder.build(), options)
     }
 
