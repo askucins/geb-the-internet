@@ -19,6 +19,8 @@ class CssPropertiesSpec extends GebLocalSpec {
         verifyAll {
             $('div.example-a').css('float') == 'left'
             $('div.example-b').css('background-color') == 'rgba(0, 128, 0, 1)'
+            $('div.example-a').css('visibility') == 'collapse'
+            $('div.example-b').css('visibility') == 'visible'
         }
     }
 
@@ -26,13 +28,13 @@ class CssPropertiesSpec extends GebLocalSpec {
         given:
         to CssPropertiesPage
         when:
-        $('div').css('column')
+        $('div').css('columns')
         then:
         SingleElementNavigatorOnlyMethodException e = thrown()
         and:
-        $('div')[0].css('column') == 'auto' //TODO - fix me!
+        $('div')[0].css('visibility') == 'collapse'
         and:
-        $('div')[1].css('column') == 'inherit'
+        $('div')[1].css('visibility') == 'visible'
 
     }
 }
