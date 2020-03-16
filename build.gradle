@@ -30,7 +30,7 @@ ext {
     ext {
         gebVersion = '3.3'
         webdriverVersion = '4.0.0-alpha-4'
-        chromeDriverVersion = '80.0.3987.16'
+        chromeDriverVersion = '80.0.3987.106' //16
         geckoDriverVersion = '0.26.0'
     }
 }
@@ -60,7 +60,7 @@ dependencies {
     implementation "org.seleniumhq.selenium:selenium-chrome-driver:${webdriverVersion}"
     implementation "org.seleniumhq.selenium:selenium-firefox-driver:${webdriverVersion}"
     implementation "org.seleniumhq.selenium:selenium-support:${webdriverVersion}"
-    testImplementation('com.athaydes:spock-reports:1.6.3') {
+    testImplementation('com.athaydes:spock-reports:1.7.1') {
         transitive = false // this avoids affecting your version of Groovy/Spock
     }
 
@@ -100,6 +100,7 @@ tasks.withType(Test) {
     systemProperty 'org.askucins.tesseract', '/usr/share/tesseract'
 
     testLogging {
+        showStandardStreams = true
         events 'passed', 'failed'
         exceptionFormat 'full'
 

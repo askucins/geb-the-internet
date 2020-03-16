@@ -34,10 +34,12 @@ waiting {
             retryInterval = 1
         }
         quick {
-            timeout = 1
+            timeout = 5
         }
     }
 }
+
+atCheckWaiting = true
 
 navigatorEventListener = new NavigatorEventListenerSupport() {
     void afterClick(Browser browser, Navigator navigator) {

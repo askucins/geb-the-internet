@@ -4,15 +4,13 @@
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <pattern>%d{HH:mm:ss.SSS} %-5level %logger{24} %msg%n</pattern>
         </encoder>
     </appender>
 
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!-- Daily rollover -->
             <fileNamePattern>logs/test.%d{yyyy-MM-dd}.log</fileNamePattern>
-            <!-- Keep 999 days' worth of history -->
             <maxHistory>999</maxHistory>
         </rollingPolicy>
         <encoder>
@@ -20,7 +18,7 @@
         </encoder>
     </appender>
 
-    <logger name="org.askucins" level="DEBUG">
+    <logger name="org.askucins"  additivity="true" level="DEBUG">
         <appender-ref ref="FILE"/>
         <appender-ref ref="STDOUT"/>
     </logger>
