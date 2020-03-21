@@ -133,10 +133,14 @@ class SmokeSpec extends GebLocalSpec {
             $(".a") == $(".a")
             $(".a") == $("p").not(".b")
             $("p") == $("p")
-            $("p") == $(".a").add(".b")
             $("div") != $("p")
             $(".a") != $(".b")
             $(".a").add(".b") != $(".b").add(".a")
+            // Gotcha! See also 'Composition' test.
+            $("p") == $(".a.gotcha").add(".b.gotcha")
+            // This seems to be either a spock or geb quirk.
+            // Like that right-side or the 'add is global for the whole DOM or so..
+            $("p") != $(".a").add(".b")
         }
     }
 

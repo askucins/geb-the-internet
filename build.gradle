@@ -30,7 +30,7 @@ ext {
     ext {
         gebVersion = '3.3'
         webdriverVersion = '4.0.0-alpha-4'
-        chromeDriverVersion = '80.0.3987.106' //16
+        chromeDriverVersion = '80.0.3987.16' //106
         geckoDriverVersion = '0.26.0'
     }
 }

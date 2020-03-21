@@ -12,11 +12,9 @@ Logger log = LoggerFactory.getLogger("GebConfig")
 
 environments {
     firefox {
-        atCheckWaiting = 1
         driver = { new FirefoxDriver() }
     }
     firefoxHeadless {
-        atCheckWaiting = 1
         driver = { customizedFirefoxDriver([headless: true]) }
     }
     chrome {
@@ -26,6 +24,8 @@ environments {
         driver = { customizedChromeDriver([headless: true]) }
     }
 }
+
+atCheckWaiting = true
 
 waiting {
     presets {
@@ -38,8 +38,6 @@ waiting {
         }
     }
 }
-
-atCheckWaiting = true
 
 navigatorEventListener = new NavigatorEventListenerSupport() {
     void afterClick(Browser browser, Navigator navigator) {

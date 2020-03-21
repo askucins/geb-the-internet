@@ -34,6 +34,7 @@ class BasicAuthSpec extends InternetSpec {
         when:
         proxy = runProxyWithAuthorization(correctDomain, 'admin', 'admin', AuthType.BASIC)
         driver = customizedFirefoxDriver([proxy: proxy])
+        browser.config.atCheckWaiting = false
         then:
         to BasicAuthPage
         cleanup:
@@ -45,10 +46,11 @@ class BasicAuthSpec extends InternetSpec {
         given:
         proxy = runProxyWithAuthorization(domain, username, password, AuthType.BASIC)
         driver = customizedFirefoxDriver([proxy: proxy])
+        browser.config.atCheckWaiting = false // Gotcha!
         when:
         to BasicAuthPage
         then:
-        thrown(UnhandledAlertException)
+        thrown(UnhandledAlertException) // Gotcha! If atCheckWaiting is true there is a WaitTimeoutException instead.
         cleanup:
         report "Basic Auth failed test of $tc"
 
