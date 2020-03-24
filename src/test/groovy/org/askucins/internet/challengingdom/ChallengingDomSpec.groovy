@@ -2,6 +2,7 @@ package org.askucins.internet.challengingdom
 
 import geb.error.RequiredPageContentNotPresent
 import groovy.util.logging.Slf4j
+import org.apache.commons.text.similarity.LevenshteinDistance
 import org.askucins.internet.InternetSpec
 import org.askucins.utils.ImageOcr
 import org.openqa.selenium.WebElement
@@ -34,7 +35,7 @@ class ChallengingDomSpec extends InternetSpec {
         when:
         String imageContent = ImageOcr.extractTextFromImage(extractImageFromCanvas(canvas))
         then:
-        imageContent.startsWith 'Answer: '
+        new LevenshteinDistance().apply(imageContent.substring(0, 8), 'Answer: ') <= 2
 
         cleanup:
         log.info "OCRed: " + imageContent

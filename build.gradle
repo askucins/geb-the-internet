@@ -26,7 +26,7 @@ wrapper {
 ext {
     // GebConfig environments
     drivers = ['firefox', 'firefoxHeadless', 'chrome', 'chromeHeadless']
-    defaultDriver = 'chrome'
+    defaultDriver = 'chromeHeadless'
     ext {
         gebVersion = '3.3'
         webdriverVersion = '4.0.0-alpha-4'
@@ -49,8 +49,8 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.codehaus.groovy:groovy-all:2.5.10'
-    testImplementation 'org.spockframework:spock-core:1.3-groovy-2.5', {
+    implementation 'org.codehaus.groovy:groovy-all:3.0.2'
+    testImplementation 'org.spockframework:spock-core:2.0-M2-groovy-3.0', {
         exclude module: 'groovy-all'
     }
     implementation 'org.slf4j:slf4j-api:2.0.0-alpha1'
@@ -60,9 +60,10 @@ dependencies {
     implementation "org.seleniumhq.selenium:selenium-chrome-driver:${webdriverVersion}"
     implementation "org.seleniumhq.selenium:selenium-firefox-driver:${webdriverVersion}"
     implementation "org.seleniumhq.selenium:selenium-support:${webdriverVersion}"
-    testImplementation('com.athaydes:spock-reports:1.7.1') {
-        transitive = false // this avoids affecting your version of Groovy/Spock
-    }
+    //TODO Blocked by https://github.com/renatoathaydes/spock-reports/issues/189
+    // testImplementation('com.athaydes:spock-reports:1.7.1') {
+    //     transitive = false // this avoids affecting your version of Groovy/Spock
+    // }
 
     // Proxy https://github.com/browserup/browserup-proxy
     def versionBrowserUp = '2.0.1'
@@ -77,6 +78,10 @@ dependencies {
     // tesseract-3.04.00-3.el7.x86_64
     // TODO add verification of the installed binary
     implementation 'net.sourceforge.tess4j:tess4j:4.5.1'
+
+    // Other
+    testImplementation 'org.apache.commons:commons-text:1.8'
+
 }
 
 sourceSets {
@@ -100,7 +105,7 @@ tasks.withType(Test) {
     systemProperty 'org.askucins.tesseract', '/usr/share/tesseract'
 
     testLogging {
-        showStandardStreams = true
+        showStandardStreams = false
         events 'passed', 'failed'
         exceptionFormat 'full'
 
@@ -110,6 +115,7 @@ tasks.withType(Test) {
             exceptionFormat 'full'
         }
     }
+    useJUnitPlatform()
 }
 
 String localContextPath = '/gebbook'

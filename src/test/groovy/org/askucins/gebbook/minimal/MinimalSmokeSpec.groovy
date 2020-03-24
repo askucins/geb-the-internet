@@ -7,7 +7,7 @@ class MinimalSmokeSpec extends MinimalBaseSpec {
     def "should open the Gebish page"() {
         expect:
         drive {
-            go "http://gebish.org"
+            go "https://gebish.org"
             report "Geb-home-page"
             assert title == "Geb - Very Groovy Browser Automation"
             $("div.menu a.manuals").click()
