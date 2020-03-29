@@ -30,7 +30,7 @@ atCheckWaiting = true
 waiting {
     presets {
         slow {
-            timeout = 20
+            timeout = 30
             retryInterval = 1
         }
         quick {

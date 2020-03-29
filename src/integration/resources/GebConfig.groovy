@@ -12,11 +12,11 @@ Logger log = LoggerFactory.getLogger("GebConfig")
 
 environments {
     firefox {
-        atCheckWaiting = 1
+        atCheckWaiting = true
         driver = { new FirefoxDriver() }
     }
     firefoxHeadless {
-        atCheckWaiting = 1
+        atCheckWaiting = true
         driver = { customizedFirefoxDriver([headless: true]) }
     }
     chrome {
