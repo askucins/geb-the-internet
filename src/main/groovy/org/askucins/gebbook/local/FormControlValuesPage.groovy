@@ -1,5 +1,6 @@
 package org.askucins.gebbook.local
 
+import geb.module.MultipleSelect
 import geb.module.Select
 import groovy.util.logging.Slf4j
 
@@ -15,5 +16,14 @@ class FormControlValuesPage extends GebLocalPage {
         artistText { artist.$('option', value: artist.value()).text() }
         // Except it is not :) There is API which wraps both:
         artistModule { artist.module(Select) }
+
+        genres { $('form#example-of-multiple-select').genres() }
+        genresText {
+            genres.value().collect { genres.$('option', value: it).text() }
+        }
+        // or via a module
+        genresModule { genres.module(MultipleSelect) }
+
+        pet { $('form#example-of-checkbox').pet() }
     }
 }
