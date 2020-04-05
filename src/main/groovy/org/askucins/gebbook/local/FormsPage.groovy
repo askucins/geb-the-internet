@@ -6,7 +6,7 @@ import groovy.util.logging.Slf4j
 @Slf4j
 class BasicFormModule extends Module {
     static content = {
-        basicForm { $('form#basic-form').basicForm() }
+        dslBasicForm { $('form#basic-form').basicForm() } // Gotcha! Shortcut to Navigator
     }
 }
 
@@ -15,7 +15,13 @@ class FormsPage extends GebLocalPage {
     static url = 'forms.html'
     static at = { title == 'Forms' }
     static content = {
-        basicForm { $('form#basic-form').basicForm() }
-        basicFormModule { module BasicFormModule }
+        dslBasicForm { $('form#basic-form').basicForm() } // Gotcha! Shortcut to Navigator
+        dslBasicFormModule { module BasicFormModule }
     }
 }
+
+
+// Gotcha! Please notice, that if you only read those values,
+// then you don't need those ending ().
+// However when you want to change values, you will need those parentheses,
+// because you need to return a Navigator object.

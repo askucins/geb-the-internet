@@ -8,6 +8,7 @@
 </head>
 <body>
 <h1>Sending keystrokes</h1>
+<h2>Simple inputs</h2>
 <label>
     <input class="demo" type="text"/>
 </label>
@@ -17,6 +18,10 @@
 <label>
     <input class="enabler" type="checkbox"/>
 </label>
+<label>
+    <textarea id="text-me" name="textMe"></textarea>
+</label>
+<h2>Select</h2>
 <label for="pet-select">Choose a pet:</label>
 <select class="select-me" id="pet-select" name="pets">
     <option value="">--Please choose an option--</option>
@@ -27,6 +32,7 @@
     <option value="spider">Spider</option>
     <option value="goldfish">Goldfish</option>
 </select>
+<h2>Multi select</h2>
 <label for="plant-select">Choose a plant:</label>
 <select class="select-me" id="plant-select" name="plants" multiple>
     <option value="">--Please choose an option--</option>
@@ -35,10 +41,6 @@
     <option value="pine">Pine</option>
     <option value="carrot">Carrot</option>
 </select>
-<label>
-    <textarea id="text-me" name="textMe"></textarea>
-</label>
-
 </body>
 </html>
 
