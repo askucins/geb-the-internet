@@ -1,0 +1,25 @@
+{
+  "drivers": [
+    {
+      "name": "chromedriver",
+      "platform": "linux",
+      "bit": "64",
+      "version": "81.0.4044.69",
+      "url": "https://chromedriver.storage.googleapis.com/81.0.4044.69/chromedriver_linux64.zip"
+    },
+    {
+      "name": "chromedriver",
+      "platform": "linux",
+      "bit": "64",
+      "version": "80.0.3987.106",
+      "url": "https://chromedriver.storage.googleapis.com/80.0.3987.106/chromedriver_linux64.zip"
+    },
+    {
+      "name": "chromedriver",
+      "platform": "linux",
+      "bit": "64",
+      "version": "79.0.3945.36",
+      "url": "https://chromedriver.storage.googleapis.com/79.0.3945.36/chromedriver_linux64.zip"
+    }
+  ]
+}

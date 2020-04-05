@@ -1,3 +1,7 @@
+import groovy.json.JsonBuilder
+import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
+
 // Gretty https://github.com/gretty-gradle-plugin/gretty
 buildscript {
     repositories {
@@ -35,7 +39,22 @@ ext {
     }
 }
 
+task refreshWebdriverConfiguration {
+    group = 'other'
+    description = 'refreshes configuration of webdriver binaries'
+
+    def slurper = new JsonSlurper()
+    def customWebdriver = slurper.parseText(resources.text.fromFile('webdriver-custom.json').asFile().text)
+    def remoteWebdriver = slurper.parseText(new URL('https://raw.githubusercontent.com/webdriverextensions/webdriverextensions-maven-plugin-repository/master/repository-3.0.json').text)
+    def finalWebdriver = slurper.parseText(new JsonBuilder([drivers: customWebdriver.drivers + remoteWebdriver.drivers]).toString())
+
+    def webdriverJson = new File(projectDir, 'webdriver.json')
+    webdriverJson.delete()
+    webdriverJson << JsonOutput.prettyPrint(JsonOutput.toJson(finalWebdriver))
+}
+
 webdriverBinaries {
+    driverUrlsConfiguration = resources.text.fromFile('webdriver.json')
     chromedriver {
         version = chromeDriverVersion
         fallbackTo32Bit = false
