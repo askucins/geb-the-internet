@@ -1,5 +1,6 @@
 package org.askucins.gebbook.local
 
+import geb.module.Checkbox
 import geb.module.MultipleSelect
 import geb.module.Select
 import groovy.util.logging.Slf4j
@@ -25,5 +26,15 @@ class FormControlValuesPage extends GebLocalPage {
         genresModule { genres.module(MultipleSelect) }
 
         pet { $('form#example-of-checkbox').pet() }
+        // or via a module
+        petModule { pet.module(Checkbox) }
+
+        pets { $('form#example-of-multiple-checkboxes').pet() }
+        petsOf { pets.filter(value: it)?.first()?.value() }
+        // or via a module
+        petsModule { pets.filter(value: it).module(Checkbox) }
+
+        site { $('form#example-of-radio').site() }
+
     }
 }

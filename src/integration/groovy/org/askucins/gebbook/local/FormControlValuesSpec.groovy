@@ -1,5 +1,6 @@
 package org.askucins.gebbook.local
 
+import geb.error.RequiredPageValueNotPresent
 import groovy.util.logging.Slf4j
 
 @Slf4j
@@ -142,6 +143,13 @@ class FormControlValuesSpec extends GebLocalSpec {
         and:
         genresModule.selectedText == ['Alt folk', 'Hair metal']
 
+        when: 'selecting by matching text of given option - () style'
+        genresModule.setSelected(['Alt folk', 'Hair metal'])
+        then:
+        genresModule.getSelected() == ['1', '5']
+        and:
+        genresModule.getSelectedText() == ['Alt folk', 'Hair metal']
+
         when: 'deselecting all'
         genresModule = []
         then:
@@ -162,11 +170,118 @@ class FormControlValuesSpec extends GebLocalSpec {
         when:
         pet = true
         then:
+        pet == 'dog'
+        and:
         pet() == 'dog'
 
         when:
         pet = false
         then:
         pet().value() == null
+        and:
+        pet.value() == null
+    }
+
+    def "should control 'checkbox' element by Checkbox module"() {
+        given:
+        to FormControlValuesPage
+
+        when:
+        petModule.check()
+        then:
+        petModule.isChecked()
+        and:
+        petModule() == 'dog'
+
+        when:
+        petModule.uncheck()
+        then:
+        petModule.isUnchecked()
+        and:
+        petModule.value() == null
+
+    }
+
+    def "should control multiple checkboxes"() {
+        given:
+        to FormControlValuesPage
+
+        when:
+        pets = 'dog'
+        then:
+        pets()*.value() == ['dog', null, null]
+
+        when:
+        pets = 'Canis familiaris'
+        then:
+        pets()*.value() == ['dog', null, null]
+        and:
+        pets.filter(value: 'dog').first().value()
+        and:
+        petsOf('dog')
+        and:
+        !pets.filter(value: 'lizard').first().value()
+
+        when: "This does not seem working, strange.."
+        petsOf('lizard')
+        then:
+        thrown(RequiredPageValueNotPresent)
+
+        when:
+        pets = ['dog', 'lizard']
+        then:
+        pets()*.value() == ['dog', null, 'lizard']
+
+        when:
+        pets = ['Canis familiaris', 'Lacerta']
+        then:
+        pets()*.value() == ['dog', null, 'lizard']
+
+    }
+
+    def "should control multiple checkboxes by Checkbox module"() {
+        given:
+        to FormControlValuesPage
+
+        when:
+        petsModule('dog').check()
+        then:
+        petsModule('dog').isChecked()
+    }
+
+    def "should control 'radio' element"() {
+        given:
+        to FormControlValuesPage
+
+        expect:
+        site()*.value() == [null, null]
+
+        when:
+        site = 'current'
+        then:
+        site == 'current'
+        and:
+        site()*.value() == ['current', null]
+
+        when: "Searching by label"
+        site = 'Search this site'
+        then:
+        site == 'current'
+        and:
+        site()*.value() == ['current', null]
+
+        when:
+        site = 'google'
+        then:
+        site == 'google'
+        and:
+        site()*.value() == [null, 'google']
+
+        when: "Searching by label"
+        site = 'Search Google'
+        then:
+        site == 'google'
+        and:
+        site()*.value() == [null, 'google']
     }
 }
