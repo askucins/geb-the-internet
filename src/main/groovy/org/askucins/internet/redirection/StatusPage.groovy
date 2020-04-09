@@ -1,14 +1,11 @@
 package org.askucins.internet.redirection
 
-import geb.Page
 import groovy.util.logging.Slf4j
+import org.askucins.internet.InternetPage
 
 @Slf4j
-class StatusPage extends Page {
+class StatusPage extends InternetPage {
     static url = 'status_codes'
-    static content = {
-        header { $('div#content div.example h3').first().text() }
-    }
     static at = {
         header == 'Status Codes'
     }

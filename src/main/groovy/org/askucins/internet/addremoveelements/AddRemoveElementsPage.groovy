@@ -1,10 +1,10 @@
 package org.askucins.internet.addremoveelements
 
-import geb.Page
 import groovy.util.logging.Slf4j
+import org.askucins.internet.InternetPage
 
 @Slf4j
-class AddRemoveElementsPage extends Page {
+class AddRemoveElementsPage extends InternetPage {
     static url = 'add_remove_elements/'
     static content = {
         header { $('div#content h3').first().text() }

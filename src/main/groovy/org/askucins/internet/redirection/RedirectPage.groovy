@@ -1,9 +1,9 @@
 package org.askucins.internet.redirection
 
-import geb.Page
 import groovy.util.logging.Slf4j
+import org.askucins.internet.InternetPage
 
 @Slf4j
-class RedirectPage extends Page {
+class RedirectPage extends InternetPage {
     static url = 'redirect'
 }

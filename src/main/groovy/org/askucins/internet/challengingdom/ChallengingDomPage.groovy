@@ -1,14 +1,13 @@
 package org.askucins.internet.challengingdom
 
-import geb.Page
 import groovy.util.logging.Slf4j
+import org.askucins.internet.InternetPage
 import org.openqa.selenium.InvalidArgumentException
 
 @Slf4j
-class ChallengingDomPage extends Page {
+class ChallengingDomPage extends InternetPage {
     static url = 'challenging_dom'
     static content = {
-        header { $('div#content div.example h3').first().text() }
         answerCanvasById { $('div canvas#canvas').firstElement() }
         answerCanvasByJs { js.canvas.canvas }
         /*

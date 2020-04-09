@@ -41,6 +41,4 @@ class RedirectionSpec extends InternetSpec {
         then:
         at StatusPage
     }
-
-
 }

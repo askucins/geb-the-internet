@@ -1,13 +1,12 @@
 package org.askucins.internet.basicauth
 
-import geb.Page
 import groovy.util.logging.Slf4j
+import org.askucins.internet.InternetPage
 
 @Slf4j
-class BasicAuthPage extends Page {
+class BasicAuthPage extends InternetPage {
     static url = 'basic_auth'
     static content = {
-        header { $('div#content div.example h3').first().text() }
         info { $('div#content div.example p').first().text() }
     }
     static at = {

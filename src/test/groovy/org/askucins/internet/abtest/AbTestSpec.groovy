@@ -13,7 +13,7 @@ class AbTestSpec extends InternetSpec {
         then:
         info.startsWith 'Also known as split testing.'
         cleanup:
-        log.debug "Current header variant: $headerVariant"
+        log.debug "Current header variant: $header"
     }
 
     @Unroll
@@ -23,7 +23,7 @@ class AbTestSpec extends InternetSpec {
         then:
         at AbTestPage
         cleanup:
-        log.debug "Current header variant: $headerVariant"
+        log.debug "Current header variant: $header"
         where:
         attempt << (0..10)
     }

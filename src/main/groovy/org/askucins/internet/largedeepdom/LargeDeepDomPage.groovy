@@ -1,14 +1,13 @@
 package org.askucins.internet.largedeepdom
 
-import geb.Page
 import geb.navigator.Navigator
 import groovy.util.logging.Slf4j
+import org.askucins.internet.InternetPage
 
 @Slf4j
-class LargeDeepDomPage extends Page {
+class LargeDeepDomPage extends InternetPage {
     static url = 'large'
     static content = {
-        header { $('div#content div.example h3').first().text() }
         sectionLabel { $('h4') }
         siblings { $('div#siblings') }
         siblingParent { siblings.$('div.parent', id: ~/sibling-.*/) }

@@ -9,7 +9,7 @@ import spock.util.environment.RestoreSystemProperties
 @RestoreSystemProperties
 class WindowsSpec extends InternetSpec {
     def setupSpec() {
-        //System.setProperty('org.askucins.webdriver', TestDriver.FIREFOX.toString())
+        System.setProperty('geb.env', 'firefox')
     }
 
     def "should open WindowsPage page"() {

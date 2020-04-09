@@ -1,10 +1,10 @@
 package org.askucins.internet.inputs
 
-import geb.Page
 import groovy.util.logging.Slf4j
+import org.askucins.internet.InternetPage
 
 @Slf4j
-class InputsPage extends Page {
+class InputsPage extends InternetPage {
     static url = 'inputs'
     static content = {
         header { $('div#content h3').first().text() }
