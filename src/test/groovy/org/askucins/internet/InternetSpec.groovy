@@ -3,11 +3,16 @@ package org.askucins.internet
 import geb.driver.CachingDriverFactory
 import geb.spock.GebReportingSpec
 import groovy.util.logging.Slf4j
+import org.junit.Rule
+import org.junit.rules.TestName
 import spock.util.environment.RestoreSystemProperties
 
 @Slf4j
 @RestoreSystemProperties
 abstract class InternetSpec extends GebReportingSpec {
+    @Rule
+    TestName testName = new TestName()
+
     def setupSpec() {
         assert System.getProperty('webdriver.chrome.driver')
         assert System.getProperty('webdriver.gecko.driver')
@@ -22,5 +27,9 @@ abstract class InternetSpec extends GebReportingSpec {
 
         resetBrowser()
         CachingDriverFactory.clearCacheAndQuitDriver()
+    }
+
+    def setup() {
+        log.info ">>>> ${testName.methodName}"
     }
 }
