@@ -15,7 +15,7 @@ class SizeAndLocationSpec extends GebLocalSpec {
         when:
         to SizeAndLocationPage
         then:
-        verifyAll($("div", 0)){
+        verifyAll($("div", 0)) {
             height == 20
             width == 40
             x == 20

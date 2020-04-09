@@ -284,4 +284,56 @@ class FormControlValuesSpec extends GebLocalSpec {
         and:
         site()*.value() == [null, 'google']
     }
+
+    def "should control 'text' element"() {
+        given:
+        to FormControlValuesPage
+
+        when:
+        language = "Hello, world!"
+        then:
+        language == "Hello, world!"
+        and:
+        language() == "Hello, world!"
+        and:
+        language.value() == "Hello, world!"
+
+        when:
+        description = "Foo, bar."
+        then:
+        description == "Foo, bar."
+        and:
+        description() == "Foo, bar."
+        and:
+        description.value() == "Foo, bar."
+
+        when:
+        description() << " Even more!"
+        then:
+        description == "Foo, bar. Even more!"
+    }
+
+    def "should control 'text' element by TextInput module"() {
+        given:
+        to FormControlValuesPage
+
+        when:
+        languageModule = "Hello, world!"
+        then:
+        languageModule == "Hello, world!"
+    }
+
+    def "should control 'input file' element"() {
+        given:
+        to FormControlValuesPage
+        File csv = new File(this.class.classLoader.getResource('test.csv').toURI())
+
+        when:
+        csvFile = csv.absolutePath
+        then:
+        csvFile
+        cleanup:
+        report("To be uploaded")
+
+    }
 }

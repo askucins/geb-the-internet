@@ -3,6 +3,7 @@ package org.askucins.gebbook.local
 import geb.module.Checkbox
 import geb.module.MultipleSelect
 import geb.module.Select
+import geb.module.TextInput
 import groovy.util.logging.Slf4j
 
 @Slf4j
@@ -36,5 +37,11 @@ class FormControlValuesPage extends GebLocalPage {
 
         site { $('form#example-of-radio').site() }
 
+        language { $('form#example-of-text').language() }
+        description { $('form#example-of-text').description() }
+
+        languageModule { language.module(TextInput) }
+
+        csvFile { $('form#example-of-file-upload').csvFile() }
     }
 }
