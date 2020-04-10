@@ -9,4 +9,24 @@ class DragAndDropSpec extends InternetSpec {
         expect:
         to DragAndDropPage
     }
+
+    def "should be boxes displayed"() {
+        when:
+        to DragAndDropPage
+        then:
+        label(boxLeft) == 'A'
+        and:
+        label(boxRight) == 'B'
+        and:
+        boxOfLabel('A') == boxLeft
+        and:
+        boxOfLabel('B') == boxRight
+    }
+
+    def "should drag and drop box Left over box Right"() {
+        given:
+        to DragAndDropPage
+        expect:
+        true
+    }
 }

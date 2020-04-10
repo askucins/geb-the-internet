@@ -9,5 +9,11 @@ class DragAndDropPage extends InternetPage {
     static at = {
         header == 'Drag and Drop'
     }
-    static content = {}
+    static content = {
+        boxes { $('div#columns') }
+        boxLeft { boxes.$('div#column-a') }
+        boxRight { boxes.$('div#column-b') }
+        label { it.$('header').text() }
+        boxOfLabel { boxes.$('div.column').filter(text: it) }
+    }
 }
