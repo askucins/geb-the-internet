@@ -8,7 +8,7 @@ class ImageOcr {
         imageFile.withOutputStream {
             it.write(image)
         }
-        Tesseract tesseract = new Tesseract();
+        Tesseract tesseract = new Tesseract()
         tesseract.setDatapath(System.getProperty('org.askucins.tesseract'))
         tesseract.doOCR(imageFile)
     }
