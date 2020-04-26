@@ -2,9 +2,16 @@ package org.askucins.internet.draganddrop
 
 import groovy.util.logging.Slf4j
 import org.askucins.internet.InternetSpec
+import spock.util.environment.RestoreSystemProperties
 
+@RestoreSystemProperties
 @Slf4j
 class DragAndDropSpec extends InternetSpec {
+
+    def setupSpec() {
+        System.setProperty('geb.env', 'chrome')
+    }
+
     def "should open DragAndDrop page"() {
         expect:
         to DragAndDropPage
@@ -21,6 +28,8 @@ class DragAndDropSpec extends InternetSpec {
         boxOfLabel('A') == boxLeft
         and:
         boxOfLabel('B') == boxRight
+        cleanup:
+        report 'final'
     }
 
     def "should drag and drop box Left over box Right"() {

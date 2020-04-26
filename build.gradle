@@ -101,7 +101,6 @@ dependencies {
 
     // Other
     testImplementation 'org.apache.commons:commons-text:1.8'
-
 }
 
 sourceSets {
@@ -118,10 +117,18 @@ configurations {
     integrationRuntime.extendsFrom testRuntime
 }
 
+task cleanReports(type: Delete) {
+    group = 'other'
+    description = 'removes geb reports'
+    delete 'reports'
+}
+
 tasks.withType(Test) {
     systemProperty 'geb.env', project.findProperty('webdriver') ?: defaultDriver
     systemProperty 'geb.build.reportsDir', 'reports'
-    systemProperty 'geb.build.baseUrl', 'http://the-internet.herokuapp.com/'
+    //systemProperty 'geb.build.baseUrl', 'https://the-internet.herokuapp.com/'
+    systemProperty 'geb.build.baseUrl', 'http://localhost:9292/'
+
     systemProperty 'org.askucins.tesseract', '/usr/share/tesseract'
 
     testLogging {
@@ -155,3 +162,4 @@ gretty {
     contextPath = localContextPath
     integrationTestTask = 'integrationTest'
 }
+

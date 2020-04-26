@@ -12,6 +12,10 @@ class CustomizedChromeDriver {
 /*
  See more about Chrome options in regard to content settings:
  https://developer.chrome.com/extensions/contentSettings
+ and:
+ https://github.com/GoogleChrome/chrome-launcher/blob/master/docs/chrome-flags-for-tools.md
+ and:
+ https://peter.sh/experiments/chromium-command-line-switches/
  */
 
     enum ChromeGeoLocation {
@@ -26,10 +30,15 @@ class CustomizedChromeDriver {
     static ChromeOptions defaultChromeOptions() {
         ChromeOptions options = new ChromeOptions()
         //options.setBinary('/opt/google/chrome/google-chrome')
-        options.addArguments("disable-gpu")
+        options.addArguments('disable-gpu')
         options.addArguments('auto-ssl-client-auth')
         options.addArguments('start-maximized')
-        options.setExperimentalOption("prefs", [profile: [default_content_setting_values: [geolocation: ChromeGeoLocation.Block.value]]])
+        options.addArguments('enable-automation')
+        //TODO double check if really needed...
+        //options.addArguments('no-sandbox')
+        //options.addArguments('dns-prefetch-disable')
+        //options.addArguments('disable-browser-side-navigation')
+        //options.setExperimentalOption("prefs", [profile: [default_content_setting_values: [geolocation: ChromeGeoLocation.Block.value]]])
         return options
     }
 

@@ -1,13 +1,11 @@
-Learning Geb with The Internet (version 0.57.0 - 14, July 2019)
+Learning Geb with The Internet (version 0.58.0 - 10, February 2020)
 =======
 
-# An excerpt from [https://github.com/tourdedave/the-internet](https://github.com/tourdedave/the-internet_)
+Examples of [Geb](https://gebish.org/) test automation of various popular use cases available, well... on the Internet :)
+A list of such use cases has been collected by [Dave Heaffner](https://github.com/tourdedave) 
+and it's available on [https://github.com/tourdedave/the-internet](https://github.com/tourdedave/the-internet).
 
-An example application that captures prominent and ugly functionality found on the web. Perfect for writing automated acceptance tests against.
-
-Deployed and available at [http://the-internet.herokuapp.com](http://the-internet.herokuapp.com).
-
-## Available Examples:
+# Available examples from [The Internet](https://github.com/tourdedave/the-internet)
 
 + Done! [A/B Testing](http://the-internet.herokuapp.com/abtest)
 + Done! [Add/Remove Elements](http://the-internet.herokuapp.com/add_remove_elements/)
@@ -46,6 +44,7 @@ Deployed and available at [http://the-internet.herokuapp.com](http://the-interne
 + [Notification Messages](http://the-internet.herokuapp.com/notification_message)
 + Done! [Redirect Link](http://the-internet.herokuapp.com/redirector)
 + [Secure File Download](http://the-internet.herokuapp.com/download_secure)
++ [Shadow DOM](http://the-internet.herokuapp.com/shadowdom)
 + [Shifting Content](http://the-internet.herokuapp.com/shifting_content)
 + [Slow Resources](http://the-internet.herokuapp.com/slow)
 + [Sortable Data Tables](http://the-internet.herokuapp.com/tables)
@@ -53,28 +52,31 @@ Deployed and available at [http://the-internet.herokuapp.com](http://the-interne
 + Done! [Typos](http://the-internet.herokuapp.com/typos)
 + [WYSIWYG Editor](http://the-internet.herokuapp.com/tinymce)
 
-## Getting Started with The Internet
+## Alternatively: run The Internet examples locally
+* Install [rvm](https://rvm.io/) 
+* Install ruby 2.4.1
+    ```bash
+    rvm install ruby-2.4.1
+    ```
+* Install bundler
+    ```bash
+    gem install bundler
+    ```
+* Checkout [The Internet](https://github.com/tourdedave/the-internet)
+* Install dependencies
+    ```bash
+    bundle install
+    ```
+* Start the server:
+    ```bash
+    rackup
+    ```
+* Pages will be available locally:
+    ```text
+    http://localhost:9292/url_path
+    ```
 
-Install your dependencies:
-```bash
-bundle install
-```
-
-Start the server:
-```bash
-rackup
-```
-
-Load the page you want to see in your browser:
-```text
-http://localhost:9292/url_path
-```
-    
-## Docker image
-
-- A Docker Image of the-internet ([link](https://hub.docker.com/r/gprestes/the-internet/))
-
-# Notes
+# Notes, how-tos etc.
 
 ## Gradle
 See more at: https://guides.gradle.org/building-groovy-libraries/
@@ -161,8 +163,8 @@ gw test -Pwebdriver=firefox
 
 And a quote from [The Book of Geb](https://gebish.org/manual/current/):
 > The `find()` and `$()` *methods* support the exact same argument types as the $() *function*.
-> The `filter()` , `not()` , `has()` and `hasNot()` *methods* have the same signatures - 
-> they accept: a selector string, a predicates map or both. 
+> The `filter()`, `not()`, `has()` and `hasNot()` *methods* have the same signatures - 
+> they accept: a selector string, a predicate map or both. 
 > These methods return a new navigator object that represents the new content.
 
 # Questions
