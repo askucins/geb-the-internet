@@ -68,7 +68,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.codehaus.groovy:groovy-all:3.0.2'
+    implementation 'org.codehaus.groovy:groovy-all:3.0.3'
     testImplementation 'org.spockframework:spock-core:2.0-M2-groovy-3.0', {
         exclude module: 'groovy-all'
     }
@@ -126,9 +126,6 @@ task cleanReports(type: Delete) {
 tasks.withType(Test) {
     systemProperty 'geb.env', project.findProperty('webdriver') ?: defaultDriver
     systemProperty 'geb.build.reportsDir', 'reports'
-    //systemProperty 'geb.build.baseUrl', 'https://the-internet.herokuapp.com/'
-    systemProperty 'geb.build.baseUrl', 'http://localhost:9292/'
-
     systemProperty 'org.askucins.tesseract', '/usr/share/tesseract'
 
     testLogging {

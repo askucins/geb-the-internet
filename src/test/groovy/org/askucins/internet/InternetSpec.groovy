@@ -14,16 +14,22 @@ abstract class InternetSpec extends GebReportingSpec {
     TestName testName = new TestName()
 
     def setupSpec() {
+        System.setProperty('geb.build.baseUrl', 'http://localhost:9292/')
+        //System.setProperty('geb.build.baseUrl', 'https://the-internet.herokuapp.com/')
+
         assert System.getProperty('webdriver.chrome.driver')
         assert System.getProperty('webdriver.gecko.driver')
         assert System.getProperty('geb.build.reportsDir')
         assert System.getProperty('geb.env')
+        assert System.getProperty('geb.build.baseUrl')
 
         log.info "=".padLeft(78, '=')
         log.info "webdriver.chrome.driver: {}", System.getProperty('webdriver.chrome.driver')
         log.info "webdriver.gecko.driver: {}", System.getProperty('webdriver.gecko.driver')
         log.info "geb.build.reportsDir: {}", System.getProperty('geb.build.reportsDir')
         log.info "geb.env: {}", System.getProperty('geb.env')
+        log.info "geb.env: {}", System.getProperty('geb.build.baseUrl')
+
 
         log.info "About to reset the browser..."
         resetBrowser()

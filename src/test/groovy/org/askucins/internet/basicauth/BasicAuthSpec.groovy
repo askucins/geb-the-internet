@@ -8,13 +8,15 @@ import org.askucins.internet.InternetSpec
 import org.openqa.selenium.UnhandledAlertException
 import spock.lang.Shared
 import spock.lang.Unroll
+import spock.util.environment.RestoreSystemProperties
 
 import static org.askucins.utils.CustomizedFirefoxDriver.customizedFirefoxDriver
 
+@RestoreSystemProperties
 @Slf4j
 class BasicAuthSpec extends InternetSpec {
-    static correctDomain = System.getProperty('geb.build.baseUrl').toURI().host
-
+    @Shared
+    String correctDomain
     @Shared
     BrowserUpProxy proxy
 
@@ -23,6 +25,12 @@ class BasicAuthSpec extends InternetSpec {
         proxy.autoAuthorization(domain, username, password, authType)
         proxy.start()
         proxy
+    }
+
+    def setupSpec() {
+        System.setProperty('geb.build.baseUrl', 'http://the-internet.herokuapp.com/') //GOTCHA proxy over http!
+        correctDomain = System.getProperty('geb.build.baseUrl').toURI().host
+        log.info "Reference host: {}", correctDomain
     }
 
     def cleanup() {
