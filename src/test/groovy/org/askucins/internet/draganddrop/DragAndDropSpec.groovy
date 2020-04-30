@@ -2,6 +2,7 @@ package org.askucins.internet.draganddrop
 
 import groovy.util.logging.Slf4j
 import org.askucins.internet.InternetSpec
+import org.openqa.selenium.interactions.Actions
 import spock.util.environment.RestoreSystemProperties
 
 @RestoreSystemProperties
@@ -35,7 +36,8 @@ class DragAndDropSpec extends InternetSpec {
     def "should drag and drop box Left over box Right"() {
         given:
         to DragAndDropPage
-        expect:
-        true
+        def actions = new Actions(driver)
+        when:
+        WebElement 
     }
 }
