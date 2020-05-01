@@ -10,10 +10,11 @@ class DragAndDropPage extends InternetPage {
         header == 'Drag and Drop'
     }
     static content = {
+        headerNav { $('div#content div.example h3') }
         boxes { $('div#columns') }
-        boxLeft { boxes.$('div#column-a') }
-        boxRight { boxes.$('div#column-b') }
-        label { it.$('header').text() }
         boxOfLabel { boxes.$('div.column').filter(text: it) }
+        boxLeft { $('div#column-a') }
+        boxRight { $('div#column-b') }
+        label { it.$('header').text() }
     }
 }

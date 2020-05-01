@@ -30,7 +30,6 @@ abstract class InternetSpec extends GebReportingSpec {
         log.info "geb.env: {}", System.getProperty('geb.env')
         log.info "geb.env: {}", System.getProperty('geb.build.baseUrl')
 
-
         log.info "About to reset the browser..."
         resetBrowser()
         log.info "About to clear cache and quit the running driver..."

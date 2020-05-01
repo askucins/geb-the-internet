@@ -29,16 +29,16 @@ class CustomizedChromeDriver {
 
     static ChromeOptions defaultChromeOptions() {
         ChromeOptions options = new ChromeOptions()
-        //options.setBinary('/opt/google/chrome/google-chrome')
-        options.addArguments('disable-gpu')
         options.addArguments('auto-ssl-client-auth')
-        options.addArguments('start-maximized')
         options.addArguments('enable-automation')
+        options.addArguments('disable-gpu')
+        //options.addArguments('start-maximized')
+        options.addArguments('window-position=0,0')
+        options.addArguments('window-size=1920,1080')
         //TODO double check if really needed...
         //options.addArguments('no-sandbox')
         //options.addArguments('dns-prefetch-disable')
         //options.addArguments('disable-browser-side-navigation')
-        //options.setExperimentalOption("prefs", [profile: [default_content_setting_values: [geolocation: ChromeGeoLocation.Block.value]]])
         return options
     }
 
@@ -48,8 +48,7 @@ class CustomizedChromeDriver {
             options.setExperimentalOption("prefs", [profile: [default_content_setting_values: [geolocation: ChromeGeoLocation.Allow.value]]])
         }
         if (config?.headless) {
-            options.addArguments('window-size=1920x1080')
-            options.addArguments("headless")
+            options.addArguments('headless')
         }
         if (config?.proxy) {
             // Host defined explicitly to enforce using localhost/127.0.0.1
