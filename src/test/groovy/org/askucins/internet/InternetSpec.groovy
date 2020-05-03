@@ -14,8 +14,8 @@ abstract class InternetSpec extends GebReportingSpec {
     TestName testName = new TestName()
 
     def setupSpec() {
-        //System.setProperty('geb.build.baseUrl', 'http://localhost:9292/')
-        System.setProperty('geb.build.baseUrl', 'https://the-internet.herokuapp.com/')
+        System.setProperty('geb.build.baseUrl', 'http://localhost:9292/')
+        //System.setProperty('geb.build.baseUrl', 'https://the-internet.herokuapp.com/')
 
         assert System.getProperty('webdriver.chrome.driver')
         assert System.getProperty('webdriver.gecko.driver')

@@ -34,26 +34,23 @@ class DragAndDropSpec extends InternetSpec {
         to DragAndDropPage
         def actions = new Actions(driver)
         and:
-        WebElement leftBoxElem = boxLeft.firstElement()
-        WebElement rightBoxElem = boxRight.firstElement()
-        assert leftBoxElem.text == 'A'
-        assert rightBoxElem.text == 'B'
+        WebElement source = boxLeft.firstElement()
+        WebElement target = boxRight.firstElement()
+        assert source.text == 'A'
+        assert target.text == 'B'
+        log.info "Before: Left:{}, Right:{}", source.text, target.text
         and:
-        def switchBoxes = actions
-            .moveToElement(headerNav.firstElement())
-            .dragAndDrop(leftBoxElem, rightBoxElem)
-            .click(rightBoxElem)
-            .build()
+        def switchBoxes = actions.dragAndDrop(source, target).build()
         when:
         switchBoxes.perform()
-        sleep(5000)
+        sleep 5000
         then:
-        leftBoxElem.text == 'B'
+        source.text == 'B'
         and:
-        rightBoxElem.text == 'A'
+        target.text == 'A'
         cleanup:
         report "final-by-actions"
-        log.info "Left:{}, Right:{}", boxLeft.text, boxRight.text
+        log.info "After: Left:{}, Right:{}", source.text, target.text
     }
 
     def "should drag and drop box Left over box Right by 'interact'"() {
@@ -61,10 +58,12 @@ class DragAndDropSpec extends InternetSpec {
         to DragAndDropPage
         assert label(boxLeft) == 'A'
         assert label(boxRight) == 'B'
+        log.info "Before: Left:{}, Right:{}", label(boxLeft), label(boxRight)
         when:
         interact {
             dragAndDrop(boxLeft, boxRight)
         }
+        sleep 5000
         then:
         label(boxLeft) == 'B'
         and:
@@ -72,7 +71,7 @@ class DragAndDropSpec extends InternetSpec {
 
         cleanup:
         report "final-by-interact"
-        log.info "Left:{}, Right:{}", boxLeft.text, boxRight.text
+        log.info "After: Left:{}, Right:{}", label(boxLeft), label(boxRight)
 
     }
 
@@ -81,23 +80,27 @@ class DragAndDropSpec extends InternetSpec {
         to DragAndDropPage
         assert label(boxLeft) == 'A'
         assert label(boxRight) == 'B'
-
+        log.info "Before: Left:{}, Right:{}", label(boxLeft), label(boxRight)
+        and:
         def source = new Point(boxLeft.x + boxLeft.width.intdiv(2), boxLeft.y + boxLeft.height.intdiv(2))
         def target = new Point(boxRight.x + boxRight.width.intdiv(2), boxRight.y + boxRight.height.intdiv(2))
         def offset = new Point(target.x - source.x, target.y - source.y)
         when:
         interact {
+            moveToElement(boxLeft)
             clickAndHold(boxLeft)
-            moveToElement(boxRight)
+            moveByOffset(offset.x, offset.y)
             release()
         }
+        //sleep 5000
         then:
-        label(boxes.$('div#column-a')) == 'B'
+        label(boxLeft) == 'B'
         and:
-        label(boxes.$('div#column-b')) == 'A'
+        label(boxRight) == 'A'
 
         cleanup:
         report "final-by-offset"
         log.info "Source: {}, Target: {}, Offset: {}", source, target, offset
+        log.info "After: Left:{}, Right:{}", label(boxLeft), label(boxRight)
     }
 }
