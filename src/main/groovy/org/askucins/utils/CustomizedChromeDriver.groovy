@@ -31,7 +31,10 @@ class CustomizedChromeDriver {
         ChromeOptions options = new ChromeOptions()
         options.addArguments('auto-ssl-client-auth')
         options.addArguments('enable-automation')
+        options.addArguments('disable-dev-shm-usage')
+        options.addArguments('disable-extensions')
         options.addArguments('disable-gpu')
+        options.addArguments('log-level=3')
         //options.addArguments('start-maximized')
         options.addArguments('window-position=0,0')
         options.addArguments('window-size=1920,1080')
@@ -39,6 +42,8 @@ class CustomizedChromeDriver {
         //options.addArguments('no-sandbox')
         //options.addArguments('dns-prefetch-disable')
         //options.addArguments('disable-browser-side-navigation')
+
+        options.setExperimentalOption("prefs", [profile: [default_content_setting_values: [geolocation: ChromeGeoLocation.Block.value]]])
         return options
     }
 
