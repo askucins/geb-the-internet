@@ -13,8 +13,8 @@ class DragAndDropPage extends InternetPage {
         headerNav { $('div#content div.example h3') }
         boxes { $('div#columns') }
         boxOfLabel { boxes.$('div.column').filter(text: it) }
-        boxLeft { $('div#column-a') }
-        boxRight { $('div#column-b') }
+        boxLeft { $('div.column#column-a', draggable: 'true') }
+        boxRight { $('div.column#column-b', draggable: 'true') }
         label { it.$('header').text() }
     }
 }

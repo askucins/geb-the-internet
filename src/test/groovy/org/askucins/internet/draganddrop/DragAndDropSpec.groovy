@@ -66,11 +66,17 @@ class DragAndDropSpec extends InternetSpec {
         log.info "Before: Left:{}, Right:{}", label(boxLeft), label(boxRight)
         when:
         interact {
-            //moveToElement(boxRight)
-            //moveToElement(boxLeft)
-            dragAndDrop(boxLeft, boxRight)
+            //dragAndDrop(boxLeft, boxRight)
+            moveToElement(boxLeft)
+            pause(1000)
+            clickAndHold(boxLeft)
+            pause(1000)
+            moveToElement(boxRight)
+            //moveByOffset(boxRight.firstElement().location.x, boxRight.firstElement().location.y)
+            pause(1000)
+            release()
+            pause(1000)
         }
-        sleep 5000
         then:
         label(boxLeft) == 'B'
         and:
