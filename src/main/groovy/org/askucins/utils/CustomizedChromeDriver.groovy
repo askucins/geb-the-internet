@@ -30,7 +30,6 @@ class CustomizedChromeDriver {
     static ChromeOptions defaultChromeOptions() {
         ChromeOptions options = new ChromeOptions()
         options.addArguments('auto-ssl-client-auth')
-        options.addArguments('enable-automation')
         options.addArguments('disable-dev-shm-usage')
         options.addArguments('disable-extensions')
         options.addArguments('disable-gpu')
@@ -38,12 +37,21 @@ class CustomizedChromeDriver {
         //options.addArguments('start-maximized')
         options.addArguments('window-position=0,0')
         options.addArguments('window-size=1920,1080')
+        //workarounds for that high DPI odd behaviour
+        //options.addArguments('device-scale-factor=2')
+        //options.addArguments('ash-host-window-bound=1920x1080*4')
+        options.addArguments('force-device-scale-factor=2')
         //TODO double check if really needed...
         //options.addArguments('no-sandbox')
         //options.addArguments('dns-prefetch-disable')
         //options.addArguments('disable-browser-side-navigation')
 
-        options.setExperimentalOption("prefs", [profile: [default_content_setting_values: [geolocation: ChromeGeoLocation.Block.value]]])
+        //options.addArguments('enable-automation')
+        options.setExperimentalOption('excludeSwitches', ['enable-automation'])
+        options.setExperimentalOption('useAutomationExtension', true)
+
+        options.setExperimentalOption('prefs', [profile: [default_content_setting_values: [geolocation: ChromeGeoLocation.Block.value]]])
+
         return options
     }
 

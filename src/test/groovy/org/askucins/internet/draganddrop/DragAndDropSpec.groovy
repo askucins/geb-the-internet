@@ -6,6 +6,11 @@ import org.openqa.selenium.Point
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.interactions.Actions
 
+import java.awt.*
+import java.awt.event.InputEvent
+
+import static org.askucins.internet.InternetPage.centerOf
+
 @Slf4j
 class DragAndDropSpec extends InternetSpec {
 
@@ -61,6 +66,8 @@ class DragAndDropSpec extends InternetSpec {
         log.info "Before: Left:{}, Right:{}", label(boxLeft), label(boxRight)
         when:
         interact {
+            //moveToElement(boxRight)
+            //moveToElement(boxLeft)
             dragAndDrop(boxLeft, boxRight)
         }
         sleep 5000
@@ -82,8 +89,8 @@ class DragAndDropSpec extends InternetSpec {
         assert label(boxRight) == 'B'
         log.info "Before: Left:{}, Right:{}", label(boxLeft), label(boxRight)
         and:
-        def source = new Point(boxLeft.x + boxLeft.width.intdiv(2), boxLeft.y + boxLeft.height.intdiv(2))
-        def target = new Point(boxRight.x + boxRight.width.intdiv(2), boxRight.y + boxRight.height.intdiv(2))
+        def source = centerOf(boxLeft)
+        def target = centerOf(boxRight)
         def offset = new Point(target.x - source.x, target.y - source.y)
         when:
         interact {
@@ -92,7 +99,41 @@ class DragAndDropSpec extends InternetSpec {
             moveByOffset(offset.x, offset.y)
             release()
         }
-        //sleep 5000
+        sleep 1000
+        then:
+        label(boxLeft) == 'B'
+        and:
+        label(boxRight) == 'A'
+
+        cleanup:
+        report "final-by-offset"
+        log.info "Source: {}, Target: {}, Offset: {}", source, target, offset
+        log.info "After: Left:{}, Right:{}", label(boxLeft), label(boxRight)
+    }
+
+    def "should drag and drop box Left over box Right by 'robot'"() {
+        given:
+        to DragAndDropPage
+        assert label(boxLeft) == 'A'
+        assert label(boxRight) == 'B'
+        log.info "Before: Left:{}, Right:{}", label(boxLeft), label(boxRight)
+        and:
+        Robot robot = new Robot()
+        Integer scale = 2 // dpi?
+        Integer addressBarOffset = 75 // address bar etc..
+        Integer sleepTime = 1000
+        def source = centerOf(boxLeft, addressBarOffset, scale)
+        def target = centerOf(boxRight, addressBarOffset, scale)
+        def offset = new Point(target.x - source.x, target.y - source.y)
+        when:
+        robot.mouseMove(source.x, source.y)
+        sleep sleepTime
+        robot.mousePress(InputEvent.BUTTON1_DOWN_MASK)
+        sleep sleepTime
+        robot.mouseMove(target.x, target.y)
+        sleep sleepTime
+        robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK)
+        sleep sleepTime
         then:
         label(boxLeft) == 'B'
         and:
