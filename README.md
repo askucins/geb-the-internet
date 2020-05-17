@@ -16,7 +16,7 @@ and it's available on [https://github.com/tourdedave/the-internet](https://githu
 + [Context Menu](http://the-internet.herokuapp.com/context_menu)
 + [Digest Authentication](http://the-internet.herokuapp.com/digest_auth) (user and pass: admin)
 + [Disappearing Elements](http://the-internet.herokuapp.com/disappearing_elements)
-+ W-I-P [Drag and Drop](http://the-internet.herokuapp.com/drag_and_drop)
++ Done? [Drag and Drop](http://the-internet.herokuapp.com/drag_and_drop) - problem...
 + [Dropdown](http://the-internet.herokuapp.com/dropdown)
 + [Dynamic Content](http://the-internet.herokuapp.com/dynamic_content)
 + [Dynamic Controls](http://the-internet.herokuapp.com/dynamic_controls)
