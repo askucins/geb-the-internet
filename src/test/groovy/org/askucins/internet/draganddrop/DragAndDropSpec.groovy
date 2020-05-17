@@ -5,14 +5,19 @@ import org.askucins.internet.InternetSpec
 import org.openqa.selenium.Point
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.interactions.Actions
+import spock.util.environment.RestoreSystemProperties
 
 import java.awt.*
 import java.awt.event.InputEvent
 
 import static org.askucins.internet.InternetPage.centerOf
 
+@RestoreSystemProperties
 @Slf4j
 class DragAndDropSpec extends InternetSpec {
+    def setupSpec() {
+        //System.setProperty('webdriver.chrome.verboseLogging', 'true')
+    }
 
     def "should open DragAndDrop page"() {
         expect:

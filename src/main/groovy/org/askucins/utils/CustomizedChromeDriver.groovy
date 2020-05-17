@@ -33,14 +33,14 @@ class CustomizedChromeDriver {
         options.addArguments('disable-dev-shm-usage')
         options.addArguments('disable-extensions')
         options.addArguments('disable-gpu')
-        options.addArguments('log-level=3')
+        options.addArguments('log-level=0') //minimal log level; INFO = 0, WARNING = 1, LOG_ERROR = 2, LOG_FATAL = 3
         //options.addArguments('start-maximized')
         options.addArguments('window-position=0,0')
         options.addArguments('window-size=1920,1080')
         //workarounds for that high DPI odd behaviour
         //options.addArguments('device-scale-factor=2')
         //options.addArguments('ash-host-window-bound=1920x1080*4')
-        options.addArguments('force-device-scale-factor=2')
+        //options.addArguments('force-device-scale-factor=2') //!
         //TODO double check if really needed...
         //options.addArguments('no-sandbox')
         //options.addArguments('dns-prefetch-disable')

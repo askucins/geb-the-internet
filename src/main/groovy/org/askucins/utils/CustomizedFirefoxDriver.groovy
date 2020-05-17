@@ -2,11 +2,14 @@ package org.askucins.utils
 
 import com.browserup.bup.BrowserUpProxy
 import com.browserup.bup.client.ClientUtil
+import groovy.util.logging.Slf4j
 import org.openqa.selenium.firefox.FirefoxDriver
 import org.openqa.selenium.firefox.FirefoxOptions
 import org.openqa.selenium.remote.CapabilityType
 
+@Slf4j
 class CustomizedFirefoxDriver {
+
     static FirefoxDriver customizedFirefoxDriver(Map config) {
         FirefoxOptions options = new FirefoxOptions()
         if (config?.headless) {
