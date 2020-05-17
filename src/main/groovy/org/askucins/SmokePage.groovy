@@ -10,7 +10,7 @@ class SmokePage extends Page {
         title == 'httpstat.us'
     }
     static content = {
-        titleContent { $('div#content header h1#title') }
+        titleInContent { $('div#content header h1#title') }
         /*
         <div id='content'>
             <header>

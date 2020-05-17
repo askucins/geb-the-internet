@@ -30,6 +30,7 @@ wrapper {
 idea {
     module {
         downloadJavadoc = true
+        downloadSources = true
     }
 }
 
@@ -39,7 +40,7 @@ ext {
     defaultDriver = 'chrome'
     ext {
         gebVersion = '3.4'
-        webdriverVersion = '4.0.0-alpha-4'
+        webdriverVersion = '4.0.0-alpha-4' //TODO tests fail with 4.0.0-alpha-5!
         chromeDriverVersion = '81.0.4044.138'
         geckoDriverVersion = '0.26.0'
     }

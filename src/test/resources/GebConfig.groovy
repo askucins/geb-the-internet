@@ -46,3 +46,6 @@ navigatorEventListener = new NavigatorEventListenerSupport() {
         log.debug "Something was clicked!"
     }
 }
+
+//cacheDriver = false
+//cacheDriverPerThread = true
