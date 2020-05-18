@@ -1,7 +1,7 @@
 package org.askucins.gebbook.local
 
-import groovy.util.logging.Slf4j
 import geb.Browser
+import groovy.util.logging.Slf4j
 
 @Slf4j
 class PageWithDivSpec extends GebLocalSpec {
@@ -17,8 +17,22 @@ class PageWithDivSpec extends GebLocalSpec {
         expect:
         Browser.drive {
             to PageWithDivPage
-            assert theDiv.text() == 'a' // as a property
-            assert theDiv().text() == 'a' // as a method
+            assert theDiv.text() == 'aa'
         }.quit()
+    }
+
+    def "should work with various content templates"() {
+        when:
+        to PageWithDivPage
+        then:
+        theDiv.text() == 'aa' // as a property
+        and:
+        theDiv().text() == 'aa' // as a method
+        and:
+        theDivText == 'aa'
+        and:
+        theDivTemplate('a').text() == 'aa' // returns Navigator
+        and:
+        theDivTemplateText('a') == 'aa' //returns text
     }
 }
