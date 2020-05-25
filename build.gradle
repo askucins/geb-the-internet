@@ -41,7 +41,7 @@ ext {
     ext {
         gebVersion = '3.4'
         webdriverVersion = '4.0.0-alpha-4' //TODO tests fail with 4.0.0-alpha-5!
-        chromeDriverVersion = '81.0.4044.138'
+        chromeDriverVersion = '83.0.4103.39'
         geckoDriverVersion = '0.26.0'
     }
 }
@@ -167,3 +167,11 @@ gretty {
     integrationTestTask = 'integrationTest'
 }
 
+task removeChromedriverInstances(type: Exec) {
+    ignoreExitValue true
+
+    commandLine "pgrep", "-f", "webdriver"
+    commandLine "pgrep", "-f", "chromedriver"
+    commandLine "pkill", "-f", "webdriver"
+    commandLine "pkill", "-f", "chromedriver"
+}
