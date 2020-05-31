@@ -28,6 +28,11 @@ class PageWithDivPage extends GebLocalPage {
 
         valueCached(cache: true) { value }
         valueNotCached { value }
+
+        targetPage(to: [PageWithDivPageA, PageWithDivPageB, PageWithDivPageC]) { $('div#pages p.target-page a') }
+        targetPageA(to: PageWithDivPageA) { $('div#pages p.target-page#page-a a') }
+        targetPageB(to: PageWithDivPageB) { $('div#pages p.target-page#page-b a') }
+        targetPageC(to: PageWithDivPageC) { $('div#pages p.target-page#page-c a') }
     }
     static at = {
         title == 'Page with div'
@@ -38,4 +43,9 @@ class PageWithDivPage extends GebLocalPage {
     def divId = 'a'
 
     def divId() { 'a' }
+
+    def navigateToTargetPageOf(Integer n) {
+        targetPage[(n)].click()
+        browser.page
+    }
 }
