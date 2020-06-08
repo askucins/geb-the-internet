@@ -93,7 +93,7 @@ dependencies {
     // }
 
     // Proxy https://github.com/browserup/browserup-proxy
-    def versionBrowserUp = '2.1.0'
+    def versionBrowserUp = '2.1.1'
     implementation "com.browserup:browserup-proxy-core:${versionBrowserUp}"
     implementation "com.browserup:browserup-proxy-mitm:${versionBrowserUp}"
     // Proxy https://github.com/mrog/LittleProxy
