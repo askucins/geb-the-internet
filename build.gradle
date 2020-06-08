@@ -75,7 +75,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.codehaus.groovy:groovy-all:3.0.3'
+    implementation 'org.codehaus.groovy:groovy-all:3.0.4'
     testImplementation 'org.spockframework:spock-core:2.0-M2-groovy-3.0', {
         exclude module: 'groovy-all'
     }
