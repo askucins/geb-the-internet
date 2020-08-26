@@ -2,13 +2,14 @@ import groovy.json.JsonBuilder
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 
-// Gretty https://github.com/gretty-gradle-plugin/gretty
 buildscript {
     repositories {
         jcenter()
     }
     dependencies {
+        // Gretty https://github.com/gretty-gradle-plugin/gretty
         classpath 'org.gretty:gretty:+'
+        classpath 'org.codehaus.groovy:groovy-all:3.0.5'
     }
 }
 
@@ -22,16 +23,16 @@ plugins {
 
 apply plugin: 'org.gretty'
 
-wrapper {
-    gradleVersion = '6.5.1'
-    distributionType = Wrapper.DistributionType.ALL
-}
-
 idea {
     module {
         downloadJavadoc = true
         downloadSources = true
     }
+}
+
+wrapper {
+    gradleVersion = '6.6.1'
+    distributionType = Wrapper.DistributionType.ALL
 }
 
 ext {
@@ -40,33 +41,15 @@ ext {
     defaultDriver = 'chrome'
     ext {
         gebVersion = '3.4'
-        webdriverVersion = '4.0.0-alpha-4' //TODO tests fail with 4.0.0-alpha-5!
-        chromeDriverVersion = '83.0.4103.39'
-        geckoDriverVersion = '0.26.0'
+        webdriverVersion = '4.0.0-alpha-6'
+        chromeDriverVersion = {
+            (project.findProperty('qa.chromium') != null)
+                ? '84.0.4147.30'
+                : '85.0.4183.38'
+            //TODO this doesn't work right now !!
+        }()
+        geckoDriverVersion = '0.27.0'
     }
-}
-
-task refreshWebdriverConfiguration {
-    group = 'other'
-    description = 'refreshes configuration of webdriver binaries'
-
-    def slurper = new JsonSlurper()
-    def customWebdriver = slurper.parseText(resources.text.fromFile('webdriver-custom.json').asFile().text)
-    def remoteWebdriver = slurper.parseText(new URL('https://raw.githubusercontent.com/webdriverextensions/webdriverextensions-maven-plugin-repository/master/repository-3.0.json').text)
-    def finalWebdriver = slurper.parseText(new JsonBuilder([drivers: customWebdriver.drivers + remoteWebdriver.drivers]).toString())
-
-    def webdriverJson = new File(projectDir, 'webdriver.json')
-    webdriverJson.delete()
-    webdriverJson << JsonOutput.prettyPrint(JsonOutput.toJson(finalWebdriver))
-}
-
-webdriverBinaries {
-    driverUrlsConfiguration = resources.text.fromFile('webdriver.json')
-    chromedriver {
-        version = chromeDriverVersion
-        fallbackTo32Bit = false
-    }
-    geckodriver geckoDriverVersion
 }
 
 repositories {
@@ -75,7 +58,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.codehaus.groovy:groovy-all:3.0.4'
+    implementation 'org.codehaus.groovy:groovy-all:3.0.5'
     testImplementation 'org.spockframework:spock-core:2.0-M2-groovy-3.0', {
         exclude module: 'groovy-all'
     }
@@ -165,6 +148,33 @@ check.dependsOn integrationTest
 gretty {
     contextPath = localContextPath
     integrationTestTask = 'integrationTest'
+}
+
+webdriverBinaries {
+    driverUrlsConfiguration = resources.text.fromFile('webdriver.json')
+    chromedriver {
+        version = chromeDriverVersion
+        fallbackTo32Bit = false
+    }
+    geckodriver geckoDriverVersion
+}
+
+task refreshWebdriverConfiguration {
+    group = 'other'
+    description = 'refreshes configuration of webdriver binaries'
+
+    def slurper = new JsonSlurper()
+    def customWebdriver = slurper.parseText(resources.text.fromFile('webdriver-custom.json').asFile().text)
+    try {
+        def remoteWebdriver = slurper.parseText(new URL('https://raw.githubusercontent.com/webdriverextensions/webdriverextensions-maven-plugin-repository/master/repository-3.0.json').text)
+        def finalWebdriver = slurper.parseText(new JsonBuilder([drivers: customWebdriver.drivers + remoteWebdriver.drivers]).toString())
+        def webdriverJson = new File(projectDir, 'webdriver.json')
+        webdriverJson.delete()
+        webdriverJson << JsonOutput.prettyPrint(JsonOutput.toJson(finalWebdriver))
+    } catch (e) {
+        logger.error("Unable to refresh webdriver versions configuration!")
+        logger.error(e.asString())
+    }
 }
 
 task removeChromedriverInstances(type: Exec) {
