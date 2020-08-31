@@ -37,7 +37,7 @@ wrapper {
 ext {
     // GebConfig environments
     drivers = ['firefox', 'firefoxHeadless', 'chrome', 'chromeHeadless', 'chromeBare']
-    defaultDriver = 'chromeBare'
+    defaultDriver = 'chromeHeadless'
     ext {
         gebVersion = '3.4'
         webdriverVersion = '4.0.0-alpha-6'
@@ -47,7 +47,7 @@ ext {
                 : '85.0.4183.38'
             //TODO this doesn't work right now !!
         }()
-        geckoDriverVersion = '0.27.0'
+        geckoDriverVersion = '0.26.0'
     }
 }
 
@@ -66,13 +66,17 @@ dependencies {
     implementation 'ch.qos.logback:logback-classic:1.3.0-alpha5'
     implementation "org.gebish:geb-core:${gebVersion}"
     testImplementation "org.gebish:geb-spock:${gebVersion}"
-    implementation "org.seleniumhq.selenium:selenium-chrome-driver:${webdriverVersion}"
-    implementation "org.seleniumhq.selenium:selenium-firefox-driver:${webdriverVersion}"
+    implementation 'io.netty:netty-buffer:4.1.51.Final'
+    implementation ("org.seleniumhq.selenium:selenium-chrome-driver:${webdriverVersion}") {
+        exclude group: 'io.netty'
+    }
+    implementation ("org.seleniumhq.selenium:selenium-firefox-driver:${webdriverVersion}") {
+        exclude group: 'io.netty'
+    }
     //TODO It still throws an error...
-    //implementation "org.seleniumhq.selenium:selenium-support:${webdriverVersion}"
-    //testImplementation('com.athaydes:spock-reports:2.0-RC2') {
-    //    transitive = false
-    //}
+    testImplementation('com.athaydes:spock-reports:2.0-RC2') {
+        transitive = false
+    }
 
     // Proxy https://github.com/browserup/browserup-proxy
     def versionBrowserUp = '2.1.1'
@@ -176,11 +180,30 @@ task refreshWebdriverConfiguration {
     }
 }
 
-task removeChromedriverInstances(type: Exec) {
-    ignoreExitValue true
+task removeChromedriverInstances() {
+    group = 'other'
+    description = 'removes hanging instances of webdriver'
 
-    commandLine "pgrep", "-f", "webdriver"
-    commandLine "pgrep", "-f", "chromedriver"
-    commandLine "pkill", "-f", "webdriver"
-    commandLine "pkill", "-f", "chromedriver"
+    def doRemoveWebdriverInstances = {
+        exec {
+            ignoreExitValue true
+            commandLine "pgrep", "-f", "webdriver"
+        }
+        exec {
+            ignoreExitValue true
+            commandLine "pgrep", "-f", "chromedriver"
+        }
+        exec {
+            ignoreExitValue true
+            commandLine "pkill", "-f", "webdriver"
+        }
+        exec {
+            ignoreExitValue true
+            commandLine "pkill", "-f", "chromedriver"
+        }
+    }
+
+    doLast {
+        doRemoveWebdriverInstances()
+    }
 }

@@ -2,7 +2,6 @@ import geb.Browser
 import geb.navigator.Navigator
 import geb.navigator.event.NavigatorEventListenerSupport
 import org.openqa.selenium.chrome.ChromeDriver
-import org.openqa.selenium.firefox.FirefoxDriver
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
@@ -13,7 +12,7 @@ Logger log = LoggerFactory.getLogger("GebConfig")
 
 environments {
     firefox {
-        driver = { new FirefoxDriver() }
+        driver = { customizedFirefoxDriver([:]) }
     }
     firefoxHeadless {
         driver = { customizedFirefoxDriver([headless: true]) }
