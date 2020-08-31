@@ -48,7 +48,8 @@ class CustomizedChromeDriver {
 
         //options.addArguments('enable-automation')
         options.setExperimentalOption('excludeSwitches', ['enable-automation'])
-        options.setExperimentalOption('useAutomationExtension', true)
+        // TODO it seems deprecated...
+        //options.setExperimentalOption('useAutomationExtension', true)
 
         options.setExperimentalOption('prefs', [profile: [default_content_setting_values: [geolocation: ChromeGeoLocation.Block.value]]])
 
