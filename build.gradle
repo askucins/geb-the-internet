@@ -34,130 +34,37 @@ wrapper {
     distributionType = Wrapper.DistributionType.ALL
 }
 
+/**
+ * Geb and Webdriver configuration
+ */
+
 ext {
     // GebConfig environments
     drivers = ['firefox', 'firefoxHeadless', 'chrome', 'chromeHeadless', 'chromeBare']
     defaultDriver = 'chromeHeadless'
     ext {
-        gebVersion = '3.4'
-        webdriverVersion = '4.0.0-alpha-6'
+        gebVersion = '4.0-rc-1' // '3.4.1'
+        webdriverVersion = '4.0.0-alpha-7'
         chromeDriverVersion = {
             (project.findProperty('qa.chromium') != null)
-                ? '84.0.4147.30'
-                : '85.0.4183.38'
+                ? '87.0.4280.88'
+                : '88.0.4324.27'
             //TODO this doesn't work right now !!
         }()
         geckoDriverVersion = '0.26.0'
     }
 }
 
-repositories {
-    jcenter()
-    mavenCentral()
-}
-
-dependencies {
-    implementation 'org.codehaus.groovy:groovy-all:3.0.5'
-    testImplementation 'org.spockframework:spock-core:2.0-M3-groovy-3.0', {
-        exclude module: 'groovy-all'
-    }
-    testImplementation 'org.spockframework:spock-junit4:2.0-M3-groovy-3.0' //Temporary workaround for JUnit 4 rules
-    implementation 'org.slf4j:slf4j-api:2.0.0-alpha1'
-    implementation 'ch.qos.logback:logback-classic:1.3.0-alpha5'
-    implementation "org.gebish:geb-core:${gebVersion}"
-    testImplementation "org.gebish:geb-spock:${gebVersion}"
-    implementation 'io.netty:netty-buffer:4.1.51.Final'
-    implementation ("org.seleniumhq.selenium:selenium-chrome-driver:${webdriverVersion}") {
-        exclude group: 'io.netty'
-    }
-    implementation ("org.seleniumhq.selenium:selenium-firefox-driver:${webdriverVersion}") {
-        exclude group: 'io.netty'
-    }
-    //TODO It still throws an error...
-    testImplementation('com.athaydes:spock-reports:2.0-RC2') {
-        transitive = false
-    }
-
-    // Proxy https://github.com/browserup/browserup-proxy
-    def versionBrowserUp = '2.1.1'
-    implementation "com.browserup:browserup-proxy-core:${versionBrowserUp}"
-    implementation "com.browserup:browserup-proxy-mitm:${versionBrowserUp}"
-    // Proxy https://github.com/mrog/LittleProxy
-    implementation 'xyz.rogfam:littleproxy:2.0.0-beta-5'
-
-    // OCR - Tesseract
-    // Tesseract requires to install the library, e.g
-    // [root@nighthawk tmp]# rpm -q tesseract
-    // tesseract-3.04.00-3.el7.x86_64
-    // TODO add verification of the installed binary
-    implementation 'net.sourceforge.tess4j:tess4j:4.5.1'
-
-    // Other
-    testImplementation 'org.apache.commons:commons-text:1.8'
-}
-
-sourceSets {
-    integration {
-        groovy.srcDir "$projectDir/src/integration/groovy"
-        resources.srcDir "$projectDir/src/integration/resources"
-        compileClasspath += main.output + test.output
-        runtimeClasspath += main.output + test.output
-    }
-}
-
-configurations {
-    integrationImplementation.extendsFrom testImplementation
-    integrationRuntime.extendsFrom testRuntime
-}
-
-task cleanReports(type: Delete) {
-    group = 'other'
-    description = 'removes geb reports'
-    delete 'reports'
-}
-
 tasks.withType(Test) {
     systemProperty 'geb.env', project.findProperty('webdriver') ?: defaultDriver
     systemProperty 'geb.build.reportsDir', 'reports'
-    systemProperty 'org.askucins.tesseract', '/usr/share/tesseract'
-
-    testLogging {
-        showStandardStreams = true
-        events 'passed', 'failed'
-        exceptionFormat 'full'
-
-        debug {
-            events 'passed', 'skipped', 'failed'
-            showStackTraces true
-            exceptionFormat 'full'
-        }
-    }
-    useJUnitPlatform()
-}
-
-String localContextPath = '/gebbook'
-
-task integrationTest(type: Test) {
-    group = 'verification'
-    description = 'runs integration tests via gretty'
-    testClassesDirs = sourceSets.integration.output.classesDirs
-    classpath = sourceSets.integration.runtimeClasspath
-
-    systemProperty 'geb.build.baseUrl', "http://localhost:8080${localContextPath}/"
-}
-
-check.dependsOn integrationTest
-
-gretty {
-    contextPath = localContextPath
-    integrationTestTask = 'integrationTest'
 }
 
 webdriverBinaries {
     driverUrlsConfiguration = resources.text.fromFile('webdriver.json')
     chromedriver {
         version = chromeDriverVersion
-        fallbackTo32Bit = false
+        fallbackTo32Bit = true
     }
     geckodriver geckoDriverVersion
 }
@@ -206,4 +113,126 @@ task removeChromedriverInstances() {
     doLast {
         doRemoveWebdriverInstances()
     }
+}
+
+task cleanGebTestResults(type: Delete) {
+    group = 'other'
+    description = 'removes geb reports and logs'
+    delete "reports"
+    delete "logs"
+}
+
+/**
+ * Integration tests with gretty
+ */
+
+sourceSets {
+    integration {
+        groovy.srcDir "$projectDir/src/integration/groovy"
+        resources.srcDir "$projectDir/src/integration/resources"
+        compileClasspath += main.output + test.output
+        runtimeClasspath += main.output + test.output
+    }
+}
+
+configurations {
+    integrationImplementation.extendsFrom testImplementation
+    integrationRuntime.extendsFrom testRuntime
+}
+
+String localContextPath = '/gebbook'
+
+task integrationTest(type: Test) {
+    group = 'verification'
+    description = 'runs integration tests via gretty'
+    testClassesDirs = sourceSets.integration.output.classesDirs
+    classpath = sourceSets.integration.runtimeClasspath
+
+    systemProperty 'geb.build.baseUrl', "http://localhost:8080${localContextPath}/"
+}
+
+check.dependsOn integrationTest
+
+gretty {
+    contextPath = localContextPath
+    integrationTestTask = 'integrationTest'
+}
+
+/**
+ *  Usual configuration
+ */
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.codehaus.groovy:groovy-all:3.0.7'
+    def spockVersion = '2.0-M4-groovy-3.0'
+    testImplementation "org.spockframework:spock-core:${spockVersion}", {
+        exclude module: 'groovy-all'
+    }
+    testImplementation "org.spockframework:spock-junit4:${spockVersion}" //Temporary workaround for JUnit 4 rules
+    implementation 'org.slf4j:slf4j-api:2.0.0-alpha1'
+    implementation 'ch.qos.logback:logback-classic:1.3.0-alpha5'
+    implementation "org.gebish:geb-core:${gebVersion}"
+    testImplementation "org.gebish:geb-spock:${gebVersion}"
+    implementation 'io.netty:netty-buffer:4.1.56.Final'
+    implementation("org.seleniumhq.selenium:selenium-chrome-driver:${webdriverVersion}") {
+        exclude group: 'io.netty'
+    }
+    implementation("org.seleniumhq.selenium:selenium-firefox-driver:${webdriverVersion}") {
+        exclude group: 'io.netty'
+    }
+
+    //TODO It still throws an error...
+    testImplementation('com.athaydes:spock-reports:2.0-RC2') {
+        transitive = false
+    }
+    // TODO check https://github.com/AOEpeople/geb-spock-reports
+    testImplementation 'com.aoe:geb-spock-reports:0.3.0-RC1'
+
+    // Full-page screenshots https://github.com/pazone/ashot
+    implementation 'ru.yandex.qatools.ashot:ashot:1.5.4'
+    // TODO compare with the one used by Piotr:
+    // implementation 'com.assertthat:selenium-shutterbug:1.2'
+
+    // Proxy https://github.com/browserup/browserup-proxy
+    def versionBrowserUp = '2.1.2'
+    implementation "com.browserup:browserup-proxy:${versionBrowserUp}"
+    implementation "com.browserup:browserup-proxy-core:${versionBrowserUp}"
+    implementation "com.browserup:browserup-proxy-mitm:${versionBrowserUp}"
+    // Proxy https://github.com/mrog/LittleProxy
+    implementation 'xyz.rogfam:littleproxy:2.0.1'
+
+    // Decompressing Brotli-encoded payload
+    implementation 'org.brotli:dec:0.1.2'
+
+    // OCR - Tesseract
+    // Tesseract requires to install the library, e.g
+    // [root@nighthawk tmp]# rpm -q tesseract
+    // tesseract-3.04.00-3.el7.x86_64
+    // TODO add verification of the installed binary
+    implementation 'net.sourceforge.tess4j:tess4j:4.5.1'
+
+    // Other
+    testImplementation 'org.apache.commons:commons-text:1.9'
+}
+
+tasks.withType(Test) {
+    systemProperty 'org.askucins.tesseract', '/usr/share/tesseract'
+
+    testLogging {
+        showStandardStreams = true
+        events 'passed', 'failed'
+        exceptionFormat 'full'
+
+        debug {
+            events 'passed', 'skipped', 'failed'
+            showStackTraces true
+            exceptionFormat 'full'
+        }
+    }
+    useJUnitPlatform()
 }

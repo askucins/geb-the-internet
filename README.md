@@ -1,8 +1,9 @@
 Learning Geb with The Internet (version 0.58.0 - 10, February 2020)
 =======
 
-Examples of [Geb](https://gebish.org/) test automation of various popular use cases available, well... on the Internet :)
-A list of such use cases has been collected by [Dave Heaffner](https://github.com/tourdedave) 
+Examples of [Geb](https://gebish.org/) test automation of various popular use cases available, well... on the
+Internet :)
+A list of such use cases has been collected by [Dave Heaffner](https://github.com/tourdedave)
 and it's available on [https://github.com/tourdedave/the-internet](https://github.com/tourdedave/the-internet).
 
 # Available examples from [The Internet](https://github.com/tourdedave/the-internet)
@@ -29,7 +30,7 @@ and it's available on [https://github.com/tourdedave/the-internet](https://githu
 + [Forgot Password](http://the-internet.herokuapp.com/forgot_password)
 + [Form Authentication](http://the-internet.herokuapp.com/login)
 + [Frames](http://the-internet.herokuapp.com/frames)
-+ [Geolocation](http://the-internet.herokuapp.com/geolocation)
++ [Geolocation](http://the-internet.herokuapp.com/geolocation) 
 + [Horizontal Slider](http://the-internet.herokuapp.com/horizontal_slider)
 + [Hovers](http://the-internet.herokuapp.com/hovers)
 + [Infinite Scroll](http://the-internet.herokuapp.com/infinite_scroll)
@@ -53,7 +54,8 @@ and it's available on [https://github.com/tourdedave/the-internet](https://githu
 + [WYSIWYG Editor](http://the-internet.herokuapp.com/tinymce)
 
 ## Alternatively: run The Internet examples locally
-* Install [rvm](https://rvm.io/) 
+
+* Install [rvm](https://rvm.io/)
 * Install ruby 2.4.1
     ```bash
     rvm install ruby-2.4.1
@@ -79,17 +81,22 @@ and it's available on [https://github.com/tourdedave/the-internet](https://githu
 # Notes, how-tos etc.
 
 ## Gradle
+
 See more at: https://guides.gradle.org/building-groovy-libraries/
 
 ### Init
+
 ```
 gradle init --type groovy-library
 ```
 
 ### Passing a configuration from gradle to JVM
-Inspired by [https://stackoverflow.com/questions/28985395/gradle-gebconfig-groovy-parameterized](https://stackoverflow.com/questions/28985395/gradle-gebconfig-groovy-parameterized)
+
+Inspired
+by [https://stackoverflow.com/questions/28985395/gradle-gebconfig-groovy-parameterized](https://stackoverflow.com/questions/28985395/gradle-gebconfig-groovy-parameterized)
 
 In ```build.gradle``` pass the gradle project property to system property:
+
 ```groovy
 tasks.withType(Test) {
     systemProperty 'org.askucins.webdriver', project.findProperty('webdriver')
@@ -98,6 +105,7 @@ tasks.withType(Test) {
 ```
 
 Then in the ```GebConfig.groovy``` select your webdriver based on the passed system property:
+
 ```groovy
 import org.openqa.selenium.firefox.FirefoxDriver
 
@@ -115,20 +123,26 @@ switch (System.getProperty('org.askucins.webdriver')) {
 }
 ```
 
-and if you want to e.g. run execute tests with firefox you may run this:
+Also, if you want to e.g. run execute tests with firefox you may run this:
+
 ```bash
 gw test -Pwebdriver=firefox
 ```
 
 #### Update 2020-02-23
-Although that works just fine, one can use rather the built-in concept of GebConfig.environments, so then in ```build.gradle``` there would be:
+
+Although that works just fine, one can use rather the built-in concept of GebConfig.environments, so then
+in ```build.gradle``` there would be:
+
 ```groovy
 tasks.withType(Test) {
     systemProperty 'geb.env', project.findProperty('webdriver') ?: 'chrome'
     // [...]
 }
 ```
-And then in the ```GebConfig.groovy```:
+
+Aso, then in the ```GebConfig.groovy```:
+
 ```groovy
 environments {
     firefox {
@@ -148,8 +162,9 @@ environments {
 }
 ```
 
-With that setup if the gradle project property 'webdriver' is not defined that 'chrome' environment will be used, 
-while when it is defined - an appropriate environment will be picked up, e.g.
+With that setup if the gradle project property 'webdriver' is not defined that 'chrome' environment will be used, while
+when it is defined - an appropriate environment will be picked up, e.g.
+
 ```bash
 gw test -Pwebdriver=firefox
 ```  
@@ -161,10 +176,10 @@ gw test -Pwebdriver=firefox
 * A method `$(...)` (or its alias `find(...)`) searches in depth, looking for descendants
 * Methods `filter(...)` and `not(...)` search in breadth, limiting the found content.
 
-And a quote from [The Book of Geb](https://gebish.org/manual/current/):
+Also, a quote from [The Book of Geb](https://gebish.org/manual/current/):
 > The `find()` and `$()` *methods* support the exact same argument types as the $() *function*.
-> The `filter()`, `not()`, `has()` and `hasNot()` *methods* have the same signatures - 
-> they accept: a selector string, a predicate map or both. 
+> The `filter()`, `not()`, `has()` and `hasNot()` *methods* have the same signatures -
+> they accept: a selector string, a predicate map or both.
 > These methods return a new navigator object that represents the new content.
 
 # Questions
