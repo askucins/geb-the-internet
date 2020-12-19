@@ -13,7 +13,7 @@ var app = new Vue({
             this.berries.splice(index, 2, this.berries[index + 1], this.berries[index])
         },
         hello: function (index) {
-            console.log("On position: " + index +", value: "+ this.berries[index])
+            console.log("On position: " + index + ", value: " + this.berries[index])
         }
     }
 });

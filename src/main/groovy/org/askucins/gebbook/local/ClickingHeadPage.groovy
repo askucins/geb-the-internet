@@ -7,6 +7,6 @@ class ClickingHeadPage extends GebLocalPage {
     static url = 'clicking-head.html'
     static at = { title == 'Clicking - head' }
     static content = {
-        clicker {$('div.clicker a')}
+        clicker { $('div.clicker a') }
     }
 }

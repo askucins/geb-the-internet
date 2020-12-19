@@ -2,7 +2,6 @@ package org.askucins.gebbook.local
 
 import geb.driver.CachingDriverFactory
 import geb.spock.GebReportingSpec
-import geb.test.GebTestManager
 import groovy.util.logging.Slf4j
 import org.junit.Rule
 import org.junit.rules.TestName
