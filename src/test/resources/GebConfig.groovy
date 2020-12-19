@@ -1,6 +1,3 @@
-import geb.Browser
-import geb.navigator.Navigator
-import geb.navigator.event.NavigatorEventListenerSupport
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.firefox.FirefoxDriver
 import org.slf4j.Logger
@@ -10,6 +7,9 @@ import static org.askucins.utils.CustomizedChromeDriver.customizedChromeDriver
 import static org.askucins.utils.CustomizedFirefoxDriver.customizedFirefoxDriver
 
 Logger log = LoggerFactory.getLogger("GebConfig")
+
+// Default driver
+driver = { customizedChromeDriver([headless: false]) }
 
 environments {
     firefoxBare {
@@ -32,6 +32,9 @@ environments {
     }
 }
 
+//cacheDriver = false
+//cacheDriverPerThread = true
+
 atCheckWaiting = true
 
 waiting {
@@ -45,14 +48,3 @@ waiting {
         }
     }
 }
-
-navigatorEventListener = new NavigatorEventListenerSupport() {
-    void afterClick(Browser browser, Navigator navigator) {
-        // TODO This actually breaks those dynamic-navigator tests!!!
-        //log.debug "${navigator*.tag()} was clicked"
-        log.debug "Something was clicked!"
-    }
-}
-
-//cacheDriver = false
-//cacheDriverPerThread = true
