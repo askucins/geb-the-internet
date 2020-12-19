@@ -1,4 +1,4 @@
-package org.askucins.gebbook.local
+package org.askucins.gebbook
 
 import geb.driver.CachingDriverFactory
 import geb.spock.GebReportingSpec
@@ -14,8 +14,7 @@ abstract class GebLocalSpec extends GebReportingSpec {
     TestName testName = new TestName()
 
     def setupSpec() {
-        assert System.getProperty('geb.env')
-        log.info "geb.env: {}", System.getProperty('geb.env')
+        log.info "geb.env: {}", System.getProperty('geb.env') ?: '[not set explicitly!]'
         assert System.getProperty('geb.build.reportsDir')
         log.info "geb.build.reportsDir: {}", System.getProperty('geb.build.reportsDir')
     }
@@ -26,7 +25,6 @@ abstract class GebLocalSpec extends GebReportingSpec {
 
     def cleanupSpec() {
         log.info "Closing webdriver..."
-        // Based on https://github.com/geb/issues/issues/473
         testManager.resetBrowser()
         CachingDriverFactory.clearCacheAndQuitDriver()
     }
