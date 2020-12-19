@@ -1,6 +1,7 @@
 import geb.Browser
 import geb.navigator.Navigator
 import geb.navigator.event.NavigatorEventListenerSupport
+import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.firefox.FirefoxDriver
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -11,13 +12,17 @@ import static org.askucins.utils.CustomizedFirefoxDriver.customizedFirefoxDriver
 Logger log = LoggerFactory.getLogger("GebConfig")
 
 environments {
-    firefox {
-        atCheckWaiting = true
+    firefoxBare {
         driver = { new FirefoxDriver() }
     }
+    firefox {
+        driver = { customizedFirefoxDriver([headless: false]) }
+    }
     firefoxHeadless {
-        atCheckWaiting = true
         driver = { customizedFirefoxDriver([headless: true]) }
+    }
+    chromeBare {
+        driver = { new ChromeDriver() }
     }
     chrome {
         driver = { customizedChromeDriver([headless: false]) }
@@ -26,6 +31,8 @@ environments {
         driver = { customizedChromeDriver([headless: true]) }
     }
 }
+
+atCheckWaiting = true
 
 waiting {
     presets {
@@ -39,8 +46,6 @@ waiting {
     }
 }
 
-atCheckWaiting = true
-
 navigatorEventListener = new NavigatorEventListenerSupport() {
     void afterClick(Browser browser, Navigator navigator) {
         // TODO This actually breaks those dynamic-navigator tests!!!
@@ -48,3 +53,6 @@ navigatorEventListener = new NavigatorEventListenerSupport() {
         log.debug "Something was clicked!"
     }
 }
+
+//cacheDriver = false
+//cacheDriverPerThread = true

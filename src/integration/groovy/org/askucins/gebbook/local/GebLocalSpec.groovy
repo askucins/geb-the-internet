@@ -2,6 +2,7 @@ package org.askucins.gebbook.local
 
 import geb.driver.CachingDriverFactory
 import geb.spock.GebReportingSpec
+import geb.test.GebTestManager
 import groovy.util.logging.Slf4j
 import org.junit.Rule
 import org.junit.rules.TestName
@@ -27,7 +28,7 @@ abstract class GebLocalSpec extends GebReportingSpec {
     def cleanupSpec() {
         log.info "Closing webdriver..."
         // Based on https://github.com/geb/issues/issues/473
-        resetBrowser()
+        testManager.resetBrowser()
         CachingDriverFactory.clearCacheAndQuitDriver()
     }
 }
