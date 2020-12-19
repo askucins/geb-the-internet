@@ -31,7 +31,7 @@ abstract class InternetSpec extends GebReportingSpec {
         log.info "geb.env: {}", System.getProperty('geb.build.baseUrl')
 
         log.info "About to reset the browser..."
-        resetBrowser() //TODO check why it fails in 4.0.0-alpha-5
+        testManager.resetBrowser()
         log.info "About to clear cache and quit the running driver..."
         CachingDriverFactory.clearCacheAndQuitDriver()
     }

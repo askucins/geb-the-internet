@@ -19,7 +19,7 @@ abstract class MinimalBaseSpec extends GebSpec {
         log.info "geb.build.reportsDir: {}", System.getProperty('geb.build.reportsDir')
         log.info "geb.env: {}", System.getProperty('geb.env')
 
-        resetBrowser()
+        testManager.resetBrowser()
         CachingDriverFactory.clearCacheAndQuitDriver()
     }
 }
