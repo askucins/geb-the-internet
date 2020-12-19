@@ -2,6 +2,7 @@ package org.askucins.gebbook.local
 
 import geb.navigator.Navigator
 import groovy.util.logging.Slf4j
+import org.askucins.gebbook.GebLocalSpec
 
 @Slf4j
 class FormsSpec extends GebLocalSpec {

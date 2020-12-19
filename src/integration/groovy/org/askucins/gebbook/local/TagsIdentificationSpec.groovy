@@ -3,6 +3,7 @@ package org.askucins.gebbook.local
 import geb.error.SingleElementNavigatorOnlyMethodException
 import geb.navigator.Navigator
 import groovy.util.logging.Slf4j
+import org.askucins.gebbook.GebLocalSpec
 
 @Slf4j
 class TagsIdentificationSpec extends GebLocalSpec {

@@ -4,6 +4,7 @@ import geb.Browser
 import geb.error.ContentCountOutOfBoundsException
 import geb.error.RequiredPageContentNotPresent
 import groovy.util.logging.Slf4j
+import org.askucins.gebbook.GebLocalSpec
 import spock.lang.Ignore
 
 @Slf4j

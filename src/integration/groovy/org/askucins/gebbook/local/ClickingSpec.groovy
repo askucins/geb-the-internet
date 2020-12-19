@@ -1,6 +1,7 @@
 package org.askucins.gebbook.local
 
 import groovy.util.logging.Slf4j
+import org.askucins.gebbook.GebLocalSpec
 
 @Slf4j
 class ClickingSpec extends GebLocalSpec {

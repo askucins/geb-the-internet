@@ -3,6 +3,7 @@ package org.askucins.gebbook.local
 import geb.error.SingleElementNavigatorOnlyMethodException
 import geb.module.Checkbox
 import groovy.util.logging.Slf4j
+import org.askucins.gebbook.GebLocalSpec
 import org.openqa.selenium.Keys
 
 @Slf4j
