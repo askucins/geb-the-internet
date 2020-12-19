@@ -3,9 +3,9 @@ import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 
 /**
- * Properties:
+ * Properties (not mandatory):
  * qa.webdriver - webdriver name; one of: 'firefoxBare', 'firefox', 'firefoxHeadless', 'chromeBare', 'chrome', 'chromeHeadless'
- * qa.chromium - if present different chromedriver version will be used (only POC)
+ * qa.chromium - if present non-standard chromedriver version will be used (only POC)
  */
 
 
@@ -40,6 +40,9 @@ wrapper {
 
 /**
  * Geb and Webdriver configuration
+ * Properties:
+ *  qa.webdriver
+ *  qa.chromium
  */
 
 tasks.withType(Test) {
