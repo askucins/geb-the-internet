@@ -44,7 +44,7 @@ class PageWithDivPage extends GebLocalPage {
 
     def divId = 'a'
 
-    def divId() { 'a' }
+    static divId() { 'a' }
 
     def navigateToRandomTargetPage() {
         randomTargetPage.click()

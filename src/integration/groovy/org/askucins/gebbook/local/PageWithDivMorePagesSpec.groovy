@@ -1,9 +1,7 @@
 package org.askucins.gebbook.local
 
-
 import groovy.util.logging.Slf4j
 import org.askucins.gebbook.GebLocalSpec
-import spock.lang.Ignore
 import spock.lang.Unroll
 
 @Unroll
@@ -58,38 +56,11 @@ class PageWithDivMorePagesSpec extends GebLocalSpec {
         navigateToRandomTargetPage()
         then:
         ['Page with div A', 'Page with div B', 'Page with div C'].contains(theHeader)
+        cleanup:
+        if (page instanceof PageWithDivPageA) {
+            log.info "Sometimes page A is randomly picked."
+        } else {
+            log.info "Sometimes page other than A is randomly picked."
+        }
     }
-
-    @Ignore
-    def "should navigate to (#header)"() {
-        given:
-        to PageWithDivPage
-        when:
-        targetPage[(position)].click()
-        then:
-        pageChecker()
-        where:
-        position | pageChecker                                 | header
-        0        | { assert page instanceof PageWithDivPageA } | 'Page with div A'
-        1        | { assert page instanceof PageWithDivPageB } | 'Page with div B'
-        2        | { assert page instanceof PageWithDivPageC } | 'Page with div C'
-    }
-
-    @Ignore
-    def "should open a random page (#attempt)"() {
-        given:
-        to PageWithDivPage
-        Integer numberOfTargets = targetPage.size()
-        when:
-        targetPage[r.nextInt(numberOfTargets)].click()
-        then:
-        page instanceof PageWithDivPageA
-        and:
-        theHeader
-//        cleanup:
-//        log.info "Landed at page: {}", theHeader
-        where:
-        attempt << (0..0)
-    }
-
 }
