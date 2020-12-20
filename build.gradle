@@ -175,6 +175,9 @@ dependencies {
     testImplementation "org.gebish:geb-spock:${gebVersion}"
     def webdriverVersion = '4.0.0-alpha-6' // '4.0.0-alpha-7'
     implementation 'io.netty:netty-buffer:4.1.56.Final' // TODO see below - workaround
+    implementation("org.seleniumhq.selenium:selenium-support:${webdriverVersion}") {
+        exclude group: 'io.netty'
+    }
     implementation("org.seleniumhq.selenium:selenium-chrome-driver:${webdriverVersion}") {
         exclude group: 'io.netty'
     }
@@ -183,9 +186,9 @@ dependencies {
     }
 
     // TODO It still throws an error...
-    testImplementation('com.athaydes:spock-reports:2.0-RC2') {
-        transitive = false
-    }
+    //testImplementation('com.athaydes:spock-reports:2.0-RC2') {
+    //    transitive = false
+    //}
     // TODO check https://github.com/AOEpeople/geb-spock-reports
     testImplementation 'com.aoe:geb-spock-reports:0.3.0-RC1'
 

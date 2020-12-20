@@ -1,4 +1,4 @@
-package org.askucins.gebbook.local
+package org.askucins.gebbook
 
 import geb.Page
 import groovy.util.logging.Slf4j

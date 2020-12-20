@@ -20,23 +20,25 @@ abstract class InternetSpec extends GebReportingSpec {
         assert System.getProperty('webdriver.chrome.driver')
         assert System.getProperty('webdriver.gecko.driver')
         assert System.getProperty('geb.build.reportsDir')
-        assert System.getProperty('geb.env')
         assert System.getProperty('geb.build.baseUrl')
+        //assert System.getProperty('geb.env')
 
         log.info "=".padLeft(78, '=')
         log.info "webdriver.chrome.driver: {}", System.getProperty('webdriver.chrome.driver')
         log.info "webdriver.gecko.driver: {}", System.getProperty('webdriver.gecko.driver')
         log.info "geb.build.reportsDir: {}", System.getProperty('geb.build.reportsDir')
-        log.info "geb.env: {}", System.getProperty('geb.env')
-        log.info "geb.env: {}", System.getProperty('geb.build.baseUrl')
-
-        log.info "About to reset the browser..."
-        testManager.resetBrowser()
-        log.info "About to clear cache and quit the running driver..."
-        CachingDriverFactory.clearCacheAndQuitDriver()
+        log.info "geb.build.baseUrl: {}", System.getProperty('geb.build.baseUrl')
+        log.info "geb.env: {}", System.getProperty('geb.env') ?: '[not set explicitly!]'
     }
 
     def setup() {
         log.info ">>>> ${testName.methodName}"
+    }
+
+    def cleanupSpec() {
+        log.info "About to reset the browser..."
+        testManager.resetBrowser()
+        log.info "About to clear cache and quit the running driver..."
+        CachingDriverFactory.clearCacheAndQuitDriver()
     }
 }

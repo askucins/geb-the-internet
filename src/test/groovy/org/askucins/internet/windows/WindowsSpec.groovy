@@ -12,6 +12,11 @@ class WindowsSpec extends InternetSpec {
         System.setProperty('geb.env', 'firefox')
     }
 
+    def cleanupSpec() {
+        //TODO weirdly @RestoreSystemProperties does not work as expected
+        System.clearProperty('geb.env')
+    }
+
     def "should open WindowsPage page"() {
         expect:
         to WindowsPage

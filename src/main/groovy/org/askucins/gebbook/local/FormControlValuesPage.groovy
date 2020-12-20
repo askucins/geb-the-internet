@@ -5,6 +5,7 @@ import geb.module.MultipleSelect
 import geb.module.Select
 import geb.module.TextInput
 import groovy.util.logging.Slf4j
+import org.askucins.gebbook.GebLocalPage
 
 @Slf4j
 class FormControlValuesPage extends GebLocalPage {

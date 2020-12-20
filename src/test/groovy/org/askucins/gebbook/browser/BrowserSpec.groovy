@@ -1,6 +1,7 @@
 package org.askucins.gebbook.browser
 
 import geb.Browser
+import geb.driver.CachingDriverFactory
 import geb.spock.GebSpec
 import groovy.util.logging.Slf4j
 import org.openqa.selenium.chrome.ChromeDriver
@@ -22,6 +23,11 @@ class BrowserSpec extends GebSpec {
     def cleanup() {
         log.info "Browser's properties: ${browser_.driver.properties}"
         browser_.quit()
+    }
+
+    def cleanupSpec() {
+        testManager.resetBrowser()
+        CachingDriverFactory.clearCacheAndQuitDriver()
     }
 
     def "01 should work with a driver created implicitly"() {

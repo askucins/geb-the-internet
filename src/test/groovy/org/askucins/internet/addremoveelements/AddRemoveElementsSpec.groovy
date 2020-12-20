@@ -5,6 +5,7 @@ import org.askucins.internet.InternetSpec
 import spock.lang.Unroll
 
 @Slf4j
+@Unroll
 class AddRemoveElementsSpec extends InternetSpec {
     def "should not be any added elements when started"() {
         when:
@@ -62,7 +63,6 @@ class AddRemoveElementsSpec extends InternetSpec {
         elements.size() == 1
     }
 
-    @Unroll
     def "should multiple adding element increase the number of visible elements respectively (#attempts)"() {
         given:
         to AddRemoveElementsPage
@@ -70,17 +70,13 @@ class AddRemoveElementsSpec extends InternetSpec {
         (0..<attempts).each { add() }
         then:
         elements.size() == attempts
-        cleanup:
-        report "AddRemoveElements $attempts element/s"
         where:
         attempts | _
         1        | _
         5        | _
         10       | _
-        50       | _
     }
 
-    @Unroll
     def "should adding and removing last element keeps the number of displayed elements intact (#attempts)"() {
         given:
         to AddRemoveElementsPage
@@ -90,21 +86,16 @@ class AddRemoveElementsSpec extends InternetSpec {
         then:
         elements.size() == attempts + 1
         when: "removing that last added"
-        report "AddRemoveElements before removing that last one ($attempts element/s)"
         deleteLast()
         then:
         elements.size() == attempts
-        cleanup:
-        report "AddRemoveElements after removing that last one ($attempts element/s)"
         where:
         attempts | _
         1        | _
         5        | _
         10       | _
-        50       | _
     }
 
-    @Unroll
     def "should adding and removing first element keeps the number of displayed elements intact (#attempts)"() {
         given:
         to AddRemoveElementsPage
@@ -114,21 +105,16 @@ class AddRemoveElementsSpec extends InternetSpec {
         then:
         elements.size() == attempts + 1
         when: "removing the first element"
-        report "AddRemoveElements before removing the first one ($attempts element/s)"
         deleteFirst()
         then:
         elements.size() == attempts
-        cleanup:
-        report "AddRemoveElements after removing the first one ($attempts element/s)"
         where:
         attempts | _
         1        | _
         5        | _
         10       | _
-        50       | _
     }
 
-    @Unroll
     def "should adding and removing random element keeps the number of displayed elements intact (#attempts)"() {
         given:
         to AddRemoveElementsPage
@@ -138,21 +124,16 @@ class AddRemoveElementsSpec extends InternetSpec {
         then:
         elements.size() == attempts + 1
         when: "removing a random element"
-        report "AddRemoveElements before removing the random one ($attempts element/s)"
         deleteRandom()
         then:
         elements.size() == attempts
-        cleanup:
-        report "AddRemoveElements after removing the random one ($attempts element/s)"
         where:
         attempts | _
         1        | _
         5        | _
         10       | _
-        50       | _
     }
 
-    @Unroll
     def "should adding and removing all elements from the end leaving zero elements (#attempts)"() {
         when:
         to AddRemoveElementsPage
@@ -168,10 +149,8 @@ class AddRemoveElementsSpec extends InternetSpec {
         1        | _
         5        | _
         10       | _
-        50       | _
     }
 
-    @Unroll
     def "should adding and removing all elements from the beginning leaving zero elements (#attempts)"() {
         when:
         to AddRemoveElementsPage
@@ -187,10 +166,8 @@ class AddRemoveElementsSpec extends InternetSpec {
         1        | _
         5        | _
         10       | _
-        50       | _
     }
 
-    @Unroll
     def "should adding and removing all elements randomly leaving zero elements (#attempts)"() {
         when:
         to AddRemoveElementsPage
@@ -206,6 +183,5 @@ class AddRemoveElementsSpec extends InternetSpec {
         1        | _
         5        | _
         10       | _
-        50       | _
     }
 }

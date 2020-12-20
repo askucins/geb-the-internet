@@ -1,5 +1,6 @@
 package org.askucins.gebbook.local
 
+
 import groovy.util.logging.Slf4j
 import org.askucins.gebbook.GebLocalSpec
 import spock.lang.Ignore
@@ -50,16 +51,13 @@ class PageWithDivMorePagesSpec extends GebLocalSpec {
         theHeader == 'Page with div C'
     }
 
-    def "should navigate to page A by target position"() {
+    def "should navigate to random page of A, B, C"() {
         given:
         to PageWithDivPage
         when:
-        //targetPage[0].click()
-        navigateToTargetPageOf(0)
-        //page(PageWithDivPageA)
+        navigateToRandomTargetPage()
         then:
-        //at PageWithDivPageA
-        theHeader == 'Page with div A'
+        ['Page with div A', 'Page with div B', 'Page with div C'].contains(theHeader)
     }
 
     @Ignore

@@ -2,6 +2,7 @@ package org.askucins.gebbook.local
 
 import geb.Module
 import groovy.util.logging.Slf4j
+import org.askucins.gebbook.GebLocalPage
 
 @Slf4j
 class BasicFormModule extends Module {
