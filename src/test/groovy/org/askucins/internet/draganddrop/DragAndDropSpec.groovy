@@ -11,11 +11,13 @@ import java.awt.*
 import java.awt.event.InputEvent
 
 import static org.askucins.internet.InternetPage.centerOf
+import static org.askucins.utils.CustomizedChromeDriver.customizedChromeDriver
 
 @RestoreSystemProperties
 @Slf4j
 class DragAndDropSpec extends InternetSpec {
     def setupSpec() {
+        //driver = customizedChromeDriver([headless: false])
         //System.setProperty('webdriver.chrome.verboseLogging', 'true')
     }
 
@@ -53,7 +55,6 @@ class DragAndDropSpec extends InternetSpec {
         def switchBoxes = actions.dragAndDrop(source, target).build()
         when:
         switchBoxes.perform()
-        sleep 5000
         then:
         source.text == 'B'
         and:
@@ -61,6 +62,27 @@ class DragAndDropSpec extends InternetSpec {
         cleanup:
         report "final-by-actions"
         log.info "After: Left:{}, Right:{}", source.text, target.text
+    }
+
+    def "should drag and drop box Left over box Right by 'interact drag-and-drop'"() {
+        given:
+        to DragAndDropPage
+        assert label(boxLeft) == 'A'
+        assert label(boxRight) == 'B'
+        log.info "Before: Left:{}, Right:{}", label(boxLeft), label(boxRight)
+        when:
+        interact {
+            dragAndDrop(boxLeft, boxRight)
+        }
+        then:
+        label(boxLeft) == 'B'
+        and:
+        label(boxRight) == 'A'
+
+        cleanup:
+        report "final-by-interact-drag-and-drop"
+        log.info "After: Left:{}, Right:{}", label(boxLeft), label(boxRight)
+
     }
 
     def "should drag and drop box Left over box Right by 'interact'"() {
@@ -71,13 +93,11 @@ class DragAndDropSpec extends InternetSpec {
         log.info "Before: Left:{}, Right:{}", label(boxLeft), label(boxRight)
         when:
         interact {
-            //dragAndDrop(boxLeft, boxRight)
             moveToElement(boxLeft)
             pause(1000)
             clickAndHold(boxLeft)
             pause(1000)
             moveToElement(boxRight)
-            //moveByOffset(boxRight.firstElement().location.x, boxRight.firstElement().location.y)
             pause(1000)
             release()
             pause(1000)
@@ -102,15 +122,18 @@ class DragAndDropSpec extends InternetSpec {
         and:
         def source = centerOf(boxLeft)
         def target = centerOf(boxRight)
-        def offset = new Point(target.x - source.x, target.y - source.y)
+        def offset = new Point(target.x - source.x+20, target.y - source.y + 20)
         when:
         interact {
             moveToElement(boxLeft)
+            pause(2000)
             clickAndHold(boxLeft)
+            pause(2000)
             moveByOffset(offset.x, offset.y)
+            pause(2000)
             release()
+            pause(2000)
         }
-        sleep 1000
         then:
         label(boxLeft) == 'B'
         and:

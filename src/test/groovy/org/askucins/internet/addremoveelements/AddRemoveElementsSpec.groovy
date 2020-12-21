@@ -73,8 +73,8 @@ class AddRemoveElementsSpec extends InternetSpec {
         where:
         attempts | _
         1        | _
+        2        | _
         5        | _
-        10       | _
     }
 
     def "should adding and removing last element keeps the number of displayed elements intact (#attempts)"() {
@@ -92,8 +92,8 @@ class AddRemoveElementsSpec extends InternetSpec {
         where:
         attempts | _
         1        | _
+        2        | _
         5        | _
-        10       | _
     }
 
     def "should adding and removing first element keeps the number of displayed elements intact (#attempts)"() {
@@ -111,8 +111,8 @@ class AddRemoveElementsSpec extends InternetSpec {
         where:
         attempts | _
         1        | _
+        2        | _
         5        | _
-        10       | _
     }
 
     def "should adding and removing random element keeps the number of displayed elements intact (#attempts)"() {
@@ -130,8 +130,8 @@ class AddRemoveElementsSpec extends InternetSpec {
         where:
         attempts | _
         1        | _
+        2        | _
         5        | _
-        10       | _
     }
 
     def "should adding and removing all elements from the end leaving zero elements (#attempts)"() {
@@ -147,8 +147,8 @@ class AddRemoveElementsSpec extends InternetSpec {
         where:
         attempts | _
         1        | _
+        2        | _
         5        | _
-        10       | _
     }
 
     def "should adding and removing all elements from the beginning leaving zero elements (#attempts)"() {
@@ -164,8 +164,8 @@ class AddRemoveElementsSpec extends InternetSpec {
         where:
         attempts | _
         1        | _
+        2        | _
         5        | _
-        10       | _
     }
 
     def "should adding and removing all elements randomly leaving zero elements (#attempts)"() {
@@ -181,7 +181,7 @@ class AddRemoveElementsSpec extends InternetSpec {
         where:
         attempts | _
         1        | _
+        2        | _
         5        | _
-        10       | _
     }
 }

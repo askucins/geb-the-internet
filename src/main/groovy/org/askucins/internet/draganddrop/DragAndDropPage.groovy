@@ -2,6 +2,7 @@ package org.askucins.internet.draganddrop
 
 import groovy.util.logging.Slf4j
 import org.askucins.internet.InternetPage
+import org.openqa.selenium.WebElement
 
 @Slf4j
 class DragAndDropPage extends InternetPage {

@@ -39,7 +39,7 @@ wrapper {
 }
 
 /**
- * Geb and Webdriver configuration
+ * Geb and Webdriver mgmt
  * Properties:
  *  qa.webdriver
  *  qa.chromium
@@ -145,12 +145,12 @@ task integrationTest(type: Test) {
     systemProperty 'geb.build.baseUrl', "http://localhost:8080${localContextPath}/"
 }
 
-check.dependsOn integrationTest
-
 gretty {
     contextPath = localContextPath
     integrationTestTask = 'integrationTest'
 }
+
+check.dependsOn integrationTest
 
 /**
  *  Usual configuration

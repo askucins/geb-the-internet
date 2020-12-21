@@ -10,6 +10,10 @@
 <h1>Dynamic navigator example</h1>
 <div id="app">
     <ul>
+        <!--
+            This is a bit tricky - there are 4 buttons defined for each berry.
+            However given conditions filter out two of them, for each berry!
+        -->
         <li v-for="(berry,index) in berries" :key="`${berry}-${index}`">
             <button v-if="index == 0" v-on:click="hello(index)">T</button>
             <button v-if="index != 0" v-on:click="swapWithNext(index - 1)">⇑</button>

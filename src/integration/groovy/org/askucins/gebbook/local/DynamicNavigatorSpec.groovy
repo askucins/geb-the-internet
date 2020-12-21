@@ -25,6 +25,12 @@ class DynamicNavigatorSpec extends GebLocalSpec {
         notThrown(StaleElementReferenceException)
         and:
         giveMeThoseBerries() == ["blueberry", "strawberry", "raspberry", "cranberry"]
+        when:
+        moveDownBy("blueberry", 2)
+        then:
+        notThrown(StaleElementReferenceException)
+        and:
+        giveMeThoseBerries() == ["strawberry", "raspberry", "blueberry", "cranberry"]
         cleanup:
         report("Dynamic-Navigator-naive-no-error")
     }
@@ -42,7 +48,7 @@ class DynamicNavigatorSpec extends GebLocalSpec {
         given:
         to DynamicNavigatorPageBad
         when:
-        item("blueberry").moveUpBy(2)
+        itemByText("blueberry").moveUpBy(2)
         then:
         StaleElementReferenceException e = thrown()
         cleanup:
@@ -53,7 +59,7 @@ class DynamicNavigatorSpec extends GebLocalSpec {
         given:
         to DynamicNavigatorPageBad
         when:
-        item("blueberry").moveUpBy(1)
+        itemByText("blueberry").moveUpBy(1)
         then:
         notThrown(StaleElementReferenceException)
         and:
@@ -75,7 +81,7 @@ class DynamicNavigatorSpec extends GebLocalSpec {
         given:
         to DynamicNavigatorPageGood
         when:
-        item("blueberry").moveUpBy(2)
+        itemByText("blueberry").moveUpBy(2)
         then:
         notThrown(StaleElementReferenceException)
         and:

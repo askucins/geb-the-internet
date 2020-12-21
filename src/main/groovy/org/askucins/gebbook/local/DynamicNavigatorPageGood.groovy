@@ -6,6 +6,6 @@ import groovy.util.logging.Slf4j
 class DynamicNavigatorPageGood extends DynamicNavigatorPage {
     static content = {
         items { $("li").moduleList(DynamicNavigatorListItem) } //Gotcha!
-        item { text -> $("li", text: endsWith(text), dynamic: true).module(DynamicNavigatorListItem) }
+        itemByText { text -> $("li", text: endsWith(text), dynamic: true).module(DynamicNavigatorListItem) }
     }
 }
