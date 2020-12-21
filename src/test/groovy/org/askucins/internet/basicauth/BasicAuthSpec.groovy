@@ -3,6 +3,7 @@ package org.askucins.internet.basicauth
 import com.browserup.bup.BrowserUpProxy
 import com.browserup.bup.BrowserUpProxyServer
 import com.browserup.bup.proxy.auth.AuthType
+import geb.driver.CachingDriverFactory
 import groovy.util.logging.Slf4j
 import org.askucins.internet.InternetSpec
 import org.openqa.selenium.UnhandledAlertException
@@ -36,6 +37,8 @@ class BasicAuthSpec extends InternetSpec {
     def cleanup() {
         driver?.quit()
         proxy?.stop()
+        testManager.resetBrowser()
+        CachingDriverFactory.clearCacheAndQuitDriver()
     }
 
     def "should pass basic auth with correct credentials"() {

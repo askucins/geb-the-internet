@@ -9,7 +9,7 @@ import static org.askucins.utils.CustomizedFirefoxDriver.customizedFirefoxDriver
 Logger log = LoggerFactory.getLogger("GebConfig")
 
 // Default driver
-driver = { customizedChromeDriver([headless: false]) }
+driver = { customizedChromeDriver([headless: true]) }
 
 environments {
     firefoxBare {
