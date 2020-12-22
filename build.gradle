@@ -142,6 +142,8 @@ task integrationTest(type: Test) {
     testClassesDirs = sourceSets.integration.output.classesDirs
     classpath = sourceSets.integration.runtimeClasspath
 
+    // According to https://gebish.org/manual/current/#base-url
+    // Base url with trailing slash, relative urls without leading slash
     systemProperty 'geb.build.baseUrl', "http://localhost:8080${localContextPath}/"
 }
 

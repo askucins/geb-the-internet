@@ -14,6 +14,9 @@ abstract class InternetSpec extends GebReportingSpec {
     TestName testName = new TestName()
 
     def setupSpec() {
+        // According to https://gebish.org/manual/current/#base-url
+        // Base url with trailing slash, relative urls without leading slash
+
         //System.setProperty('geb.build.baseUrl', 'http://localhost:9292/')
         System.setProperty('geb.build.baseUrl', 'https://the-internet.herokuapp.com/')
 

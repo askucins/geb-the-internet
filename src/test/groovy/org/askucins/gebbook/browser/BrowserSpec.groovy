@@ -18,11 +18,11 @@ class BrowserSpec extends GebSpec {
     static url = 'https://ipconfig.io'
     static slug = 'ipconfig'
 
-    Browser browser_
+    Browser myBrowser
 
     def cleanup() {
-        log.info "Browser's properties: ${browser_.driver.properties}"
-        browser_.quit()
+        log.info "Browser's properties: ${myBrowser.driver.properties}"
+        myBrowser.quit()
     }
 
     def cleanupSpec() {
@@ -32,95 +32,95 @@ class BrowserSpec extends GebSpec {
 
     def "01 should work with a driver created implicitly"() {
         when:
-        browser_ = new Browser()
+        myBrowser = new Browser()
         then: 'driver is created implicitly'
-        browser_.driver.toString()
+        myBrowser.driver.toString()
         when:
-        browser_.go(url)
+        myBrowser.go(url)
         then:
-        browser_.currentUrl.contains(slug)
+        myBrowser.currentUrl.contains(slug)
         cleanup:
-        browser_.report("01-driver-created-implicitly")
+        myBrowser.report("01-driver-created-implicitly")
     }
 
     def "02 should work with default Firefox driver assigned to browser"() {
         when:
-        browser_ = new Browser()
-        browser_.driver = new FirefoxDriver()
+        myBrowser = new Browser()
+        myBrowser.driver = new FirefoxDriver()
         then:
-        browser_.driver.toString().startsWith('FirefoxDriver')
+        myBrowser.driver.toString().startsWith('FirefoxDriver')
         when:
-        browser_.go(url)
+        myBrowser.go(url)
         then:
-        browser_.currentUrl.contains(slug)
+        myBrowser.currentUrl.contains(slug)
         cleanup:
-        browser_.report("02-firefox-driver-assigned-to-browser")
+        myBrowser.report("02-firefox-driver-assigned-to-browser")
     }
 
     def "03 should work with default Chrome driver assigned to browser"() {
         when:
-        browser_ = new Browser()
-        browser_.driver = new ChromeDriver()
+        myBrowser = new Browser()
+        myBrowser.driver = new ChromeDriver()
         then:
-        browser_.driver.toString().startsWith('Chrome')
+        myBrowser.driver.toString().startsWith('Chrome')
         when:
-        browser_.go(url)
+        myBrowser.go(url)
         then:
-        browser_.currentUrl.contains(slug)
+        myBrowser.currentUrl.contains(slug)
         cleanup:
-        browser_.report("03-chrome-driver-assigned-to-browser")
+        myBrowser.report("03-chrome-driver-assigned-to-browser")
     }
 
     def "04 should work with browser initialized with Headless Firefox driver"() {
         when:
-        browser_ = new Browser(driver: customizedFirefoxDriver([headless: true]))
+        myBrowser = new Browser(driver: customizedFirefoxDriver([headless: true]))
         then:
-        browser_.driver.toString().startsWith('FirefoxDriver')
+        myBrowser.driver.toString().startsWith('FirefoxDriver')
         when:
-        browser_.go(url)
+        myBrowser.go(url)
         then:
-        browser_.currentUrl.contains(slug)
+        myBrowser.currentUrl.contains(slug)
         cleanup:
-        browser_.report("04-browser-initialized-with-firefox-headless")
+        myBrowser.report("04-browser-initialized-with-firefox-headless")
     }
 
     def "05 should work with browser initialized with Headless Chrome drivers"() {
         when:
-        browser_ = new Browser(driver: customizedChromeDriver([headless: true]))
+        myBrowser = new Browser(driver: customizedChromeDriver([headless: true]))
         then:
-        browser_.driver.toString().startsWith('Chrome')
+        myBrowser.driver.toString().startsWith('Chrome')
         when:
-        browser_.go(url)
+        myBrowser.go(url)
         then:
-        browser_.currentUrl.contains(slug)
+        myBrowser.currentUrl.contains(slug)
         cleanup:
-        browser_.report("05-browser-initialized-with-chrome-headless")
+        myBrowser.report("05-browser-initialized-with-chrome-headless")
     }
 
     def "06 should work with browser initialized with Firefox driver"() {
         when:
-        browser_ = new Browser(driver: customizedFirefoxDriver([headless: false]))
+        myBrowser = new Browser(driver: customizedFirefoxDriver([headless: false]))
         then:
-        browser_.driver.toString().startsWith('FirefoxDriver')
+        myBrowser.driver.toString().startsWith('FirefoxDriver')
         when:
-        browser_.go(url)
+        myBrowser.go(url)
         then:
-        browser_.currentUrl.contains(slug)
+        myBrowser.currentUrl.contains(slug)
         cleanup:
-        browser_.report("06-browser-initialized-with-firefox")
+        myBrowser.report("06-browser-initialized-with-firefox")
     }
 
     def "07 should work with browser initialized with Chrome driver"() {
         when:
-        browser_ = new Browser(driver: customizedChromeDriver([headless: false]))
+        myBrowser = new Browser(driver: customizedChromeDriver([headless: false]))
         then:
-        browser_.driver.toString().startsWith('Chrome')
+        myBrowser.driver.toString().startsWith('Chrome')
         when:
-        browser_.go(url)
+        myBrowser.go(url)
         then:
-        browser_.currentUrl.contains(slug)
+        myBrowser.currentUrl.contains(slug)
         cleanup:
-        browser_.report("07-browser-initialized-with-chrome")
+        myBrowser.report("07-browser-initialized-with-chrome")
     }
 
 }

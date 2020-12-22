@@ -35,6 +35,7 @@ environments {
 //cacheDriver = false
 //cacheDriverPerThread = true
 
+requirePageAtCheckers = true
 atCheckWaiting = true
 
 waiting {

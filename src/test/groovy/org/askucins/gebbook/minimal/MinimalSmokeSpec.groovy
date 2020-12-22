@@ -14,6 +14,6 @@ class MinimalSmokeSpec extends MinimalBaseSpec {
             waitFor { !$("#manuals-menu").hasClass("animating") }
             $("#manuals-menu a").first().click()
             assert title.startsWith("The Book Of Geb")
-        }
+        }.quit()
     }
 }
