@@ -6,6 +6,10 @@ import org.askucins.gebbook.GebLocalSpec
 @Slf4j
 class ClickingSpec extends GebLocalSpec {
 
+    def setupSpec() {
+        //driver = customizedChromeDriver([headless: false])
+    }
+
     def "should open clicker page"() {
         expect:
         to ClickingHeadPage
@@ -24,6 +28,7 @@ class ClickingSpec extends GebLocalSpec {
         given:
         to ClickingHeadPage
         when:
+        //pause() // then in the DevConsole: geb.unpause = true;
         clicker.click()
         then:
         at ClickingTailPage

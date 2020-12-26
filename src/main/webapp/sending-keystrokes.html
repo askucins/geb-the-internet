@@ -9,38 +9,46 @@
 <body>
 <h1>Sending keystrokes</h1>
 <h2>Simple inputs</h2>
-<label>
-    <input class="demo" type="text"/>
-</label>
-<label>
-    <input class="another" type="text"/>
-</label>
-<label>
-    <input class="enabler" type="checkbox"/>
-</label>
-<label>
+<div class="demo">
+    <label for="demo">This is 'demo'</label>
+    <input class="demo" type="text" name="demo" id="demo"/>
+</div>
+<div class="another">
+    <label for="another">This is 'another'</label>
+    <input class="another" type="text" name="another" id="another"/>
+</div>
+<div class="enabler">
+    <label for="enabler">This is 'enabler'</label>
+    <input class="enabler" type="checkbox" name="enabler" id="enabler"/>
+</div>
+<div>
+    <label for="text-me">This is 'textMe'</label>
     <textarea id="text-me" name="textMe"></textarea>
-</label>
+</div>
 <h2>Select</h2>
-<label for="pet-select">Choose a pet:</label>
-<select class="select-me" id="pet-select" name="pets">
-    <option value="">--Please choose an option--</option>
-    <option value="dog">Dog</option>
-    <option value="cat">Cat</option>
-    <option value="hamster">Hamster</option>
-    <option value="parrot">Parrot</option>
-    <option value="spider">Spider</option>
-    <option value="goldfish">Goldfish</option>
-</select>
+<div class="select-me">
+    <label for="pet-select">Choose a pet:</label>
+    <select class="select-me" id="pet-select" name="pets">
+        <option value="" selected disabled>--Please choose an option--</option>
+        <option value="dog">Dog</option>
+        <option value="cat">Cat</option>
+        <option value="hamster">Hamster</option>
+        <option value="parrot">Parrot</option>
+        <option value="spider">Spider</option>
+        <option value="goldfish">Goldfish</option>
+    </select>
+</div>
 <h2>Multi select</h2>
-<label for="plant-select">Choose a plant:</label>
-<select class="select-me" id="plant-select" name="plants" multiple>
-    <option value="">--Please choose an option--</option>
-    <option value="oak">Oak</option>
-    <option value="cactus">Cactus</option>
-    <option value="pine">Pine</option>
-    <option value="carrot">Carrot</option>
-</select>
+<div class="select-me">
+    <label for="plant-select">Choose a plant:</label>
+    <select class="select-me" id="plant-select" name="plants" multiple>
+        <option value="" selected disabled>--Please choose an option--</option>
+        <option value="oak">Oak</option>
+        <option value="cactus">Cactus</option>
+        <option value="pine">Pine</option>
+        <option value="carrot">Carrot</option>
+    </select>
+</div>
 </body>
 </html>
 

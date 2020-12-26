@@ -7,6 +7,7 @@ import org.askucins.gebbook.GebLocalSpec
 
 @Slf4j
 class TagsIdentificationSpec extends GebLocalSpec {
+
     def "should open tags-identification page"() {
         expect:
         to TagsIdentificationPage
@@ -22,6 +23,7 @@ class TagsIdentificationSpec extends GebLocalSpec {
             $('.a').text() == 'a'
             $('.a').tag() == 'p'
             $('.a').@title == 'a' // value of an attribute 'title'
+            $('.a').attr('title') == 'a' // value of an attribute 'title'
             $('.a').classes() == ['a', 'para']
         }
         and:
@@ -29,6 +31,7 @@ class TagsIdentificationSpec extends GebLocalSpec {
             $("p")*.text() == ["a", "b", "c"]
             $("p")*.tag() == ["p", "p", "p"]
             $("p")*.@title == ["a", "b", "c"]
+            $("p")*.attr('title') == ["a", "b", "c"]
             $("p")*.classes() == [["a", "para"], ["b", "para"], ["c", "para"]]
         }
         cleanup:
@@ -39,6 +42,8 @@ class TagsIdentificationSpec extends GebLocalSpec {
         given:
         to TagsIdentificationPage
         Navigator nav = $('.a').add('.b')
+        assert nav.size() == 2
+        assert nav*.text() == ['a', 'b']
         when:
         nav.text()
         then:
@@ -51,6 +56,8 @@ class TagsIdentificationSpec extends GebLocalSpec {
         given:
         to TagsIdentificationPage
         Navigator nav = $('.a').add('.b')
+        assert nav.size() == 2
+        assert nav*.text() == ['a', 'b']
         when:
         nav.text()
         then:
@@ -63,6 +70,8 @@ class TagsIdentificationSpec extends GebLocalSpec {
         given:
         to TagsIdentificationPage
         Navigator nav = $('.a').add('.b')
+        assert nav.size() == 2
+        assert nav*.text() == ['a', 'b']
         when:
         nav.@title
         then:
@@ -75,6 +84,8 @@ class TagsIdentificationSpec extends GebLocalSpec {
         given:
         to TagsIdentificationPage
         Navigator nav = $('.a').add('.b')
+        assert nav.size() == 2
+        assert nav*.text() == ['a', 'b']
         when:
         nav.classes()
         then:

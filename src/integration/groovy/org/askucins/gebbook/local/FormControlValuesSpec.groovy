@@ -1,6 +1,7 @@
 package org.askucins.gebbook.local
 
 import geb.error.RequiredPageValueNotPresent
+import geb.navigator.Navigator
 import groovy.util.logging.Slf4j
 import org.askucins.gebbook.GebLocalSpec
 
@@ -15,6 +16,11 @@ class FormControlValuesSpec extends GebLocalSpec {
     def "should control 'select' element"() {
         given:
         to FormControlValuesPage
+
+        expect:
+        artist() instanceof Navigator
+        and: "value of the first option, by default"
+        artist().value() == '1'
 
         when: 'selecting by a matching value'
         artist = '1'

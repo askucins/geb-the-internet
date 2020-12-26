@@ -5,6 +5,7 @@ import org.askucins.gebbook.GebLocalSpec
 
 @Slf4j
 class FocusSpec extends GebLocalSpec {
+
     def "should open focus page"() {
         expect:
         to FocusPage

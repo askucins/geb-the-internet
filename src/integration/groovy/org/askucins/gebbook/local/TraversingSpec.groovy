@@ -38,20 +38,21 @@ class TraversingSpec extends GebLocalSpec {
     def "should traversing-2 work"() {
         when:
         to Traversing2Page
-        then: "This is weird and I don't get it - especially, that it works that way!"
+        then:
         verifyAll {
-            $('p').next() == $('p.b').add('p.c')
-            $('p').next('.c') == $('p.c').add('p.c') // WTF??
-            $('p').next(class: 'c') == $('p.c').add('p.c')
-            $('p').next('p', class: 'c') == $('p.c').add('p.c')
+            $('p').next().size() == 6
+            $('p').next() == $($('p.a'), $('p.b'), $('p.c', 0..1), $('p.d'), $('p.e'))
         }
-        and:
+        and: "Found: ą->c[0], a->c[0], b->c[0], c[0]->c[1] - hence 4 elements, as expected"
         verifyAll {
-            $('p').size() == 3
-            $('p') == $('p.a').add('p.b').add('p.c')
-            $('p').next('.c') == $($('p.c'), $('p.c')) // WTF??
-            $('p').next('.c').size() == 2 // WTF?
+            $('p').next('.c').size() == 4
+            $('p').next('.c') == $($('p.c', 0), $('p.c', 0), $('p.c', 0..1))
+            $('p').next(class: 'c') == $($('p.c', 0), $('p.c', 0), $('p.c', 0..1))
+            $('p').next('p', class: 'c') == $($('p.c', 0), $('p.c', 0), $('p.c', 0..1))
         }
+        cleanup:
+        log.info "Result: {}", $('p').next()*.text()
+        log.info "Result: {}", $('p').next('.c')*.text()
     }
 
     def "should open traversing-3 page"() {
@@ -66,43 +67,51 @@ class TraversingSpec extends GebLocalSpec {
         to Traversing3Page
         then:
         verifyAll {
-            $('p').parent('.b') == $('div.b')
-            $('p').parent(class: 'b') == $('div.b')
-            $('p').parent('div', class: 'b') == $('div.b')
+            $('p').parent('.c') == $('div.c')
+            $('p').parent(class: 'c') == $('div.c')
+            $('p').parent('div', class: 'c') == $('div.c')
+
+            $('p').closest('.b') == $('div.b')
+            $('p').closest(class: 'b') == $('div.b')
+            $('p').closest('div', class: 'b') == $('div.b')
 
             $('p').closest('.a') == $('div.a')
             $('p').closest(class: 'a') == $('div.a')
             $('p').closest('div', class: 'a') == $('div.a')
 
-            $('p').closest('.b') == $('div.b')
-            $('p').closest(class: 'b') == $('div.b')
-            $('p').closest('div', class: 'b') == $('div.b')
+            $('p').parent('div') == $('div.c')
+            $('p').closest('div') == $('div.c')
+            $('p').closest('.cls') == $('div.b')
+            !$('p').parent('.cls')
         }
         and:
         verifyAll {
-            $('p').parent() == $('div.b')
+            $('p').parent() == $('div.c')
             $('p').closest('p').size() == 0
             $('p').parents().first() == $('p').parent()
             $('p').parents()[0] == $('p').parent()
             $('p').parents()[1] == $('p').parent().parent()
             $('p').parents()[2] == $('p').parent().parent().parent()
             $('p').parents()[3] == $('p').parent().parent().parent().parent()
+            $('p').parents()[4] == $('p').parent().parent().parent().parent().parent()
             $('p').parents() == $(
                 $('p').parent(),
                 $('p').parent().parent(),
                 $('p').parent().parent().parent(),
                 $('p').parent().parent().parent().parent(),
+                $('p').parent().parent().parent().parent().parent(),
             )
-            $('p').parents()[0] == $('div.b')
-            $('p').parents()[1] == $('div.a')
-            $('p').parents()[2] == $('body')
-            $('p').parents()[3] == $('html')
-            $('p').parents() == $('div.b').add('div.a').add('body').add('html')
-            $('p').parents() == $($('div.b'), $('div.a'), $('body'), $('html'))
+            $('p').parents()[0] == $('div.c')
+            $('p').parents()[1] == $('div.b')
+            $('p').parents()[2] == $('div.a')
+            $('p').parents()[3] == $('body')
+            $('p').parents()[4] == $('html')
+            $('p').parents() == $('div.c').add('div.b').add('div.a').add('body').add('html')
+            $('p').parents() == $($('div.c'), $('div.b'), $('div.a'), $('body'), $('html'))
             // Difference between parents(...) and closest(...)
-            $('p').parents('div') == $($('div.b'), $('div.a'))
-            $('p').closest('div') == $('div.b')
-            $('p').parentsUntil('body') == $($('div.b'), $('div.a'))
+            $('p').parents('div') == $($('div.c'), $('div.b'), $('div.a'))
+            $('p').closest('div') == $('div.c')
+            $('p').parentsUntil('body') == $($('div.c'), $('div.b'), $('div.a'))
         }
     }
 

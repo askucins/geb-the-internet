@@ -5,6 +5,7 @@ import org.askucins.gebbook.GebLocalSpec
 
 @Slf4j
 class SizeAndLocationSpec extends GebLocalSpec {
+
     def "should open size-and-location page"() {
         expect:
         to SizeAndLocationPage
