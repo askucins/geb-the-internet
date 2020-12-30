@@ -4,6 +4,7 @@ import geb.error.RequiredPageValueNotPresent
 import geb.navigator.Navigator
 import groovy.util.logging.Slf4j
 import org.askucins.gebbook.GebLocalSpec
+import org.openqa.selenium.Keys
 
 @Slf4j
 class FormControlValuesSpec extends GebLocalSpec {
@@ -52,6 +53,13 @@ class FormControlValuesSpec extends GebLocalSpec {
     def "should control 'select' element by Select module"() {
         given:
         to FormControlValuesPage
+
+        expect:
+        artistModule() instanceof Navigator
+        and: "value of the first option, by default"
+        artistModule().getSelected() == '1'
+        and:
+        artistModule().selected == '1'
 
         when: 'selecting by a matching value'
         artistModule = '1'
@@ -177,7 +185,7 @@ class FormControlValuesSpec extends GebLocalSpec {
         when:
         pet = true
         then:
-        pet == 'dog'
+        pet == 'dog' // Gotcha! since it's checked the value of 'value' field is returned
         and:
         pet() == 'dog'
 
@@ -213,12 +221,14 @@ class FormControlValuesSpec extends GebLocalSpec {
         given:
         to FormControlValuesPage
 
-        when:
+        when: "assigned by a value"
         pets = 'dog'
         then:
+        pets()*.value().size() == 3
+        and:
         pets()*.value() == ['dog', null, null]
 
-        when:
+        when: "assigned by a label"
         pets = 'Canis familiaris'
         then:
         pets()*.value() == ['dog', null, null]
@@ -234,12 +244,12 @@ class FormControlValuesSpec extends GebLocalSpec {
         then:
         thrown(RequiredPageValueNotPresent)
 
-        when:
+        when: "assigned by values"
         pets = ['dog', 'lizard']
         then:
         pets()*.value() == ['dog', null, 'lizard']
 
-        when:
+        when: "assigned by labels"
         pets = ['Canis familiaris', 'Lacerta']
         then:
         pets()*.value() == ['dog', null, 'lizard']
@@ -254,6 +264,8 @@ class FormControlValuesSpec extends GebLocalSpec {
         petsModule('dog').check()
         then:
         petsModule('dog').isChecked()
+        and:
+        petsModule('lizard').isUnchecked()
     }
 
     def "should control 'radio' element"() {
@@ -270,7 +282,14 @@ class FormControlValuesSpec extends GebLocalSpec {
         and:
         site()*.value() == ['current', null]
 
-        when: "Searching by label"
+        when: "setting by label"
+        site = 'Search Google'
+        then:
+        site == 'google'
+        and:
+        site()*.value() == [null, 'google']
+
+        when: "setting by label"
         site = 'Search this site'
         then:
         site == 'current'
@@ -279,13 +298,6 @@ class FormControlValuesSpec extends GebLocalSpec {
 
         when:
         site = 'google'
-        then:
-        site == 'google'
-        and:
-        site()*.value() == [null, 'google']
-
-        when: "Searching by label"
-        site = 'Search Google'
         then:
         site == 'google'
         and:
@@ -306,18 +318,24 @@ class FormControlValuesSpec extends GebLocalSpec {
         language.value() == "Hello, world!"
 
         when:
-        description = "Foo, bar."
+        description = 'This is Ala.\nAla ma kota.'
         then:
-        description == "Foo, bar."
+        description == 'This is Ala.\nAla ma kota.'
         and:
-        description() == "Foo, bar."
+        description() == 'This is Ala.\nAla ma kota.'
         and:
-        description.value() == "Foo, bar."
+        description.value() == 'This is Ala.\nAla ma kota.'
 
         when:
-        description() << " Even more!"
+        description() << " Even more! "
         then:
-        description == "Foo, bar. Even more!"
+        description == 'This is Ala.\nAla ma kota. Even more! '
+
+        when:
+        description() << Keys.BACK_SPACE
+        then:
+        description == 'This is Ala.\nAla ma kota. Even more!'
+
     }
 
     def "should control 'text' element by TextInput module"() {
@@ -339,6 +357,8 @@ class FormControlValuesSpec extends GebLocalSpec {
         csvFile = csv.absolutePath
         then:
         csvFile
+        and:
+        csvFile.value() == "C:\\fakepath\\${csv.name}" // Gotcha! See https://stackoverflow.com/questions/4851595/how-to-resolve-the-c-fakepath
         cleanup:
         report("To be uploaded")
 
