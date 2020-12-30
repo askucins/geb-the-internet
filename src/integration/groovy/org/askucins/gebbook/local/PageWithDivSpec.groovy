@@ -1,11 +1,12 @@
 package org.askucins.gebbook.local
 
-import geb.Browser
 import geb.error.ContentCountOutOfBoundsException
 import geb.error.RequiredPageContentNotPresent
 import groovy.util.logging.Slf4j
 import org.askucins.gebbook.GebLocalSpec
 import spock.lang.Ignore
+
+import static geb.Browser.drive
 
 @Slf4j
 class PageWithDivSpec extends GebLocalSpec {
@@ -13,7 +14,7 @@ class PageWithDivSpec extends GebLocalSpec {
     @Ignore
     def "should find the div via 'drive'"() {
         expect:
-        Browser.drive {
+        drive {
             to PageWithDivPage
             assert theDiv.text() == 'aa'
         }.quit()

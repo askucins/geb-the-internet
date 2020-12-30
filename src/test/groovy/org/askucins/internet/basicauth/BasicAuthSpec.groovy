@@ -35,10 +35,12 @@ class BasicAuthSpec extends InternetSpec {
     }
 
     def cleanup() {
+        log.info "Closing webdriver..."
         driver?.quit()
-        proxy?.stop()
         testManager.resetBrowser()
         CachingDriverFactory.clearCacheAndQuitDriver()
+        log.info "Closing proxy..."
+        proxy?.stop()
     }
 
     def "should pass basic auth with correct credentials"() {

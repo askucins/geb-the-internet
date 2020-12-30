@@ -81,7 +81,7 @@ task refreshWebdriverConfiguration {
     }
 }
 
-task removeChromedriverInstances() {
+task removeWebdriverInstances() {
     group = 'other'
     description = 'removes hanging instances of webdriver'
 
@@ -96,11 +96,19 @@ task removeChromedriverInstances() {
         }
         exec {
             ignoreExitValue true
+            commandLine "pgrep", "-f", "marionette"
+        }
+        exec {
+            ignoreExitValue true
             commandLine "pkill", "-f", "webdriver"
         }
         exec {
             ignoreExitValue true
             commandLine "pkill", "-f", "chromedriver"
+        }
+        exec {
+            ignoreExitValue true
+            commandLine "pkill", "-f", "marionette"
         }
     }
 

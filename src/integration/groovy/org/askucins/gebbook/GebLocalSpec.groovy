@@ -25,6 +25,7 @@ abstract class GebLocalSpec extends GebReportingSpec {
 
     def cleanupSpec() {
         log.info "Closing webdriver..."
+        driver?.quit()
         testManager.resetBrowser()
         CachingDriverFactory.clearCacheAndQuitDriver()
     }

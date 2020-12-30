@@ -1,7 +1,6 @@
 package org.askucins.gebbook.browser
 
 import geb.Browser
-import geb.driver.CachingDriverFactory
 import geb.spock.GebSpec
 import groovy.util.logging.Slf4j
 import org.openqa.selenium.chrome.ChromeDriver
@@ -26,8 +25,10 @@ class BrowserSpec extends GebSpec {
     }
 
     def cleanupSpec() {
-        testManager.resetBrowser()
-        CachingDriverFactory.clearCacheAndQuitDriver()
+        log.info "Closing webdriver explicitly is NOT needed with 'myBrowser' approach..."
+        //driver?.quit()
+        //testManager.resetBrowser()
+        //CachingDriverFactory.clearCacheAndQuitDriver()
     }
 
     def "01 should work with a driver created implicitly"() {

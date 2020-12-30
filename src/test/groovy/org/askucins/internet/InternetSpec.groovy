@@ -39,9 +39,9 @@ abstract class InternetSpec extends GebReportingSpec {
     }
 
     def cleanupSpec() {
-        log.info "About to reset the browser..."
+        log.info "Closing webdriver..."
+        driver?.quit()
         testManager.resetBrowser()
-        log.info "About to clear cache and quit the running driver..."
         CachingDriverFactory.clearCacheAndQuitDriver()
     }
 }

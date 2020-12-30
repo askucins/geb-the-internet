@@ -21,6 +21,8 @@ abstract class MinimalBaseSpec extends GebSpec {
     }
 
     def cleanupSpec() {
+        log.info "Closing webdriver..."
+        driver?.quit()
         testManager.resetBrowser()
         CachingDriverFactory.clearCacheAndQuitDriver()
     }
