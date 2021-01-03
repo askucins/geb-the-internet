@@ -35,15 +35,17 @@ class PageWithDivSpec extends GebLocalSpec {
         and:
         theDiv().text() == 'aa' // as a method
         and:
-        theDivText == 'aa' //internal reference to another content definition
+        theDivText == 'aa' // internal reference to another content definition
         and:
-        theDivTemplate('a').text() == 'aa' // returns Navigator
+        theDivTemplate('a').text() == 'aa' // returns Navigator, on which text() is called
         and:
         theDivTemplateText('a') == 'aa' //returns text
         and:
         theDivByProperty.text() == 'aa'
         and:
         theDivByMethod.text() == 'aa'
+        and:
+        theDivByStaticMethod.text() == 'aa'
     }
 
     def "should apply 'required' option"() {

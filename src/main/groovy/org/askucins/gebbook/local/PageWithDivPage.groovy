@@ -13,7 +13,8 @@ class PageWithDivPage extends GebLocalPage {
         theDivTemplate { id -> $('div', id: id) }
         theDivTemplateText { id -> theDivTemplate(id).text() }
         theDivByProperty { $('div', id: divId) }
-        theDivByMethod { $('div', id: divId()) }
+        theDivByMethod { $('div', id: getDivId()) }
+        theDivByStaticMethod { $('div', id: divId()) }
 
         requiredDiv { $('div', id: 'b') }
         notRequiredDiv(required: false) { $('div', id: 'b') }
