@@ -49,7 +49,7 @@ class PageWithDivMorePagesSpec extends GebLocalSpec {
         theHeader == 'Page with div C'
     }
 
-    def "should navigate to random page of A, B, C"() {
+    def "should navigate to random page of A, B, C (attempt: #attempt)"() {
         given:
         to PageWithDivPage
         when:
@@ -60,7 +60,9 @@ class PageWithDivMorePagesSpec extends GebLocalSpec {
         if (page instanceof PageWithDivPageA) {
             log.info "Sometimes page A is randomly picked."
         } else {
-            log.info "Sometimes page other than A is randomly picked."
+            log.info "Sometimes page other than A is randomly picked, e.g.: ${page.title}"
         }
+        where:
+        attempt << (0..10)
     }
 }

@@ -2,6 +2,7 @@ package org.askucins.gebbook.local
 
 import geb.error.ContentCountOutOfBoundsException
 import geb.error.RequiredPageContentNotPresent
+import geb.navigator.Navigator
 import groovy.util.logging.Slf4j
 import org.askucins.gebbook.GebLocalSpec
 import spock.lang.Ignore
@@ -48,6 +49,18 @@ class PageWithDivSpec extends GebLocalSpec {
         theDivByStaticMethod.text() == 'aa'
     }
 
+    // TODO This approach is only a toy! For now it's not clear what should be used instead
+    def "should work with page template"() {
+        when: "page it initialized with customized elements"
+        to(PageWithDivTemplatePage).tap {
+            divId = 'a'
+        }
+        then:
+        theDivByProperty.text() == 'aa'
+        and:
+        theDivByMethod.text() == 'aa'
+    }
+
     def "should apply 'required' option"() {
         when:
         to PageWithDivPage
@@ -55,9 +68,14 @@ class PageWithDivSpec extends GebLocalSpec {
         !notRequiredDiv
 
         when:
-        requiredDiv
+        Navigator navRequiredDiv = requiredDiv
         then:
         RequiredPageContentNotPresent error = thrown()
+
+        when:
+        Navigator navRequiredExplicitlyDiv = requiredExplicitlyDiv
+        then:
+        RequiredPageContentNotPresent errorAnother = thrown()
     }
 
     def "should apply 'min' option"() {
@@ -105,7 +123,7 @@ class PageWithDivSpec extends GebLocalSpec {
         valueNotCached == 1
 
         when:
-        value = 2 // Gotcha! This will be evaluated within page, so the property will be changed
+        valueCacheable = 2 // Gotcha! This will be evaluated within page, so the property will be changed
         then:
         valueCached == 1
         and:

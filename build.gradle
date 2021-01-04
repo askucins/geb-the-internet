@@ -117,6 +117,26 @@ task removeWebdriverInstances() {
     }
 }
 
+task removeJettyInstances() {
+    group = 'other'
+    description = 'removes hanging instances of jetty'
+
+    def doRemoveJettyInstances = {
+        exec {
+            ignoreExitValue true
+            commandLine "pgrep", "-f", "jetty"
+        }
+        exec {
+            ignoreExitValue true
+            commandLine "pkill", "-f", "jetty"
+        }
+    }
+
+    doLast {
+        doRemoveJettyInstances()
+    }
+}
+
 task cleanGebTestResults(type: Delete) {
     group = 'other'
     description = 'removes geb reports and logs'

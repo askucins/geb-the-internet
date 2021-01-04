@@ -16,7 +16,9 @@ class PageWithDivPage extends GebLocalPage {
         theDivByMethod { $('div', id: getDivId()) }
         theDivByStaticMethod { $('div', id: divId()) }
 
-        requiredDiv { $('div', id: 'b') }
+        // All three have the same content definition, only options are different
+        requiredDiv() { $('div', id: 'b') }
+        requiredExplicitlyDiv(required: true) { $('div', id: 'b') }
         notRequiredDiv(required: false) { $('div', id: 'b') }
 
         paragraphsNotEnough(min: 3) { $('div.paragraphs p') }
@@ -28,8 +30,8 @@ class PageWithDivPage extends GebLocalPage {
         paragraphsWithinLimit(times: 2..3) { $('div.paragraphs p') }
         paragraphsOutsideLimit(times: 3..3) { $('div.paragraphs p') }
 
-        valueCached(cache: true) { value }
-        valueNotCached { value }
+        valueCached(cache: true) { valueCacheable }
+        valueNotCached { valueCacheable } // Default value of 'cache' is 'false'
 
         targetPageA(to: PageWithDivPageA) { $('div#pages p.target-page#page-a a') }
         targetPageB(to: PageWithDivPageB) { $('div#pages p.target-page#page-b a') }
@@ -41,7 +43,7 @@ class PageWithDivPage extends GebLocalPage {
         title == 'Page with div'
     }
 
-    def value = 1
+    def valueCacheable = 1
 
     def divId = 'a'
 
