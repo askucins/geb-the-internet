@@ -7,7 +7,7 @@ function randomPage() {
     targetPages[randomIdx].getElementsByTagName('a')[0].click();
 }
 
-// From https://www.abeautifulsite.net/adding-and-removing-elements-on-the-fly-using-javascript
+// Based on https://www.abeautifulsite.net/adding-and-removing-elements-on-the-fly-using-javascript
 
 function addElement(parentId, elementTag, elementId, html) {
     console.log("Adding element:", elementTag, "of id:", elementId, "as a child of:", parentId);
@@ -24,16 +24,26 @@ function removeElement(elementId) {
     element.parentNode.removeChild(element);
 }
 
-let fileId = 0; // used by the addFile() function to keep track of IDs
+// Based on https://javascript.info/closure#nested-functions
+
+function nextFileId() {
+    let fileId = 0;
+    return function () {
+        return fileId++;
+    };
+}
+
+// Initialization a generator of unique fileIds
+let fileIdGen = nextFileId();
+
 function addFile() {
-    console.log("Adding file. FileId before:", fileId)
-    fileId++; // increment fileId to get a unique ID for the new element
-    let finalFileId = '\'file-' + fileId + '\'';
+    let fileId = fileIdGen();
+    console.log("Adding file of id:", fileId)
+    let fileElementId = 'file-' + fileId;
     let html =
         '<input type="file" name="uploaded_files[]" /> ' +
         '<a href="" onclick="removeElement(' +
-        finalFileId +
+        '\'' + fileElementId + '\'' +
         '); return false;">Remove</a>';
-    addElement('files', 'p', 'file-' + fileId, html);
-    console.log("Adding file. FileId after:", fileId)
+    addElement('files', 'p', fileElementId, html);
 }
