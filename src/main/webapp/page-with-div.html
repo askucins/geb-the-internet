@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>Page with div</title>
-    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="page-with-div.css">
     <script src="page-with-div.js"></script>
 </head>
 <body>
@@ -40,6 +40,21 @@
         </div>
         <p><input id="add-file" type="button" value="Add File" onclick="addFile();"/></p>
     </form>
+</div>
+<h2>Hidden-elements and waits</h2>
+<div id="hidden-element">
+    <!-- https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/hidden -->
+    <div id="welcome" class="panel">
+        <h3>Welcome to Foobar.com!</h3>
+        <p>By clicking "OK" you agree to be awesome every day!</p>
+        <button class="button" id="okButton">OK</button>
+    </div>
+    <div id="awesome" class="panel" hidden>
+        <h3>Thanks!</h3>
+        <p>Thank you <strong>so</strong> much for agreeing to be
+            awesome today! Now get out there and do awesome things
+            awesomely to make the world more awesome!</p>
+    </div>
 </div>
 </body>
 </html>

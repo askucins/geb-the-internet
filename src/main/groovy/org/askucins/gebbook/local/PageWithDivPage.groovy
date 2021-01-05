@@ -71,7 +71,6 @@ class PageWithDivPage extends GebLocalPage {
             log.info "addedFilesWaitTimeoutRetry called"
             addedFiles
         }
-
         addedFilesCount(wait: true) { count ->
             log.info "addedFilesCount called"
             addedFiles.size() == count
@@ -80,7 +79,6 @@ class PageWithDivPage extends GebLocalPage {
             log.info "addedFilesNotPresent called"
             addedFilesCount(0)
         }
-
 
         // Gotcha! This is only for illustration of an edge case.
         // In the real world no one will use this in this such context.
@@ -92,6 +90,26 @@ class PageWithDivPage extends GebLocalPage {
             log.info "addedFilesNoWait called"
             addedFilesRequired
         }
+
+        // Hidden elements
+        // Gotcha! 'required: false' and 'waitCondition: {...} do the job!
+        welcome { $('div#welcome') }
+        welcomeVisible(required: false, waitCondition: {
+            log.info "Probing if element -welcome- is visible..."
+            it.displayed
+        }) { welcome }
+        isWelcomeHidden {
+            !welcome.displayed
+        }
+        welcomeCta { welcomeVisible.$('button#okButton') }
+        awesome { $('div#awesome') }
+        isAwesomeHidden {
+            !awesome.displayed
+        }
+        awesomeVisible(required: false, waitCondition: {
+            log.info "Probing if element -awesome- is visible..."
+            it.displayed
+        }) { awesome }
     }
     static at = {
         title == 'Page with div'

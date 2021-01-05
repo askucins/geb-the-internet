@@ -7,6 +7,8 @@ function randomPage() {
     targetPages[randomIdx].getElementsByTagName('a')[0].click();
 }
 
+/* **************************************************************************************************** */
+
 // Based on https://www.abeautifulsite.net/adding-and-removing-elements-on-the-fly-using-javascript
 
 /**
@@ -88,3 +90,21 @@ function addFile(timeoutOfAdd = configTimeoutOfAdd, timeoutOfRemove = configTime
         '); return false;">Remove</a>';
     addElement('files', 'p', fileElementId, 'added-file', html, timeoutOfAdd);
 }
+
+/* **************************************************************************************************** */
+
+// See https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/hidden
+function addHiddenSwitch() {
+    console.log("Adding hidden-switch.");
+    let okButton = document.getElementById("okButton");
+    okButton.addEventListener("click", function () {
+        document.getElementById("welcome").hidden = true;
+        document.getElementById("awesome").hidden = false;
+    }, false);
+}
+
+// See https://stackoverflow.com/a/47974365/1108588
+window.addEventListener('load', function () {
+    console.log('All assets loaded');
+    addHiddenSwitch();
+});
