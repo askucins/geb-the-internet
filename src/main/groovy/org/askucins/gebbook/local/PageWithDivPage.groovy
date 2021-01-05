@@ -1,6 +1,6 @@
 package org.askucins.gebbook.local
 
-import geb.error.RequiredPageContentNotPresent
+
 import groovy.util.logging.Slf4j
 import org.askucins.gebbook.GebLocalPage
 

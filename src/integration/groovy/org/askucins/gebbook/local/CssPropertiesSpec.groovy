@@ -37,6 +37,6 @@ class CssPropertiesSpec extends GebLocalSpec {
         and:
         $('div')[1].css('visibility') == 'visible'
         cleanup:
-        log.info "CSS columns: {}",  $('div')*.css('columns')
+        log.info "CSS columns: {}", $('div')*.css('columns')
     }
 }

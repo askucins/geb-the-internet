@@ -11,7 +11,6 @@ import java.awt.*
 import java.awt.event.InputEvent
 
 import static org.askucins.internet.InternetPage.centerOf
-import static org.askucins.utils.CustomizedChromeDriver.customizedChromeDriver
 
 @RestoreSystemProperties
 @Slf4j
@@ -122,7 +121,7 @@ class DragAndDropSpec extends InternetSpec {
         and:
         def source = centerOf(boxLeft)
         def target = centerOf(boxRight)
-        def offset = new Point(target.x - source.x+20, target.y - source.y + 20)
+        def offset = new Point(target.x - source.x + 20, target.y - source.y + 20)
         when:
         interact {
             moveToElement(boxLeft)

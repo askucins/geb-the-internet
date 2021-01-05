@@ -1,10 +1,8 @@
 = Learning Geb with *The Internet* (ver. 0.58.0 - 10, February 2020)
 
-Examples of https://gebish.org/[Geb] test automation of various popular use cases available, well… on the
-Internet :)
+Examples of https://gebish.org/[Geb] test automation of various popular use cases available, well… on the Internet :)
 
-A list of such use cases has been collected by https://github.com/tourdedave[Dave Heaffner],
-and it's available on https://github.com/tourdedave/the-internet
+A list of such use cases has been collected by https://github.com/tourdedave[Dave Heaffner], and it's available on https://github.com/tourdedave/the-internet
 
 == Available examples from https://github.com/tourdedave/the-internet[The Internet]
 
@@ -57,12 +55,14 @@ and it's available on https://github.com/tourdedave/the-internet
 
 * Install https://rvm.io/[rvm]
 * Install ruby 2.4.1
+
 [source,bash]
 ----
 rvm install ruby-2.4.1
 ----
 
 * Install bundler
+
 [source,bash]
 ----
 gem install bundler
@@ -70,18 +70,21 @@ gem install bundler
 
 * Checkout `https://github.com/tourdedave/the-internet`
 * Install dependencies
+
 [source,bash]
 ----
 bundle install
 ----
 
 * Start the server:
+
 [source,bash]
 ----
 rackup
 ----
 
 * Pages will be available locally:
+
 [source,text]
 ----
 http://localhost:9292/url_path
@@ -102,8 +105,7 @@ gradle init --type groovy-library
 
 === Passing a configuration from Gradle to JVM
 
-Inspired
-by https://stackoverflow.com/questions/28985395/gradle-gebconfig-groovy-parameterized
+Inspired by https://stackoverflow.com/questions/28985395/gradle-gebconfig-groovy-parameterized
 
 In `build.gradle` pass the gradle project property to system property:
 
@@ -144,8 +146,7 @@ gw test -Pwebdriver=firefox
 
 ==== Update 2020-02-23
 
-Although that works just fine, one can use rather the built-in concept of GebConfig.environments, so then
-in `build.gradle` there would be:
+Although that works just fine, one can use rather the built-in concept of GebConfig.environments, so then in `build.gradle` there would be:
 
 [source,groovy]
 ----
@@ -177,8 +178,7 @@ environments {
 }
 ----
 
-With that setup if the gradle project property 'webdriver' is not defined that 'chrome' environment will be used, while
-when it is defined - an appropriate environment will be picked up, e.g.
+With that setup if the gradle project property 'webdriver' is not defined that 'chrome' environment will be used, while when it is defined - an appropriate environment will be picked up, e.g.
 
 [source,bash]
 ----
@@ -195,8 +195,7 @@ Also, a quote from https://gebish.org/manual/current/[The Book of Geb]:
 ____
 
 The `find()` and `$()` _methods_ support the exact same argument types as the $() _function_.
-The `filter()`, `not()`, `has()` and `hasNot()` _methods_ have the same signatures -
-they accept: a selector string, a predicate map or both.
+The `filter()`, `not()`, `has()` and `hasNot()` _methods_ have the same signatures - they accept: a selector string, a predicate map or both.
 These methods return a new navigator object that represents the new content.
 
 ____

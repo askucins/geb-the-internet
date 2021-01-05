@@ -446,12 +446,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Examples of <a href="https://gebish.org/">Geb</a> test automation of various popular use cases available, well… on the
-Internet :)</p>
+<p>Examples of <a href="https://gebish.org/">Geb</a> test automation of various popular use cases available, well… on the Internet :)</p>
 </div>
 <div class="paragraph">
-<p>A list of such use cases has been collected by <a href="https://github.com/tourdedave">Dave Heaffner</a>,
-and it&#8217;s available on <a href="https://github.com/tourdedave/the-internet" class="bare">https://github.com/tourdedave/the-internet</a></p>
+<p>A list of such use cases has been collected by <a href="https://github.com/tourdedave">Dave Heaffner</a>, and it&#8217;s available on <a href="https://github.com/tourdedave/the-internet" class="bare">https://github.com/tourdedave/the-internet</a></p>
 </div>
 </div>
 </div>
@@ -608,7 +606,7 @@ and it&#8217;s available on <a href="https://github.com/tourdedave/the-internet"
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>rvm install ruby-2.4.1</pre>
+<pre class="CodeRay highlight"><code data-lang="bash">rvm install ruby-2.4.1</code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -620,7 +618,7 @@ and it&#8217;s available on <a href="https://github.com/tourdedave/the-internet"
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>gem install bundler</pre>
+<pre class="CodeRay highlight"><code data-lang="bash">gem install bundler</code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -635,7 +633,7 @@ and it&#8217;s available on <a href="https://github.com/tourdedave/the-internet"
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>bundle install</pre>
+<pre class="CodeRay highlight"><code data-lang="bash">bundle install</code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -647,7 +645,7 @@ and it&#8217;s available on <a href="https://github.com/tourdedave/the-internet"
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>rackup</pre>
+<pre class="CodeRay highlight"><code data-lang="bash">rackup</code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -659,7 +657,7 @@ and it&#8217;s available on <a href="https://github.com/tourdedave/the-internet"
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>http://localhost:9292/url_path</pre>
+<pre class="CodeRay highlight"><code data-lang="text">http://localhost:9292/url_path</code></pre>
 </div>
 </div>
 </div>
@@ -685,8 +683,7 @@ and it&#8217;s available on <a href="https://github.com/tourdedave/the-internet"
 <div class="sect2">
 <h3 id="_passing_a_configuration_from_gradle_to_jvm">Passing a configuration from Gradle to JVM</h3>
 <div class="paragraph">
-<p>Inspired
-by <a href="https://stackoverflow.com/questions/28985395/gradle-gebconfig-groovy-parameterized" class="bare">https://stackoverflow.com/questions/28985395/gradle-gebconfig-groovy-parameterized</a></p>
+<p>Inspired by <a href="https://stackoverflow.com/questions/28985395/gradle-gebconfig-groovy-parameterized" class="bare">https://stackoverflow.com/questions/28985395/gradle-gebconfig-groovy-parameterized</a></p>
 </div>
 <div class="paragraph">
 <p>In <code>build.gradle</code> pass the gradle project property to system property:</p>
@@ -731,8 +728,7 @@ by <a href="https://stackoverflow.com/questions/28985395/gradle-gebconfig-groovy
 <div class="sect3">
 <h4 id="_update_2020_02_23">Update 2020-02-23</h4>
 <div class="paragraph">
-<p>Although that works just fine, one can use rather the built-in concept of GebConfig.environments, so then
-in <code>build.gradle</code> there would be:</p>
+<p>Although that works just fine, one can use rather the built-in concept of GebConfig.environments, so then in <code>build.gradle</code> there would be:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -766,8 +762,7 @@ in <code>build.gradle</code> there would be:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>With that setup if the gradle project property 'webdriver' is not defined that 'chrome' environment will be used, while
-when it is defined - an appropriate environment will be picked up, e.g.</p>
+<p>With that setup if the gradle project property 'webdriver' is not defined that 'chrome' environment will be used, while when it is defined - an appropriate environment will be picked up, e.g.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -795,8 +790,7 @@ when it is defined - an appropriate environment will be picked up, e.g.</p>
 <blockquote>
 <div class="paragraph">
 <p>The <code>find()</code> and <code>$()</code> <em>methods</em> support the exact same argument types as the $() <em>function</em>.
-The <code>filter()</code>, <code>not()</code>, <code>has()</code> and <code>hasNot()</code> <em>methods</em> have the same signatures -
-they accept: a selector string, a predicate map or both.
+The <code>filter()</code>, <code>not()</code>, <code>has()</code> and <code>hasNot()</code> <em>methods</em> have the same signatures - they accept: a selector string, a predicate map or both.
 These methods return a new navigator object that represents the new content.</p>
 </div>
 </blockquote>
@@ -819,7 +813,7 @@ These methods return a new navigator object that represents the new content.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-12-31 00:26:39 +0100
+Last updated 2021-01-05 15:11:30 +0100
 </div>
 </div>
 </body>

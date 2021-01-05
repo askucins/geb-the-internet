@@ -25,11 +25,12 @@
     <button id="random-page" type="button" onclick="randomPage()">Random page</button>
 </div>
 <h2>Dynamic elements and waits</h2>
-<div id="dynamic-content"><!-- https://www.abeautifulsite.net/adding-and-removing-elements-on-the-fly-using-javascript -->
+<div id="dynamic-content">
+    <!-- https://www.abeautifulsite.net/adding-and-removing-elements-on-the-fly-using-javascript -->
     <form enctype="multipart/form-data" action="" method="post">
         <p>Upload file(s)</p>
         <div id="files">
-            <p><input type="file" name="uploaded_file[]" /></p>
+            <p><input type="file" name="uploaded_file[]"/></p>
             <!-- Example of added file:
                 <p id="file-1" class="added-file">
                     <input type="file" name="uploaded_files[]">
@@ -37,7 +38,7 @@
                 </p>
             -->
         </div>
-        <p><input id="add-file" type="button" value="Add File" onclick="addFile();" /></p>
+        <p><input id="add-file" type="button" value="Add File" onclick="addFile();"/></p>
     </form>
 </div>
 </body>

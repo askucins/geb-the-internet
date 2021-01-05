@@ -38,7 +38,7 @@ class PageWithDivWaitSpec extends GebLocalSpec {
         WaitTimeoutException error = thrown()
     }
 
-    def "should fail with 'wait' when adding ot required element and waiting too long (wait: true, required: false)"() {
+    def "should fail with 'wait' when adding not required element and waiting too long (wait: true, required: false)"() {
         given:
         to PageWithDivPage
         js.configTimeouts(6000, 500)
