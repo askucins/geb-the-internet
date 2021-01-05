@@ -45,17 +45,18 @@ class PageWithDivPage extends GebLocalPage {
         // Dynamic elements
         addFile { $('input#add-file', type: 'button') }
         removeFile { addedFile -> addedFile.$('a').click() }
-        addedFiles { $('p.added-file') }
+
+        // Gotcha! It must be 'required: false' for dynamic elements
+        addedFiles(required: false) {
+            log.info "addedFiles called"
+            $('p.added-file')
+        }
         addedFilesWait(wait: true) {
             log.info "addedFilesWait called"
             addedFiles
         }
         addedFilesWaitAndNotRequired(wait: true, required: false) {
             log.info "addedFilesWaitAndNotRequired called"
-            addedFiles
-        }
-        addedFilesNoWait(wait: false) { // wait: false is default
-            log.info "addedFilesNoWait called"
             addedFiles
         }
         addedFilesWaitPreset(wait: 'quick') {
@@ -69,6 +70,27 @@ class PageWithDivPage extends GebLocalPage {
         addedFilesWaitTimeoutRetry(wait: [4, 1]) {
             log.info "addedFilesWaitTimeoutRetry called"
             addedFiles
+        }
+
+        addedFilesCount(wait: true) { count ->
+            log.info "addedFilesCount called"
+            addedFiles.size() == count
+        }
+        addedFilesNotPresent(wait: true) {
+            log.info "addedFilesNotPresent called"
+            addedFilesCount(0)
+        }
+
+
+        // Gotcha! This is only for illustration of an edge case.
+        // In the real world no one will use this in this such context.
+        addedFilesRequired(required: true) {
+            log.info "addedFilesWithRequired called"
+            $('p.added-file')
+        }
+        addedFilesNoWait(wait: false) { // wait: false is default
+            log.info "addedFilesNoWait called"
+            addedFilesRequired
         }
     }
     static at = {
@@ -88,10 +110,12 @@ class PageWithDivPage extends GebLocalPage {
     // Dynamic elements
 
     def addNewFile() {
+        log.info "Adding a new file."
         addFile.click()
     }
 
     def removeNewFile(Integer fromPosition) {
+        log.info "Removing file from position: {}.", fromPosition
         removeFile(addedFiles[fromPosition])
     }
 }

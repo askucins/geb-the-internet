@@ -137,7 +137,7 @@ task removeJettyInstances() {
     }
 }
 
-task cleanGebTestResults(type: Delete) {
+task removeTestResults(type: Delete) {
     group = 'other'
     description = 'removes geb reports and logs'
     delete "reports"
