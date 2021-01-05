@@ -1,6 +1,6 @@
 package org.askucins.gebbook.local
 
-
+import geb.error.RequiredPageContentNotPresent
 import groovy.util.logging.Slf4j
 import org.askucins.gebbook.GebLocalPage
 
@@ -20,7 +20,10 @@ class PageWithDivPage extends GebLocalPage {
         requiredDiv() { $('div', id: 'b') }
         requiredExplicitlyDiv(required: true) { $('div', id: 'b') }
         notRequiredDiv(required: false) { $('div', id: 'b') }
-
+        notRequiredDivAndWait(required: false, wait: true) {
+            log.info "notRequiredDivAndWait called"
+            $('div', id: 'b')
+        }
         paragraphsNotEnough(min: 3) { $('div.paragraphs p') }
         paragraphsEnough(min: 2) { $('div.paragraphs p') }
 
@@ -42,7 +45,31 @@ class PageWithDivPage extends GebLocalPage {
         // Dynamic elements
         addFile { $('input#add-file', type: 'button') }
         removeFile { addedFile -> addedFile.$('a').click() }
-        addedFiles(wait: true) { $('p.added-file') }
+        addedFiles { $('p.added-file') }
+        addedFilesWait(wait: true) {
+            log.info "addedFilesWait called"
+            addedFiles
+        }
+        addedFilesWaitAndNotRequired(wait: true, required: false) {
+            log.info "addedFilesWaitAndNotRequired called"
+            addedFiles
+        }
+        addedFilesNoWait(wait: false) { // wait: false is default
+            log.info "addedFilesNoWait called"
+            addedFiles
+        }
+        addedFilesWaitPreset(wait: 'quick') {
+            log.info "addedFilesWaitPreset called"
+            addedFiles
+        }
+        addedFilesWaitTimeout(wait: 4) {
+            log.info "addedFilesWaitPreset called"
+            addedFiles
+        }
+        addedFilesWaitTimeoutRetry(wait: [4, 1]) {
+            log.info "addedFilesWaitTimeoutRetry called"
+            addedFiles
+        }
     }
     static at = {
         title == 'Page with div'

@@ -2,7 +2,6 @@ package org.askucins.gebbook.local
 
 import geb.error.ContentCountOutOfBoundsException
 import geb.error.RequiredPageContentNotPresent
-import geb.navigator.Navigator
 import groovy.util.logging.Slf4j
 import org.askucins.gebbook.GebLocalSpec
 import spock.lang.Ignore
@@ -68,14 +67,21 @@ class PageWithDivSpec extends GebLocalSpec {
         !notRequiredDiv
 
         when:
-        Navigator navRequiredDiv = requiredDiv
+        requiredDiv
         then:
         RequiredPageContentNotPresent error = thrown()
 
         when:
-        Navigator navRequiredExplicitlyDiv = requiredExplicitlyDiv
+        requiredExplicitlyDiv
         then:
-        RequiredPageContentNotPresent errorAnother = thrown()
+        RequiredPageContentNotPresent errorSame = thrown()
+    }
+
+    def "should apply 'required' and 'wait' options (no exception)"() {
+        when:
+        to PageWithDivPage
+        then: "no exception is thrown even after the element has not been found"
+        !notRequiredDivAndWait
     }
 
     def "should apply 'min' option"() {
@@ -128,33 +134,5 @@ class PageWithDivSpec extends GebLocalSpec {
         valueCached == 1
         and:
         valueNotCached == 2
-    }
-
-    def "should apply 'wait' option on adding - default value"() {
-        given:
-        to PageWithDivPage
-        js.configTimeouts(1000, 2000)
-        when:
-        addNewFile()
-        then:
-        addedFiles
-        cleanup:
-        report 'added-file'
-    }
-    // TODO continue from this point...
-    def "should apply 'wait' option on removing - default value"() {
-        given:
-        to PageWithDivPage
-        js.configTimeouts(1000, 2000)
-        when:
-        addNewFile()
-        then:
-        addedFiles
-        and:
-        removeNewFile(0)
-        then:
-        !addedFiles
-        cleanup:
-        report 'added-file'
     }
 }

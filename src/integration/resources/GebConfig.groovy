@@ -41,13 +41,15 @@ requirePageAtCheckers = true
 atCheckWaiting = true
 
 waiting {
+    timeout = 5 // default: 5
+    retryInterval = 0.5 // default: 0.5
     presets {
         slow {
             timeout = 30
             retryInterval = 1
         }
         quick {
-            timeout = 5
+            timeout = 3
         }
     }
 }

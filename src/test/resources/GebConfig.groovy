@@ -32,8 +32,10 @@ environments {
     }
 }
 
-//cacheDriver = false
-//cacheDriverPerThread = true
+// Driver cache defaults:
+//cacheDriver = true
+//cacheDriverPerThread = false
+//quitCachedDriverOnShutdown = true
 
 requirePageAtCheckers = true
 atCheckWaiting = true
