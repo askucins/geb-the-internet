@@ -8,8 +8,6 @@ import spock.lang.Unroll
 @Slf4j
 class PageWithDivMorePagesSpec extends GebLocalSpec {
 
-    static Random r = new Random()
-
     def "should open page of (#header)"() {
         expect:
         to destination

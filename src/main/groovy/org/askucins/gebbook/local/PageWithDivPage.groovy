@@ -38,6 +38,11 @@ class PageWithDivPage extends GebLocalPage {
         targetPageC(to: PageWithDivPageC) { $('div#pages p.target-page#page-c a') }
 
         randomTargetPage(to: [PageWithDivPageA, PageWithDivPageB, PageWithDivPageC]) { $('button#random-page') }
+
+        // Dynamic elements
+        addFile { $('input#add-file', type: 'button') }
+        removeFile { addedFile -> addedFile.$('a').click() }
+        addedFiles(wait: true) { $('p.added-file') }
     }
     static at = {
         title == 'Page with div'
@@ -51,5 +56,15 @@ class PageWithDivPage extends GebLocalPage {
 
     def navigateToRandomTargetPage() {
         randomTargetPage.click()
+    }
+
+    // Dynamic elements
+
+    def addNewFile() {
+        addFile.click()
+    }
+
+    def removeNewFile(Integer fromPosition) {
+        removeFile(addedFiles[fromPosition])
     }
 }

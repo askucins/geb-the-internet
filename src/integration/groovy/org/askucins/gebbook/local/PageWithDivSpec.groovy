@@ -129,4 +129,32 @@ class PageWithDivSpec extends GebLocalSpec {
         and:
         valueNotCached == 2
     }
+
+    def "should apply 'wait' option on adding - default value"() {
+        given:
+        to PageWithDivPage
+        js.configTimeouts(1000, 2000)
+        when:
+        addNewFile()
+        then:
+        addedFiles
+        cleanup:
+        report 'added-file'
+    }
+    // TODO continue from this point...
+    def "should apply 'wait' option on removing - default value"() {
+        given:
+        to PageWithDivPage
+        js.configTimeouts(1000, 2000)
+        when:
+        addNewFile()
+        then:
+        addedFiles
+        and:
+        removeNewFile(0)
+        then:
+        !addedFiles
+        cleanup:
+        report 'added-file'
+    }
 }
