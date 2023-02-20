@@ -4,7 +4,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'org.codehaus.groovy:groovy-json:3.0.13'
+        classpath 'org.apache.groovy:groovy-json:4.0.9'
     }
 }
 
@@ -33,9 +33,9 @@ plugins {
     id 'groovy'
     id 'java'
     id 'java-library'
-    id 'com.github.erdi.webdriver-binaries' version '2.7'
+    id 'com.github.erdi.webdriver-binaries' version '3.0'
     id 'com.github.erdi.idea-base' version '2.2'
-    id 'org.asciidoctor.jvm.convert' version '3.3.2'
+    id 'org.asciidoctor.jvm.convert' version '4.0.0-alpha.1'
     id 'org.gretty' version '4.0.3'
 }
 
@@ -44,7 +44,7 @@ plugins {
  */
 
 wrapper {
-    gradleVersion = '7.6'
+    gradleVersion = '8.0.1'
     distributionType = Wrapper.DistributionType.ALL
 }
 
@@ -66,7 +66,7 @@ webdriverBinaries {
         version = {
             (project.findProperty('qa.chromium') != null)
                 ? '89.0.4389.23'
-                : '108.0.5359.71'
+                : '110.0.5481.77'
         }()
         fallbackTo32Bit = true
     }
@@ -207,18 +207,21 @@ repositories {
 
 dependencies {
     implementation 'org.apache.ivy:ivy:2.5.0' // Not really needed... it's for IntelliJ
-    implementation 'org.codehaus.groovy:groovy-all:3.0.13'
-    implementation 'org.slf4j:slf4j-api:2.0.5'
+    implementation 'org.apache.groovy:groovy-all:4.0.9'
+    implementation 'org.apache.groovy:groovy-json:4.0.9'
+    implementation 'org.apache.groovy:groovy-yaml:4.0.9'
+    implementation 'org.apache.groovy:groovy-xml:4.0.9'
+    implementation 'org.slf4j:slf4j-api:2.0.6'
     implementation 'ch.qos.logback:logback-classic:1.4.5'
-    def spockVersion = '2.3-groovy-3.0'
+    def spockVersion = '2.4-M1-groovy-4.0'
     testImplementation "org.spockframework:spock-core:${spockVersion}", {
-        exclude group: 'org.codehaus.groovy'
+        exclude group: 'org.apache.groovy'
     }
-    def gebVersion = '6.0'
+    def gebVersion = '7.0'
     implementation "org.gebish:geb-core:${gebVersion}"
     testImplementation "org.gebish:geb-spock:${gebVersion}"
-    def webdriverVersion = '4.7.0'
-    implementation 'io.netty:netty-buffer:4.1.56.Final' // TODO see below - workaround
+    def webdriverVersion = '4.8.1'
+    implementation 'io.netty:netty-buffer:4.1.89.Final' // TODO see below - workaround
     implementation("org.seleniumhq.selenium:selenium-support:${webdriverVersion}") {
         exclude group: 'io.netty'
     }
@@ -235,15 +238,19 @@ dependencies {
     //implementation("org.seleniumhq.selenium:selenium-devtools:4.0.0-rc-1") {
     //    exclude group: 'io.netty'
     //}
-    implementation("org.seleniumhq.selenium:selenium-devtools-v108:${webdriverVersion}") {
+    implementation("org.seleniumhq.selenium:selenium-devtools-v110:${webdriverVersion}") {
         exclude group: 'io.netty'
     }
 
-    testImplementation('com.athaydes:spock-reports:2.3.2-groovy-3.0') {
-        transitive = false
-    }
+    //TODO it throws sometimes OOM
+    //testImplementation('com.athaydes:spock-reports:2.4.0-groovy-4.0') {
+    //    transitive = false
+    //}
+
     // TODO check https://github.com/AOEpeople/geb-spock-reports
-    testImplementation 'com.aoe:geb-spock-reports:0.3.0-RC1'
+    testImplementation ('com.aoe:geb-spock-reports:0.3.0-RC1') {
+        exclude group: 'org.codehaus.groovy'
+    }
 
     // Full-page screenshots https://github.com/pazone/ashot
     implementation 'ru.yandex.qatools.ashot:ashot:1.5.4'
@@ -256,7 +263,7 @@ dependencies {
     implementation "com.browserup:browserup-proxy-core:${versionBrowserUp}"
     implementation "com.browserup:browserup-proxy-mitm:${versionBrowserUp}"
     // Proxy https://github.com/mrog/LittleProxy
-    implementation 'xyz.rogfam:littleproxy:2.0.14'
+    implementation 'xyz.rogfam:littleproxy:2.0.15'
 
     // Decompressing Brotli-encoded payload
     implementation 'org.brotli:dec:0.1.2'
