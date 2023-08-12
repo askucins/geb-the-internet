@@ -62,7 +62,7 @@ class CustomizedChromeDriver {
             options.setExperimentalOption("prefs", [profile: [default_content_setting_values: [geolocation: ChromeGeoLocation.Allow.value]]])
         }
         if (config?.headless) {
-            options.addArguments('headless')
+            options.addArguments('--headless=new')
         }
         if (config?.proxy) {
             // Host defined explicitly to enforce using localhost/127.0.0.1
