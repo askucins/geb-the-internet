@@ -1,15 +1,17 @@
 package org.askucins.gebbook.local
 
 import geb.Module
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
+import groovy.util.logging.Slf4j
 
 // TODO for some reason Geb does not understand that 'log' via annotation in modules!
-//@Slf4j
+// TODO import org.slf4j.Logger
+// TODO import org.slf4j.LoggerFactory
+
+@Slf4j
 class DynamicNavigatorListItem extends Module {
 
     //TODO as a workaround added logger explicitly
-    Logger log = LoggerFactory.getLogger("DynamicNavigatorListItem")
+    //Logger log = LoggerFactory.getLogger("DynamicNavigatorListItem")
 
     static content = {
         textOfItem { $("span") }
