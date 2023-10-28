@@ -4,7 +4,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'org.apache.groovy:groovy-json:4.0.13'
+        classpath 'org.apache.groovy:groovy-json:4.0.15'
     }
 }
 
@@ -45,7 +45,7 @@ plugins {
  */
 
 wrapper {
-    gradleVersion = '8.3'
+    gradleVersion = '8.4'
     distributionType = Wrapper.DistributionType.ALL
 }
 
@@ -208,10 +208,10 @@ repositories {
 
 dependencies {
     implementation 'org.apache.ivy:ivy:2.5.1' // Not really needed... it's for IntelliJ
-    implementation 'org.apache.groovy:groovy-all:4.0.13'
-    implementation 'org.apache.groovy:groovy-json:4.0.13'
-    implementation 'org.apache.groovy:groovy-yaml:4.0.13'
-    implementation 'org.apache.groovy:groovy-xml:4.0.13'
+    implementation 'org.apache.groovy:groovy-all:4.0.15'
+    implementation 'org.apache.groovy:groovy-json:4.0.15'
+    implementation 'org.apache.groovy:groovy-yaml:4.0.15'
+    implementation 'org.apache.groovy:groovy-xml:4.0.15'
     implementation 'org.slf4j:slf4j-api:2.0.7'
     implementation 'ch.qos.logback:logback-classic:1.4.11'
     def spockVersion = '2.4-M1-groovy-4.0'
@@ -221,7 +221,7 @@ dependencies {
     def gebVersion = '7.0'
     implementation "org.gebish:geb-core:${gebVersion}"
     testImplementation "org.gebish:geb-spock:${gebVersion}"
-    def webdriverVersion = '4.11.0'
+    def webdriverVersion = '4.13.0'
     implementation 'io.netty:netty-buffer:4.1.89.Final' // TODO see below - workaround
     implementation("org.seleniumhq.selenium:selenium-support:${webdriverVersion}") {
         exclude group: 'io.netty'
@@ -235,7 +235,7 @@ dependencies {
     implementation("org.seleniumhq.selenium:selenium-firefox-driver:${webdriverVersion}") {
         exclude group: 'io.netty'
     }
-    implementation("org.seleniumhq.selenium:selenium-devtools-v115:${webdriverVersion}") {
+    implementation("org.seleniumhq.selenium:selenium-devtools-v117:${webdriverVersion}") {
         exclude group: 'io.netty'
     }
 
