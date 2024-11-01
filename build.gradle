@@ -4,7 +4,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'org.apache.groovy:groovy-json:4.0.15'
+        classpath 'org.apache.groovy:groovy-json:4.0.17'
     }
 }
 
@@ -45,7 +45,7 @@ plugins {
  */
 
 wrapper {
-    gradleVersion = '8.4'
+    gradleVersion = '8.5'
     distributionType = Wrapper.DistributionType.ALL
 }
 
@@ -207,13 +207,13 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.apache.ivy:ivy:2.5.1' // Not really needed... it's for IntelliJ
-    implementation 'org.apache.groovy:groovy-all:4.0.15'
-    implementation 'org.apache.groovy:groovy-json:4.0.15'
-    implementation 'org.apache.groovy:groovy-yaml:4.0.15'
-    implementation 'org.apache.groovy:groovy-xml:4.0.15'
-    implementation 'org.slf4j:slf4j-api:2.0.7'
-    implementation 'ch.qos.logback:logback-classic:1.4.11'
+    implementation 'org.apache.ivy:ivy:2.5.2' // Not really needed... it's for IntelliJ
+    implementation 'org.apache.groovy:groovy-all:4.0.17'
+    implementation 'org.apache.groovy:groovy-json:4.0.17'
+    implementation 'org.apache.groovy:groovy-yaml:4.0.17'
+    implementation 'org.apache.groovy:groovy-xml:4.0.17'
+    implementation 'org.slf4j:slf4j-api:2.0.10'
+    implementation 'ch.qos.logback:logback-classic:1.4.14'
     def spockVersion = '2.4-M1-groovy-4.0'
     testImplementation "org.spockframework:spock-core:${spockVersion}", {
         exclude group: 'org.apache.groovy'
@@ -276,7 +276,7 @@ dependencies {
     implementation 'net.sourceforge.tess4j:tess4j:5.8.0'
 
     // Other
-    testImplementation 'org.apache.commons:commons-text:1.10.0'
+    testImplementation 'org.apache.commons:commons-text:1.11.0'
 }
 
 tasks.withType(Test) {
