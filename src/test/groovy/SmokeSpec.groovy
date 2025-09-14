@@ -8,6 +8,6 @@ class SmokeSpec extends GebReportingSpec {
         when:
         to SmokePage
         then:
-        titleInContent.text() == 'httpstat.us'
+        titleInContent.text() == 'ifconfig.co — What is my IP address?'
     }
 }

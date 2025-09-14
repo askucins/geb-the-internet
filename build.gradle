@@ -4,59 +4,54 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'org.apache.ivy:ivy:2.5.2'
-        classpath 'org.apache.groovy:groovy-json:4.0.24'
-    }
-}
-
-import groovy.json.JsonBuilder
-import groovy.json.JsonOutput
-import groovy.json.JsonSlurper
-import org.gradle.jvm.toolchain.JavaLanguageVersion
-
-/**
- * Properties (not mandatory):
- * qa.webdriver - webdriver name; one of: 'firefoxBare', 'firefox', 'firefoxHeadless', 'chromeBare', 'chrome', 'chromeHeadless'
- * qa.chromium - if present non-standard chromedriver version will be used (only POC)
- */
-
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
+        classpath 'org.apache.ivy:ivy:2.5.3'
+        classpath 'org.apache.groovy:groovy-json:4.0.28'
         // Gretty https://github.com/gretty-gradle-plugin/gretty
         classpath 'org.gretty:gretty:+'
     }
 }
 
 plugins {
-    id 'idea'
-    id 'groovy'
-    id 'java'
-    id 'java-library'
-    id 'com.github.erdi.webdriver-binaries' version '3.2'
     id 'com.github.erdi.idea-base' version '2.2'
-    id 'org.asciidoctor.jvm.convert' version '4.0.0-alpha.1'
-    id 'org.gretty' version '4.1.0'
+    id 'org.asciidoctor.jvm.convert' version '4.0.5'
+    id 'org.gretty' version '4.1.7'
 }
 
-/**
- * Wrapper
- */
-
 wrapper {
-    //Gotcha! Version 8.7 fails with com.github.erdi.webdriver-binaries
-    //TODO monitor https://github.com/erdi/webdriver-binaries-gradle-plugin/issues/43
-    gradleVersion = '8.6'
+    gradleVersion = '8.14.3'
     distributionType = Wrapper.DistributionType.ALL
+}
+
+apply plugin: 'java'
+apply plugin: 'java-library'
+apply plugin: 'groovy'
+apply plugin: 'idea'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+idea {
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}
+
+asciidoctor {
+    sourceDir file('.')
+    sources {
+        include 'readme.adoc'
+    }
+    outputDir file('build/docs')
 }
 
 /**
  * Geb and Webdriver mgmt
  * Properties:
  *  qa.webdriver
- *  qa.chromium
  */
 
 tasks.withType(Test) {
@@ -64,38 +59,7 @@ tasks.withType(Test) {
     systemProperty 'geb.build.reportsDir', 'reports'
 }
 
-webdriverBinaries {
-    driverUrlsConfiguration = resources.text.fromFile('webdriver.json')
-    chromedriver {
-        version = {
-            (project.findProperty('qa.chromium') != null)
-                ? '130.0.6723.69'
-                : '131.0.6778.204'
-        }()
-        fallbackTo32Bit = true
-    }
-    geckodriver '0.33.0'
-}
-
-task refreshWebdriverConfiguration {
-    group = 'other'
-    description = 'refreshes configuration of webdriver binaries'
-
-    def slurper = new JsonSlurper()
-    def customWebdriver = slurper.parseText(resources.text.fromFile('webdriver-custom.json').asFile().text)
-    try {
-        def remoteWebdriver = slurper.parseText(new URL('https://raw.githubusercontent.com/webdriverextensions/webdriverextensions-maven-plugin-repository/master/repository-3.0.json').text)
-        def finalWebdriver = slurper.parseText(new JsonBuilder([drivers: customWebdriver.drivers + remoteWebdriver.drivers]).toString())
-        def webdriverJson = new File(projectDir, 'webdriver.json')
-        webdriverJson.delete()
-        webdriverJson << JsonOutput.prettyPrint(JsonOutput.toJson(finalWebdriver))
-    } catch (e) {
-        logger.error("Unable to refresh webdriver versions configuration!")
-        logger.error(e.asString())
-    }
-}
-
-task removeWebdriverInstances() {
+tasks.register('removeWebdriverInstances') {
     group = 'other'
     description = 'removes hanging instances of webdriver'
 
@@ -131,7 +95,7 @@ task removeWebdriverInstances() {
     }
 }
 
-task removeJettyInstances() {
+tasks.register('removeJettyInstances') {
     group = 'other'
     description = 'removes hanging instances of jetty'
 
@@ -151,7 +115,7 @@ task removeJettyInstances() {
     }
 }
 
-task removeTestResults(type: Delete) {
+tasks.register('removeTestResults', Delete) {
     group = 'other'
     description = 'removes geb reports and logs'
     delete "reports"
@@ -183,7 +147,7 @@ tasks.named("processIntegrationResources") {
 
 String localContextPath = '/gebbook'
 
-task integrationTest(type: Test) {
+tasks.register('integrationTest', Test) {
     group = 'verification'
     description = 'runs integration tests via gretty'
     testClassesDirs = sourceSets.integration.output.classesDirs
@@ -210,24 +174,24 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.apache.groovy:groovy-all:4.0.24'
-    implementation 'org.apache.groovy:groovy-json:4.0.24'
-    implementation 'org.apache.groovy:groovy-yaml:4.0.24'
-    implementation 'org.apache.groovy:groovy-xml:4.0.24'
-    implementation 'org.apache.groovy:groovy-ginq:4.0.24'
-    implementation 'org.slf4j:slf4j-api:2.0.16'
-    implementation 'ch.qos.logback:logback-classic:1.5.7'
-    def spockVersion = '2.4-M4-groovy-4.0'
+    implementation 'org.apache.groovy:groovy-all:4.0.28'
+    implementation 'org.apache.groovy:groovy-json:4.0.28'
+    implementation 'org.apache.groovy:groovy-yaml:4.0.28'
+    implementation 'org.apache.groovy:groovy-xml:4.0.28'
+    implementation 'org.apache.groovy:groovy-ginq:4.0.28'
+    implementation 'org.slf4j:slf4j-api:2.0.17'
+    implementation 'ch.qos.logback:logback-classic:1.5.18'
+    def spockVersion = '2.4-M6-groovy-4.0'
     implementation "org.spockframework:spock-core:${spockVersion}", {
         exclude group: 'org.apache.groovy'
     }
     //Gotcha! https://github.com/spockframework/spock/issues/1849
-    implementation 'org.junit.platform:junit-platform-testkit:1.11.1'
+    implementation 'org.junit.platform:junit-platform-testkit:1.13.4'
     def gebVersion = '7.0'
     implementation "org.gebish:geb-core:${gebVersion}"
     testImplementation "org.gebish:geb-spock:${gebVersion}"
-    def webdriverVersion = '4.27.0'
-    implementation 'io.netty:netty-buffer:4.1.107.Final' // TODO see below - workaround
+    def webdriverVersion = '4.34.0'
+    implementation 'io.netty:netty-buffer:4.1.117.Final' // TODO see below - workaround
     implementation("org.seleniumhq.selenium:selenium-support:${webdriverVersion}") {
         exclude group: 'io.netty'
     }
@@ -240,16 +204,16 @@ dependencies {
     implementation("org.seleniumhq.selenium:selenium-firefox-driver:${webdriverVersion}") {
         exclude group: 'io.netty'
     }
-    implementation("org.seleniumhq.selenium:selenium-devtools-v131:${webdriverVersion}") {
+    implementation("org.seleniumhq.selenium:selenium-devtools-v138:${webdriverVersion}") {
         exclude group: 'io.netty'
     }
 
-    testImplementation('com.athaydes:spock-reports:2.5.0-groovy-4.0') {
+    testImplementation('com.athaydes:spock-reports:2.5.1-groovy-4.0') {
         transitive = false
     }
 
     // TODO check https://github.com/AOEpeople/geb-spock-reports
-    testImplementation ('com.aoe:geb-spock-reports:0.3.0-RC1') {
+    testImplementation('com.aoe:geb-spock-reports:0.3.0-RC1') {
         exclude group: 'org.codehaus.groovy'
     }
 
@@ -258,13 +222,13 @@ dependencies {
         exclude group: 'org.codehaus.groovy'
     }
 
-    def versionBrowserUp = '3.0.0'
+    def versionBrowserUp = '3.2.0'
     implementation "com.github.valfirst.browserup-proxy:browserup-proxy:${versionBrowserUp}"
     implementation "com.github.valfirst.browserup-proxy:browserup-proxy-core:${versionBrowserUp}"
     implementation "com.github.valfirst.browserup-proxy:browserup-proxy-mitm:${versionBrowserUp}"
 
     // Proxy https://github.com/LittleProxy/LittleProxy
-    implementation 'io.github.littleproxy:littleproxy:2.4.0'
+    implementation 'io.github.littleproxy:littleproxy:2.4.5'
 
     // Decompressing Brotli-encoded payload
     implementation 'org.brotli:dec:0.1.2'
@@ -277,11 +241,26 @@ dependencies {
     implementation 'net.sourceforge.tess4j:tess4j:5.8.0'
 
     // Other
-    implementation 'org.apache.commons:commons-text:1.12.0'
-    implementation 'commons-io:commons-io:2.16.1'
+    implementation 'org.apache.commons:commons-text:1.14.0'
+    implementation 'commons-io:commons-io:2.20.0'
 }
 
-tasks.withType(Test) {
+tasks.withType(GroovyCompile).configureEach {
+    options.incremental = true
+    options.incrementalAfterFailure = true
+    doFirst {
+        logger.lifecycle 'Explicitly enabling incremental compilation :{} in task: {}', options.incremental, it.name
+    }
+    //See: https://docs.gradle.org/current/dsl/org.gradle.api.tasks.compile.GroovyCompileOptions.html
+    configure(groovyOptions.forkOptions) {
+        memoryInitialSize = '512m'
+        memoryMaximumSize = '6g'
+        jvmArgs = ['-Xms512m', '-Xmx6g']
+    }
+}
+
+//TODO read more about that 'configureEach' in https://docs.gradle.org/current/userguide/task_configuration_avoidance.html
+tasks.withType(Test).configureEach {
     // See https://blog.gradle.org/stop-rerunning-tests
     systemProperty "random.testing.seed", new Random().nextInt()
 
@@ -299,30 +278,18 @@ tasks.withType(Test) {
         }
     }
     useJUnitPlatform()
-}
 
-/**
- * Misc
- */
-
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(11)
-        //vendor = JvmVendorSpec.ORACLE
+    reports {
+        String reportTimestamp = System.currentTimeMillis().toString()
+        html.outputLocation = file("${reports.html.outputLocation.get()}-${reportTimestamp}")
+        junitXml.outputLocation = file("${reports.junitXml.outputLocation.get()}-${reportTimestamp}")
+        //Gotcha! This is the actual source for other reports!
+        binaryResultsDirectory = file("${binaryResultsDirectory.get()}-${reportTimestamp}")
     }
-}
 
-idea {
-    module {
-        downloadJavadoc = true
-        downloadSources = true
+    doFirst {
+        logger.lifecycle "... configured test report (dir): {}", reports.html.outputLocation.get()
+        logger.lifecycle "... configured test report (xml): {}", reports.junitXml.outputLocation.get()
+        logger.lifecycle "... configured test report (bin): {}", binaryResultsDirectory.get()
     }
-}
-
-asciidoctor {
-    sourceDir file('.')
-    sources {
-        include 'readme.adoc'
-    }
-    outputDir file('build/docs')
 }

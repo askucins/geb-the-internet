@@ -1,4 +1,4 @@
-package org.askucins
+package org.askucins.utils
 
 import geb.Page
 import groovy.util.logging.Slf4j
