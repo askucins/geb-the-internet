@@ -189,7 +189,7 @@ dependencies {
     }
     //Gotcha! https://github.com/spockframework/spock/issues/1849
     implementation 'org.junit.platform:junit-platform-testkit:1.13.4'
-    def gebVersion = '8.0.1-SNAPSHOT'
+    def gebVersion = '8.0.2-SNAPSHOT'
     implementation "org.apache.groovy.geb:geb-core:${gebVersion}"
     testImplementation "org.apache.groovy.geb:geb-spock:${gebVersion}"
     def webdriverVersion = '4.38.0'
