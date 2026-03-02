@@ -183,7 +183,7 @@ dependencies {
     implementation 'org.apache.groovy:groovy-ginq:4.0.30'
     implementation 'org.slf4j:slf4j-api:2.0.17'
     implementation 'ch.qos.logback:logback-classic:1.5.18'
-    def spockVersion = '2.4-M6-groovy-4.0'
+    def spockVersion = '2.4-groovy-4.0'
     implementation "org.spockframework:spock-core:${spockVersion}", {
         exclude group: 'org.apache.groovy'
     }
@@ -192,7 +192,7 @@ dependencies {
     def gebVersion = '8.0.1'
     implementation "org.apache.groovy.geb:geb-core:${gebVersion}"
     testImplementation "org.apache.groovy.geb:geb-spock:${gebVersion}"
-    def webdriverVersion = '4.40.0'
+    def webdriverVersion = '4.41.0'
     implementation 'io.netty:netty-buffer:4.1.117.Final' // TODO see below - workaround
     implementation("org.seleniumhq.selenium:selenium-support:${webdriverVersion}") {
         exclude group: 'io.netty'
@@ -206,7 +206,7 @@ dependencies {
     implementation("org.seleniumhq.selenium:selenium-firefox-driver:${webdriverVersion}") {
         exclude group: 'io.netty'
     }
-    implementation("org.seleniumhq.selenium:selenium-devtools-v144:${webdriverVersion}") {
+    implementation("org.seleniumhq.selenium:selenium-devtools-v145:${webdriverVersion}") {
         exclude group: 'io.netty'
     }
 
@@ -224,8 +224,7 @@ dependencies {
         exclude group: 'org.codehaus.groovy'
     }
 
-    def versionBrowserUp = '3.2.0'
-    implementation "com.github.valfirst.browserup-proxy:browserup-proxy:${versionBrowserUp}"
+    def versionBrowserUp = '3.2.2'
     implementation "com.github.valfirst.browserup-proxy:browserup-proxy-core:${versionBrowserUp}"
     implementation "com.github.valfirst.browserup-proxy:browserup-proxy-mitm:${versionBrowserUp}"
 
