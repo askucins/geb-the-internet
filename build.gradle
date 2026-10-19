@@ -6,7 +6,7 @@ buildscript {
     }
     dependencies {
         classpath 'org.apache.ivy:ivy:2.5.3'
-        classpath 'org.apache.groovy:groovy-json:4.0.32'
+        classpath 'org.apache.groovy:groovy-json:4.0.33'
         // Gretty https://github.com/gretty-gradle-plugin/gretty
         classpath 'org.gretty:gretty:+'
     }
@@ -19,7 +19,7 @@ plugins {
 }
 
 wrapper {
-    gradleVersion = '8.14.5'
+    gradleVersion = '8.14.6'
     distributionType = Wrapper.DistributionType.ALL
 }
 
@@ -60,40 +60,35 @@ tasks.withType(Test) {
     systemProperty 'geb.build.reportsDir', 'reports'
 }
 
-tasks.register('removeWebdriverInstances') {
+// This is a replacement for that deprecated Project.exec()
+// See more: https://docs.gradle.org/current/userguide/service_injection.html#execoperations
+abstract class RemoveWebdriverInstances extends DefaultTask {
+    //@javax.inject.Inject
+    @Inject
+    abstract ExecOperations getExecOperations()
+
+    @TaskAction
+    void removeInstances() {
+        ['webdriver', 'chromedriver', 'marionette'].each { processName ->
+            logger.lifecycle "Reporting on hanging instances of process: {}", processName
+            execOperations.exec {
+                ignoreExitValue = true
+                commandLine 'pgrep', processName
+            }
+        }
+        ['webdriver', 'chromedriver', 'marionette'].each { processName ->
+            logger.lifecycle "Removing hanging instances of process: {}", processName
+            execOperations.exec {
+                ignoreExitValue = true
+                commandLine 'pkill', '-f', processName
+            }
+        }
+    }
+}
+
+tasks.register('removeWebdriverInstances', RemoveWebdriverInstances) {
     group = 'other'
     description = 'removes hanging instances of webdriver'
-
-    def doRemoveWebdriverInstances = {
-        exec {
-            ignoreExitValue true
-            commandLine "pgrep", "-f", "webdriver"
-        }
-        exec {
-            ignoreExitValue true
-            commandLine "pgrep", "-f", "chromedriver"
-        }
-        exec {
-            ignoreExitValue true
-            commandLine "pgrep", "-f", "marionette"
-        }
-        exec {
-            ignoreExitValue true
-            commandLine "pkill", "-f", "webdriver"
-        }
-        exec {
-            ignoreExitValue true
-            commandLine "pkill", "-f", "chromedriver"
-        }
-        exec {
-            ignoreExitValue true
-            commandLine "pkill", "-f", "marionette"
-        }
-    }
-
-    doLast {
-        doRemoveWebdriverInstances()
-    }
 }
 
 tasks.register('removeJettyInstances') {
@@ -176,11 +171,11 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.apache.groovy:groovy-all:4.0.32'
-    implementation 'org.apache.groovy:groovy-json:4.0.32'
-    implementation 'org.apache.groovy:groovy-yaml:4.0.32'
-    implementation 'org.apache.groovy:groovy-xml:4.0.32'
-    implementation 'org.apache.groovy:groovy-ginq:4.0.32'
+    implementation 'org.apache.groovy:groovy-all:4.0.33'
+    implementation 'org.apache.groovy:groovy-json:4.0.33'
+    implementation 'org.apache.groovy:groovy-yaml:4.0.33'
+    implementation 'org.apache.groovy:groovy-xml:4.0.33'
+    implementation 'org.apache.groovy:groovy-ginq:4.0.33'
     implementation 'org.slf4j:slf4j-api:2.0.17'
     implementation 'ch.qos.logback:logback-classic:1.5.18'
     def spockVersion = '2.4-groovy-4.0'
@@ -192,7 +187,7 @@ dependencies {
     def gebVersion = '8.0.1'
     implementation "org.apache.groovy.geb:geb-core:${gebVersion}"
     testImplementation "org.apache.groovy.geb:geb-spock:${gebVersion}"
-    def webdriverVersion = '4.46.0'
+    def webdriverVersion = '4.50.0'
     implementation 'io.netty:netty-buffer:4.1.117.Final' // TODO see below - workaround
     implementation("org.seleniumhq.selenium:selenium-support:${webdriverVersion}") {
         exclude group: 'io.netty'
@@ -206,7 +201,7 @@ dependencies {
     implementation("org.seleniumhq.selenium:selenium-firefox-driver:${webdriverVersion}") {
         exclude group: 'io.netty'
     }
-    implementation("org.seleniumhq.selenium:selenium-devtools-v150:${webdriverVersion}") {
+    implementation("org.seleniumhq.selenium:selenium-devtools-v154:${webdriverVersion}") {
         exclude group: 'io.netty'
     }
 
