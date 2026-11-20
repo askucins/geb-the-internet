@@ -19,7 +19,7 @@ plugins {
 }
 
 wrapper {
-    gradleVersion = '8.14.6'
+    gradleVersion = '8.14.7'
     distributionType = Wrapper.DistributionType.ALL
 }
 
@@ -91,24 +91,26 @@ tasks.register('removeWebdriverInstances', RemoveWebdriverInstances) {
     description = 'removes hanging instances of webdriver'
 }
 
-tasks.register('removeJettyInstances') {
+abstract class RemoveJettyInstances extends DefaultTask {
+    @Inject
+    abstract ExecOperations getExecOperations()
+
+    @TaskAction
+    void removeInstances() {
+        execOperations.exec {
+            ignoreExitValue = true
+            commandLine 'pgrep', '-f', 'jetty'
+        }
+        execOperations.exec {
+            ignoreExitValue = true
+            commandLine 'pkill', '-f', 'jetty'
+        }
+    }
+}
+
+tasks.register('removeJettyInstances', RemoveJettyInstances) {
     group = 'other'
     description = 'removes hanging instances of jetty'
-
-    def doRemoveJettyInstances = {
-        exec {
-            ignoreExitValue true
-            commandLine "pgrep", "-f", "jetty"
-        }
-        exec {
-            ignoreExitValue true
-            commandLine "pkill", "-f", "jetty"
-        }
-    }
-
-    doLast {
-        doRemoveJettyInstances()
-    }
 }
 
 tasks.register('removeTestResults', Delete) {
@@ -178,7 +180,7 @@ dependencies {
     implementation 'org.apache.groovy:groovy-ginq:4.0.33'
     implementation 'org.slf4j:slf4j-api:2.0.17'
     implementation 'ch.qos.logback:logback-classic:1.5.18'
-    def spockVersion = '2.4-groovy-4.0'
+    def spockVersion = '2.5-groovy-4.0'
     implementation "org.spockframework:spock-core:${spockVersion}", {
         exclude group: 'org.apache.groovy'
     }
@@ -187,7 +189,7 @@ dependencies {
     def gebVersion = '8.0.1'
     implementation "org.apache.groovy.geb:geb-core:${gebVersion}"
     testImplementation "org.apache.groovy.geb:geb-spock:${gebVersion}"
-    def webdriverVersion = '4.50.0'
+    def webdriverVersion = '4.53.0'
     implementation 'io.netty:netty-buffer:4.1.117.Final' // TODO see below - workaround
     implementation("org.seleniumhq.selenium:selenium-support:${webdriverVersion}") {
         exclude group: 'io.netty'
@@ -201,7 +203,7 @@ dependencies {
     implementation("org.seleniumhq.selenium:selenium-firefox-driver:${webdriverVersion}") {
         exclude group: 'io.netty'
     }
-    implementation("org.seleniumhq.selenium:selenium-devtools-v154:${webdriverVersion}") {
+    implementation("org.seleniumhq.selenium:selenium-devtools-v157:${webdriverVersion}") {
         exclude group: 'io.netty'
     }
 
